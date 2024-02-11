@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Final Project</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="Back">Back</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="already_registered_click_here_to_log_in">Already Registered? Click Here To Log In</string>
+    <string name="press_to_receive_code">Press to Receive Code</string>
+    <string name="return_to_login">Return To Login</string>
+</resources>

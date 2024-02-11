@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1086449563011",
+    "project_id": "final-project-authentica-1b212",
+    "storage_bucket": "final-project-authentica-1b212.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086449563011:android:72fda7ded205def002f2b6",
+        "android_client_info": {
+          "package_name": "com.example.finalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoYMq3bhV-BbBqUUdeYjrWXXQnxzWORbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
