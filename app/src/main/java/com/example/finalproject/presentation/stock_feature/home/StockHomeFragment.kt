@@ -18,7 +18,9 @@ import kotlinx.coroutines.flow.first
 
 @AndroidEntryPoint
 class StockHomeFragment : BaseFragment<FragmentStockHomeLayoutBinding>(FragmentStockHomeLayoutBinding::inflate){
-
+    //if you need to get the uid to save to a database for example, then go into the viewmodel
+    //and use the readuid function there directly with .first() to get the first instance from datastore
+    //theres no need to get it to the fragment
     private val stockHomeViewModel : StockHomeViewModel by viewModels()
 
     override fun bindViewActionListeners() {

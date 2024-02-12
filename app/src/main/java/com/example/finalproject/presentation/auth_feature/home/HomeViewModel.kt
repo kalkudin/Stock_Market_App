@@ -45,9 +45,8 @@ class HomeViewModel @Inject constructor(private val readUserSessionUseCase: Read
     private fun checkCurrentSession() {
         viewModelScope.launch {
             readUserSessionUseCase().collect {
-                when(it){
-                    true -> _navigationFlow.emit(HomeNavigationEvent.NavigateToStockHome)
-                    else -> {}
+                if(it){
+                    _navigationFlow.emit(HomeNavigationEvent.NavigateToStockHome)
                 }
             }
         }
