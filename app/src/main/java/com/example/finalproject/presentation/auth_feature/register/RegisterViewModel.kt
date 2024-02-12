@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.auth_usecase.RegisterUserUseCase
 import com.example.finalproject.presentation.auth_feature.event.RegisterEvent
-import com.example.finalproject.presentation.auth_feature.model.RegisterState
+import com.example.finalproject.presentation.auth_feature.state.RegisterState
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

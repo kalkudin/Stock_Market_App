@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentLoginLayoutBinding
 import com.example.finalproject.presentation.auth_feature.event.LoginEvent
-import com.example.finalproject.presentation.auth_feature.model.LoginState
+import com.example.finalproject.presentation.auth_feature.state.LoginState
 import com.example.finalproject.presentation.base.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

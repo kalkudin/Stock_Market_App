@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentRegisterLayoutBinding
 import com.example.finalproject.presentation.auth_feature.event.RegisterEvent
-import com.example.finalproject.presentation.auth_feature.model.RegisterState
+import com.example.finalproject.presentation.auth_feature.state.RegisterState
 import com.example.finalproject.presentation.base.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

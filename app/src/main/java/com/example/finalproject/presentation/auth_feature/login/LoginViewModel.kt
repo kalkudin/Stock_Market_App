@@ -7,7 +7,7 @@ import com.example.finalproject.domain.usecase.auth_usecase.LoginUserUseCase
 import com.example.finalproject.domain.usecase.datastore_usecase.SaveUserSessionUseCase
 import com.example.finalproject.domain.usecase.datastore_usecase.SaveUserUidUseCase
 import com.example.finalproject.presentation.auth_feature.event.LoginEvent
-import com.example.finalproject.presentation.auth_feature.model.LoginState
+import com.example.finalproject.presentation.auth_feature.state.LoginState
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

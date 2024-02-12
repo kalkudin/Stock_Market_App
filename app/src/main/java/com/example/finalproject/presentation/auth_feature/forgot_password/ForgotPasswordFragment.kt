@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentForgotPasswordLayoutBinding
 import com.example.finalproject.presentation.auth_feature.event.ForgotPasswordEvent
-import com.example.finalproject.presentation.auth_feature.model.ForgotPasswordState
+import com.example.finalproject.presentation.auth_feature.state.ForgotPasswordState
 import com.example.finalproject.presentation.base.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

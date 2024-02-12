@@ -2,16 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/main_color"
+    android:padding="30dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/Back"
+        android:background="transparent"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,11 +28,12 @@
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="90dp"
+        android:fontFamily="@font/open_sauce_sans_regular"
         android:hint="@string/email"
-        android:paddingStart="20dp"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/light_gray"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,20 +42,21 @@
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/open_sauce_sans_regular"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:paddingStart="20dp"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/light_gray"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_email"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="6dp"
         android:src="@drawable/ic_email"
         app:layout_constraintBottom_toBottomOf="@+id/et_email"
@@ -54,71 +65,59 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_lock"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="6dp"
         android:src="@drawable/ic_lock_locked"
         app:layout_constraintBottom_toBottomOf="@+id/et_password"
         app:layout_constraintEnd_toEndOf="@+id/et_password"
         app:layout_constraintTop_toTopOf="@+id/et_password" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="460dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/login"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_password" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btn_not_registered"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center"
-        android:text="Not Registered? Sign Up"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_login"
-        app:layout_constraintEnd_toEndOf="@+id/et_password"
-        app:layout_constraintStart_toStartOf="@+id/et_password"
-        app:layout_constraintTop_toBottomOf="@+id/et_password"
-        app:layout_constraintVertical_bias="0.955" />
-
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/btn_remember_me"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:fontFamily="@font/open_sauce_sans_regular"
         android:text="@string/remember_me"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_password" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/style_custom_button_home_login"
+        android:fontFamily="@font/open_sauce_sans_bold"
+        android:text="@string/login"
+        android:textAllCaps="false"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/btn_login"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="@+id/btn_login"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_remember_me" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_not_registered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/open_sauce_sans_regular"
+        android:text="@string/not_registered_sign_up"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btn_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/forgot_password"
+        android:textColor="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_remember_me" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btn_not_registered"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
