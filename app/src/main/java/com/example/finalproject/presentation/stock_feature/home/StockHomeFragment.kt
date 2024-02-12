@@ -20,12 +20,6 @@ import kotlinx.coroutines.flow.first
 class StockHomeFragment : BaseFragment<FragmentStockHomeLayoutBinding>(FragmentStockHomeLayoutBinding::inflate){
 
     private val stockHomeViewModel : StockHomeViewModel by viewModels()
-    private val args: StockHomeFragmentArgs by navArgs()
-    private lateinit var uid: String
-
-    override fun bind() {
-        bindUserUid()
-    }
 
     override fun bindViewActionListeners() {
         bindBackBtn()
@@ -35,25 +29,10 @@ class StockHomeFragment : BaseFragment<FragmentStockHomeLayoutBinding>(FragmentS
         bindNavigationFlow()
     }
 
-    private fun bindUserUid() {
-        uid = args.uid
-        if (uid.isEmpty()) {
-            bindUid()
-        }
-    }
-
     private fun bindBackBtn() {
         with(binding) {
             btnBack.setOnClickListener {
                 stockHomeViewModel.onEvent(StockHomeEvent.LogOut)
-            }
-        }
-    }
-
-    private fun bindUid() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                uid = stockHomeViewModel.getUidFromDataStore().first()
             }
         }
     }

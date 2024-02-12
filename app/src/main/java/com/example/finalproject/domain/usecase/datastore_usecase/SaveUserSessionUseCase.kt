@@ -5,7 +5,7 @@ import com.example.finalproject.domain.repository.DataStoreRepository
 import javax.inject.Inject
 
 class SaveUserSessionUseCase @Inject constructor(private val dataStoreRepository: DataStoreRepository) {
-    suspend operator fun invoke(userUid: String) {
-        dataStoreRepository.saveSession(DataStoreRepositoryImpl.SESSION_KEY, userUid)
+    suspend operator fun invoke(rememberMe: Boolean) {
+        dataStoreRepository.saveSession(DataStoreRepositoryImpl.SESSION_KEY, rememberMe)
     }
 }

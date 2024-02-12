@@ -2,7 +2,9 @@ package com.example.finalproject.presentation.auth_feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.finalproject.domain.usecase.datastore_usecase.ClearUserSessionUseCase
 import com.example.finalproject.domain.usecase.datastore_usecase.ReadUserSessionUseCase
+import com.example.finalproject.domain.usecase.datastore_usecase.ReadUserUidUseCase
 import com.example.finalproject.presentation.auth_feature.event.HomeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -42,9 +44,10 @@ class HomeViewModel @Inject constructor(private val readUserSessionUseCase: Read
 
     private fun checkCurrentSession() {
         viewModelScope.launch {
-            readUserSessionUseCase().collect { uid ->
-                if (uid.isNotEmpty()) {
-                    _navigationFlow.emit(HomeNavigationEvent.NavigateToStockHome)
+            readUserSessionUseCase().collect {
+                when(it){
+                    true -> _navigationFlow.emit(HomeNavigationEvent.NavigateToStockHome)
+                    else -> {}
                 }
             }
         }

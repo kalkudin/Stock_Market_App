@@ -79,10 +79,6 @@
         android:id="@+id/stockHomeFragment"
         android:name="com.example.finalproject.presentation.stock_feature.home.StockHomeFragment"
         android:label="StockHomeFragment" >
-        <argument
-            android:name="uid"
-            app:argType="string"
-            android:defaultValue=""/>
         <action
             android:id="@+id/action_stockHomeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />

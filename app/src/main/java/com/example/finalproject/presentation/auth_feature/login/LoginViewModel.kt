@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.auth_usecase.LoginUserUseCase
 import com.example.finalproject.domain.usecase.datastore_usecase.SaveUserSessionUseCase
+import com.example.finalproject.domain.usecase.datastore_usecase.SaveUserUidUseCase
 import com.example.finalproject.presentation.auth_feature.event.LoginEvent
 import com.example.finalproject.presentation.auth_feature.model.LoginState
 import com.example.finalproject.presentation.util.getErrorMessage
@@ -22,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUserUseCase: LoginUserUseCase,
-    private val saveUserSessionUseCase: SaveUserSessionUseCase,
+    private val saveUserUidUseCase: SaveUserUidUseCase,
+    private val saveUserSessionUseCase: SaveUserSessionUseCase
 ) : ViewModel() {
 
     private val _loginFlow = MutableStateFlow(LoginState())
@@ -48,7 +50,8 @@ class LoginViewModel @Inject constructor(
                 when (result) {
                     is Resource.Success -> {
                         _loginFlow.update { it.copy(isLoading = false, isSuccess = result.data) }
-                        if (saveSession) { saveUserSessionUseCase(result.data) }
+                        saveUserUidUseCase(result.data)
+                        saveUserSessionUseCase(rememberMe = saveSession)
                         loginSuccess(result.data)
                     }
                     is Resource.Error -> {
@@ -65,7 +68,7 @@ class LoginViewModel @Inject constructor(
 
     private fun loginSuccess(id : String) {
         viewModelScope.launch {
-            _navigationFlow.emit(LoginNavigationEvent.NavigateToStockHome(id = id))
+            _navigationFlow.emit(LoginNavigationEvent.NavigateToStockHome)
         }
     }
 
@@ -96,5 +99,5 @@ sealed class LoginNavigationEvent {
     data object NavigateToForgotPassword : LoginNavigationEvent()
     data object NavigateToRegister : LoginNavigationEvent()
     data object NavigateToHome : LoginNavigationEvent()
-    data class NavigateToStockHome(val id: String) : LoginNavigationEvent()
+    data object NavigateToStockHome : LoginNavigationEvent()
 }
