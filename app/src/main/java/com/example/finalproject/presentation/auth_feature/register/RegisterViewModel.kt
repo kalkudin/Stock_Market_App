@@ -14,41 +14,52 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val registerUserUseCase: RegisterUserUseCase) : ViewModel() {
+class RegisterViewModel @Inject constructor(private val registerUserUseCase: RegisterUserUseCase) :
+    ViewModel() {
 
     private val _registerFlow = MutableStateFlow(RegisterState())
     val registerFlow: StateFlow<RegisterState> = _registerFlow.asStateFlow()
 
     private val _navigationFlow = MutableSharedFlow<RegisterNavigationEvent>()
-    val navigationFlow : SharedFlow<RegisterNavigationEvent> = _navigationFlow.asSharedFlow()
+    val navigationFlow: SharedFlow<RegisterNavigationEvent> = _navigationFlow.asSharedFlow()
 
-    fun onEvent(event : RegisterEvent) {
-        when(event) {
+    fun onEvent(event: RegisterEvent) {
+        when (event) {
             is RegisterEvent.BackPressed -> navigateToHome()
             is RegisterEvent.UserAlreadyExistsPressed -> navigateToLogin()
             is RegisterEvent.ResetFlow -> resetStateFlow()
-            is RegisterEvent.Register -> registerUser(email = event.email, password = event.password, repeatPassword = event.repeatPassword)
+            is RegisterEvent.Register -> registerUser(
+                email = event.email,
+                password = event.password,
+                repeatPassword = event.repeatPassword
+            )
         }
     }
 
     private fun registerUser(email: String, password: String, repeatPassword: String) {
         viewModelScope.launch {
-            _registerFlow.value = RegisterState(isLoading = true)
-            registerUserUseCase(email, password, repeatPassword).collect { result ->
-                when (result) {
-                    is Resource.Loading -> {
-                        _registerFlow.value = RegisterState(isLoading = true)
+//            _registerFlow.value = RegisterState(isLoading = true)
+            registerUserUseCase(email, password, repeatPassword).collect {
+                when (it) {
+                    is Resource.Loading -> _registerFlow.update { currentState ->
+                        currentState.copy(
+                            isLoading = it.loading
+                        )
                     }
+
                     is Resource.Success -> {
-                        _registerFlow.value = RegisterState(isSuccess = true)
+                        _registerFlow.update { currentState -> currentState.copy() }
                         navigateToLogin()
                     }
+
                     is Resource.Error -> {
-                        _registerFlow.value = RegisterState(errorMessage = getErrorMessage(result.errorType))
+                        val errorMessage = getErrorMessage(it.errorType)
+                        _registerFlow.update { currentState -> currentState.copy(errorMessage = errorMessage) }
                     }
                 }
             }
