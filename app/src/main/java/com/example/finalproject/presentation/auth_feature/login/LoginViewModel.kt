@@ -46,20 +46,24 @@ class LoginViewModel @Inject constructor(
 
     private fun loginUser(email: String, password: String, saveSession: Boolean) {
         viewModelScope.launch {
-            loginUserUseCase(email, password).collect { result ->
-                when (result) {
+            loginUserUseCase(email, password).collect {
+                when (it) {
                     is Resource.Success -> {
-                        _loginFlow.update { it.copy(isLoading = false, isSuccess = result.data) }
-                        saveUserUidUseCase(result.data)
+                        _loginFlow.update { currentState -> currentState.copy() }
+                        saveUserUidUseCase(it.data)
                         saveUserSessionUseCase(rememberMe = saveSession)
-                        loginSuccess(result.data)
+                        loginSuccess(it.data)
                     }
                     is Resource.Error -> {
-                        val errorMessage = getErrorMessage(result.errorType)
-                        _loginFlow.update { it.copy(isLoading = false, errorMessage = errorMessage) }
+                        val errorMessage = getErrorMessage(it.errorType)
+                        _loginFlow.update { currentState -> currentState.copy(errorMessage = errorMessage) }
                     }
                     is Resource.Loading -> {
-                        _loginFlow.update { it.copy(isLoading = true) }
+                        _loginFlow.update { currentState ->
+                            currentState.copy(
+                                isLoading = it.loading
+                            )
+                        }
                     }
                 }
             }

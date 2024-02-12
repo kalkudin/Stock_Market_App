@@ -20,7 +20,7 @@ class HandleAuthentication @Inject constructor() {
         operation: (String, String) -> Task<AuthResult>,
         onSuccess: (AuthResult) -> T
     ): Flow<Resource<T>> = flow {
-        emit(Resource.Loading)
+        emit(Resource.Loading(loading = true))
         try {
             val result = operation(user.email, user.password).await()
             result.user?.let {
@@ -41,5 +41,6 @@ class HandleAuthentication @Inject constructor() {
         } catch (e: Exception) {
             emit(Resource.Error(ErrorType.UnknownError(e.message ?: "Unknown error")))
         }
+        emit(Resource.Loading(loading = false))
     }
 }

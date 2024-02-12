@@ -1,6 +1,6 @@
 package com.example.finalproject.presentation.auth_feature.login
 
-import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -88,14 +88,13 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.loginFlow.collect { state ->
                     handleLoginState(state = state)
-                    loginViewModel.onEvent(LoginEvent.ResetFlow)
                 }
             }
         }
     }
 
     private fun handleLoginState(state : LoginState) {
-        binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+        binding.progressBar.isVisible = state.isLoading
 
         state.isSuccess?.takeIf { it.isNotEmpty() }?.let {
             showSuccess()
@@ -103,6 +102,7 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
 
         state.errorMessage?.let { errorMessage ->
             showError(errorMessage)
+            loginViewModel.onEvent(LoginEvent.ResetFlow)
         }
     }
 

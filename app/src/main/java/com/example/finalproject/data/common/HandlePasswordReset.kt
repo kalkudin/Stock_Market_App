@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class HandlePasswordReset @Inject constructor(private val firebaseAuth: FirebaseAuth) {
     fun resetPassword(email: String): Flow<Resource<Boolean>> = flow {
-        emit(Resource.Loading)
+        emit(Resource.Loading(loading = true))
         try {
             firebaseAuth.sendPasswordResetEmail(email).await()
             emit(Resource.Success(true))
@@ -24,5 +24,6 @@ class HandlePasswordReset @Inject constructor(private val firebaseAuth: Firebase
         } catch (e: Exception) {
             emit(Resource.Error(ErrorType.UnknownError(e.localizedMessage ?: "An unexpected error occurred")))
         }
+        emit(Resource.Loading(loading = false))
     }
 }

@@ -1,6 +1,7 @@
 package com.example.finalproject.presentation.auth_feature.register
 
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -77,14 +78,14 @@ class RegisterFragment : BaseFragment<FragmentRegisterLayoutBinding>(FragmentReg
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 registerViewModel.registerFlow.collect { state ->
                     handleRegisterState(state)
-                    registerViewModel.onEvent(RegisterEvent.ResetFlow)
                 }
             }
         }
     }
 
     private fun handleRegisterState(state: RegisterState) {
-        binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+        binding.progressBar.isVisible = state.isLoading
+        if (state.isLoading) View.VISIBLE else View.GONE
 
         if(state.isSuccess) {
             showSuccess()
@@ -92,6 +93,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterLayoutBinding>(FragmentReg
 
         state.errorMessage?.let { errorMessage ->
             showError(errorMessage = errorMessage)
+            registerViewModel.onEvent(RegisterEvent.ResetFlow)
         }
     }
 
