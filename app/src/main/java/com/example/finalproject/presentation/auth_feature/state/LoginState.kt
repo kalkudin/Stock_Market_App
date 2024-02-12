@@ -1,4 +1,4 @@
-package com.example.finalproject.presentation.auth_feature.model
+package com.example.finalproject.presentation.auth_feature.state
 
 data class LoginState(
     val isLoading: Boolean = false,

@@ -5,8 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.auth_usecase.ForgotPasswordUseCase
 import com.example.finalproject.presentation.auth_feature.event.ForgotPasswordEvent
-import com.example.finalproject.presentation.auth_feature.event.RegisterEvent
-import com.example.finalproject.presentation.auth_feature.model.ForgotPasswordState
+import com.example.finalproject.presentation.auth_feature.state.ForgotPasswordState
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,7 +14,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
