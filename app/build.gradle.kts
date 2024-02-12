@@ -5,6 +5,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -39,7 +40,9 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {

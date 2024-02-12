@@ -65,6 +65,6 @@ class HomeFragment : BaseFragment<FragmentHomeLayoutBinding>(FragmentHomeLayoutB
     }
 
     private fun navigateToStockHome() {
-        //empty for now, this will navigate the user to whatever feature we want
+        findNavController().navigate(R.id.action_homeFragment_to_stockHomeFragment)
     }
 }

@@ -76,7 +76,7 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
                         is LoginNavigationEvent.NavigateToRegister -> navigateToRegister()
                         is LoginNavigationEvent.NavigateToHome -> navigateToHome()
                         is LoginNavigationEvent.NavigateToForgotPassword -> navigateToForgotPassword()
-                        is LoginNavigationEvent.NavigateToStockHome -> navigateToStockHome(id = event.id)
+                        is LoginNavigationEvent.NavigateToStockHome -> navigateToStockHome(uid = event.id)
                     }
                 }
             }
@@ -126,7 +126,8 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
         findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
     }
 
-    private fun navigateToStockHome(id : String) {
-        //logic to navigate to whatever fragment we want here
+    private fun navigateToStockHome(uid : String) {
+        val action = LoginFragmentDirections.actionLoginFragmentToStockHomeFragment(uid = uid)
+        findNavController().navigate(action)
     }
 }
