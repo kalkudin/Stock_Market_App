@@ -1,17 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
-    android:background="@color/main_color">
+    android:background="@drawable/style_background_wave">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_gradient"
+        android:layout_width="580dp"
+        android:layout_height="580dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="472dp"
+        android:src="@drawable/ic_gradient_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_gradient_2"
+        android:layout_width="580dp"
+        android:layout_height="580dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="496dp"
+        android:src="@drawable/ic_gradient_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_welcome"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@null"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="136dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/open_sauce_sans_bold"
+        android:gravity="center"
+        android:text="@string/create_an_account"
+        android:textColor="@color/text_main"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="36dp"
         android:src="@drawable/ic_arrow_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,78 +59,133 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/open_sauce_sans_regular"
+        android:text="@string/email"
+        android:textColor="@color/ghost_white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/et_email"
+        app:layout_constraintStart_toStartOf="@+id/et_email" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="90dp"
-        android:hint="@string/email"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/style_custom_edit_text"
         android:fontFamily="@font/open_sauce_sans_regular"
-        android:padding="10dp"
+        android:hint="@string/sample_email"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:textColor="@color/white"
         android:textColorHint="@color/light_gray"
-        android:textSize="20sp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_email"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="6dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
         android:src="@drawable/ic_email"
         app:layout_constraintBottom_toBottomOf="@+id/et_email"
         app:layout_constraintEnd_toEndOf="@+id/et_email"
-        app:layout_constraintTop_toTopOf="@+id/et_email" />
+        app:layout_constraintTop_toTopOf="@+id/et_email"
+        app:layout_constraintVertical_bias="0.566" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/open_sauce_sans_regular"
+        android:text="@string/password"
+        android:textColor="@color/ghost_white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/et_password"
+        app:layout_constraintStart_toStartOf="@+id/et_password" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_password"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/style_custom_edit_text"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:padding="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         android:textColor="@color/white"
         android:textColorHint="@color/light_gray"
-        android:textSize="20sp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_lock_1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="6dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
         android:src="@drawable/ic_lock_locked"
         app:layout_constraintBottom_toBottomOf="@+id/et_password"
         app:layout_constraintEnd_toEndOf="@+id/et_password"
         app:layout_constraintTop_toTopOf="@+id/et_password" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/open_sauce_sans_regular"
+        android:text="@string/repeat_password"
+        android:textColor="@color/ghost_white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/et_repeat_password"
+        app:layout_constraintStart_toStartOf="@+id/et_repeat_password" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_repeat_password"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/style_custom_edit_text"
         android:hint="@string/repeat_password"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         android:textColor="@color/white"
         android:textColorHint="@color/light_gray"
-        android:textSize="20sp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_lock_2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="6dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
         android:src="@drawable/ic_lock_locked"
         app:layout_constraintBottom_toBottomOf="@+id/et_repeat_password"
         app:layout_constraintEnd_toEndOf="@+id/et_repeat_password"
@@ -100,28 +195,35 @@
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textAllCaps="false"
-        android:background="@drawable/style_custom_button_home_login"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/style_custom_button_home_register"
         android:fontFamily="@font/open_sauce_sans_bold"
-        android:text="@string/register"
+        android:text="@string/create_account"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/et_repeat_password"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_repeat_password" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btn_already_registered"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
-        android:gravity="center"
         android:fontFamily="@font/open_sauce_sans_regular"
-        android:textColor="@color/white"
+        android:gravity="center"
         android:text="@string/already_registered_click_here_to_log_in"
+        android:textColor="@color/ghost_white"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/btn_register"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_welcome" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

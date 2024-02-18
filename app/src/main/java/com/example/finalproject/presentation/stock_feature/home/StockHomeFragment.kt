@@ -1,19 +1,16 @@
 package com.example.finalproject.presentation.stock_feature.home
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentStockHomeLayoutBinding
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.stock_feature.event.StockHomeEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.first
 
 
 @AndroidEntryPoint
@@ -52,6 +49,6 @@ class StockHomeFragment : BaseFragment<FragmentStockHomeLayoutBinding>(FragmentS
     }
 
     private fun logOut() {
-        findNavController().navigate(R.id.action_stockHomeFragment_to_loginFragment)
+        findNavController().navigate(R.id.action_stockHomeFragment_to_homeFragment)
     }
 }

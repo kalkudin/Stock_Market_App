@@ -3,6 +3,8 @@ package com.example.finalproject.presentation.auth_feature.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
+import com.example.finalproject.domain.usecase.AuthUseCases
+import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.auth_usecase.LoginUserUseCase
 import com.example.finalproject.domain.usecase.datastore_usecase.SaveUserSessionUseCase
 import com.example.finalproject.domain.usecase.datastore_usecase.SaveUserUidUseCase
@@ -22,9 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUserUseCase: LoginUserUseCase,
-    private val saveUserUidUseCase: SaveUserUidUseCase,
-    private val saveUserSessionUseCase: SaveUserSessionUseCase
+    private val authUseCases: AuthUseCases,
+    private val dataStoreUseCases: DataStoreUseCases,
 ) : ViewModel() {
 
     private val _loginFlow = MutableStateFlow(LoginState())
@@ -46,22 +47,22 @@ class LoginViewModel @Inject constructor(
 
     private fun loginUser(email: String, password: String, saveSession: Boolean) {
         viewModelScope.launch {
-            loginUserUseCase(email, password).collect {
-                when (it) {
+            authUseCases.loginUserUseCase(email, password).collect { resource ->
+                when (resource) {
                     is Resource.Success -> {
-                        _loginFlow.update { currentState -> currentState.copy() }
-                        saveUserUidUseCase(it.data)
-                        saveUserSessionUseCase(rememberMe = saveSession)
-                        loginSuccess(it.data)
+                        _loginFlow.update { it.copy(isLoading = false, isSuccess = resource.data) }
+                        dataStoreUseCases.saveUserUidUseCase(resource.data)
+                        dataStoreUseCases.saveUserSessionUseCase(rememberMe = saveSession)
+                        loginSuccess(resource.data)
                     }
                     is Resource.Error -> {
-                        val errorMessage = getErrorMessage(it.errorType)
-                        _loginFlow.update { currentState -> currentState.copy(errorMessage = errorMessage) }
+                        val errorMessage = getErrorMessage(resource.errorType)
+                        _loginFlow.update { it.copy(isLoading = false, errorMessage = errorMessage) }
                     }
                     is Resource.Loading -> {
                         _loginFlow.update { currentState ->
                             currentState.copy(
-                                isLoading = it.loading
+                                isLoading = resource.loading
                             )
                         }
                     }

@@ -2,6 +2,7 @@ package com.example.finalproject.presentation.auth_feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.datastore_usecase.ClearUserSessionUseCase
 import com.example.finalproject.domain.usecase.datastore_usecase.ReadUserSessionUseCase
 import com.example.finalproject.domain.usecase.datastore_usecase.ReadUserUidUseCase
@@ -14,7 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val readUserSessionUseCase: ReadUserSessionUseCase) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val dataStoreUseCases: DataStoreUseCases
+) : ViewModel() {
 
     private val _navigationFlow = MutableSharedFlow<HomeNavigationEvent>()
     val navigationFlow : SharedFlow<HomeNavigationEvent> = _navigationFlow.asSharedFlow()
@@ -44,7 +47,7 @@ class HomeViewModel @Inject constructor(private val readUserSessionUseCase: Read
 
     private fun checkCurrentSession() {
         viewModelScope.launch {
-            readUserSessionUseCase().collect {
+            dataStoreUseCases.readUserSessionUseCase().collect {
                 if(it){
                     _navigationFlow.emit(HomeNavigationEvent.NavigateToStockHome)
                 }
