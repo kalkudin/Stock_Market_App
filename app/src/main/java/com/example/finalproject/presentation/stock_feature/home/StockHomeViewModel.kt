@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.domain.usecase.datastore_usecase.ClearUserSessionUseCase
 import com.example.finalproject.domain.usecase.datastore_usecase.ReadUserUidUseCase
-import com.example.finalproject.presentation.stock_feature.event.StockHomeEvent
+import com.example.finalproject.presentation.stock_feature.home.event.StockHomeEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

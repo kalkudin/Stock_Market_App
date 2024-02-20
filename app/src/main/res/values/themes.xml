@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.FinalProject" parent="Base.Theme.FinalProject" />
+
+    <style name="Theme.FinalProject.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_screen_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.FinalProject</item>
+    </style>
+
 </resources>
