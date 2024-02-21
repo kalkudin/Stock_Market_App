@@ -23,7 +23,34 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField(
+                "String",
+                "BASE_URL_FMP",
+                "\"https://financialmodelingprep.com/api/\"")
+            buildConfigField(
+                "String",
+                "API_KEY",
+                "\"b1UCP2fI4gkc8noMIL1yWEpZwoYhrsVE\"")
+            buildConfigField(
+                "String",
+                "BASE_URL_MOCKY",
+                "\"https://run.mocky.io/v3/\"")
+        }
         release {
+            buildConfigField(
+                "String",
+                "BASE_URL_FMP",
+                "\"https://financialmodelingprep.com/api/\"")
+            buildConfigField(
+                "String",
+                "API_KEY",
+                "\"b1UCP2fI4gkc8noMIL1yWEpZwoYhrsVE\"")
+            buildConfigField(
+                "String",
+                "BASE_URL_MOCKY",
+                "\"https://run.mocky.io/v3/\"")
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -52,6 +79,9 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -73,8 +103,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
-    implementation("com.squareup.moshi:moshi:1.12.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+    implementation("com.squareup.moshi:moshi:1.14.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 
@@ -83,6 +113,8 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    //
+    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
 }
 
 kapt {

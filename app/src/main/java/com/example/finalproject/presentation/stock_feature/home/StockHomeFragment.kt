@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentStockHomeLayoutBinding
 import com.example.finalproject.presentation.base.BaseFragment
-import com.example.finalproject.presentation.stock_feature.event.StockHomeEvent
+import com.example.finalproject.presentation.stock_feature.home.event.StockHomeEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

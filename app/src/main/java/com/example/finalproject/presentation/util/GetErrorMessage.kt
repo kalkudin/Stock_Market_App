@@ -14,6 +14,13 @@ fun getErrorMessage(errorType: ErrorType): String {
         ErrorType.InvalidEmail -> "Invalid email address."
         ErrorType.PasswordCriteriaNotMet -> "Password does not meet the criteria."
         ErrorType.PasswordsNotMatching -> "The passwords do not match."
+        //
+        ErrorType.SocketTimeout -> "The server did not respond in time."
+        ErrorType.UnknownHost -> "The server could not be found."
+        ErrorType.SSLHandshake -> "There was an error establishing a secure connection."
+        ErrorType.Http -> "There was an error with the HTTP request."
+        ErrorType.IO -> "There was an input/output error."
+        //
         is ErrorType.UnknownError -> errorType.message
     }
 }
