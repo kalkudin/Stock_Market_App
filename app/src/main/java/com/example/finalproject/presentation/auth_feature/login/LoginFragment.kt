@@ -1,6 +1,7 @@
 package com.example.finalproject.presentation.auth_feature.login
 
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +26,8 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
         bindLoginBtn()
         bindForgotPassword()
         bindUserNotAuthenticated()
+        //create separate setup in base fragment
+        retrieveAndSetRegisterResult()
     }
 
     override fun bindObservers() {
@@ -103,6 +106,13 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
         state.errorMessage?.let { errorMessage ->
             showError(errorMessage)
             loginViewModel.onEvent(LoginEvent.ResetFlow)
+        }
+    }
+
+    private fun retrieveAndSetRegisterResult() {
+        setFragmentResultListener("registerResult") { _, bundle ->
+            binding.etEmail.setText(bundle.getString("email", ""))
+            binding.etPassword.setText(bundle.getString("password", ""))
         }
     }
 

@@ -8,4 +8,5 @@ class GetCompanyListUseCase @Inject constructor(
 ) {
     //later this will be changed to fetch data depending on the network state of the application
     suspend operator fun invoke() = companyListRepository.getCompanyListRemotely()
+
 }

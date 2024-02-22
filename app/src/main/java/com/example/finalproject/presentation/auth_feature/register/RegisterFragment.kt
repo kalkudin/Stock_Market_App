@@ -1,7 +1,9 @@
 package com.example.finalproject.presentation.auth_feature.register
 
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -56,6 +58,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterLayoutBinding>(FragmentReg
                     password = etPassword.text.toString(),
                     repeatPassword = etRepeatPassword.text.toString()
                 ))
+                sendRegisterResult()
             }
         }
     }
@@ -95,6 +98,16 @@ class RegisterFragment : BaseFragment<FragmentRegisterLayoutBinding>(FragmentReg
             showError(errorMessage = errorMessage)
             registerViewModel.onEvent(RegisterEvent.ResetFlow)
         }
+    }
+
+    private fun sendRegisterResult() {
+        setFragmentResult(
+            "registerResult",
+            bundleOf(
+                "email" to binding.etEmail.text.toString(),
+                "password" to binding.etPassword.text.toString()
+            )
+        )
     }
 
     private fun showSuccess(){
