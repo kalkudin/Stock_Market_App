@@ -11,4 +11,7 @@
     <color name="light_gray">#bebebe</color>
     <color name="text_main">#45C0E6</color>
     <color name="text_main_dark">#3977AE</color>
+    <color name="green">#91E46E</color>
+    <color name="red">#E46E6E</color>
+
 </resources>

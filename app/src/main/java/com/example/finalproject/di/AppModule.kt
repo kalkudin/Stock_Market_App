@@ -4,6 +4,7 @@ import com.example.finalproject.BuildConfig
 import com.example.finalproject.data.common.HandleResponse
 import com.example.finalproject.data.remote.service.company_details.CompanyDetailsApiService
 import com.example.finalproject.data.remote.service.company_list.CompanyListApiService
+import com.example.finalproject.data.remote.service.stocks_to_watch.StocksToWatchApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -75,7 +76,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideCompanyListService(
-        @Named("MOCKYRetrofit")listRetrofit: Retrofit
+        @Named("MOCKYRetrofit")
+        listRetrofit: Retrofit
     ): CompanyListApiService {
         return listRetrofit.create(CompanyListApiService::class.java)
     }
@@ -83,8 +85,18 @@ object AppModule {
     @Singleton
     @Provides
     fun provideCompanyDetailService(
-        @Named("FMPRetrofit")detailsRetrofit: Retrofit
+        @Named("FMPRetrofit")
+        detailsRetrofit: Retrofit
     ): CompanyDetailsApiService {
         return detailsRetrofit.create(CompanyDetailsApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideStocksToWatchService(
+        @Named("FMPRetrofit")
+        retrofit: Retrofit
+    ) : StocksToWatchApiService {
+        return retrofit.create(StocksToWatchApiService::class.java)
     }
 }

@@ -1,6 +1,5 @@
 package com.example.finalproject.domain.repository.company_list
 
-import androidx.paging.PagingData
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.model.company_list.CompanyList
 import kotlinx.coroutines.flow.Flow
