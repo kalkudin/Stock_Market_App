@@ -10,9 +10,7 @@ import com.example.finalproject.presentation.stock_feature.home.model.Stock
 
 class StockHostAdapter(
     private val onStockClick: (Stock) -> Unit,
-    private val onBestStocksViewMoreClick: () -> Unit,
-    private val onWorstStocksViewMoreClick: () -> Unit,
-    private val onActiveStocksViewMoreClick: () -> Unit
+    private val onViewMoreClick: (Stock.PerformingType) -> Unit
 ) : RecyclerView.Adapter<StockHostAdapter.StockHostViewHolder>() {
 
     private var bestStocks: List<Stock> = emptyList()
@@ -29,47 +27,36 @@ class StockHostAdapter(
     }
 
     override fun onBindViewHolder(holder: StockHostViewHolder, position: Int) {
-        holder.bind(bestStocks, worstStocks, activeStocks, onStockClick)
+        holder.bind()
     }
 
     override fun getItemCount(): Int = 1
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(best: List<Stock>, worst: List<Stock>, active: List<Stock>) {
-        this.bestStocks = best
-        this.worstStocks = worst
-        this.activeStocks = active
+        bestStocks = best
+        worstStocks = worst
+        activeStocks = active
         notifyDataSetChanged()
     }
 
     inner class StockHostViewHolder(private val binding: ItemStockHomeHostRecyclerBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(
-            bestStocks: List<Stock>,
-            worstStocks: List<Stock>,
-            activeStocks: List<Stock>,
-            onStockClick: (Stock) -> Unit
-        ) {
-            binding.rvBestStocks.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                adapter = StockListAdapter(onStockClick).apply { submitList(bestStocks) }
-            }
+        fun bind() {
+            bindStocks(binding.rvBestStocks, bestStocks)
+            bindStocks(binding.rvWorstStocks, worstStocks)
+            bindStocks(binding.rvActiveStocks, activeStocks)
 
-            binding.rvWorstStocks.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                adapter =
-                    StockListAdapter(onStockClick).apply { submitList(worstStocks) }
-            }
+            binding.btnViewMoreBestStocks.setOnClickListener { onViewMoreClick(Stock.PerformingType.BEST_PERFORMING) }
+            binding.btnViewMoreWorstStocks.setOnClickListener { onViewMoreClick(Stock.PerformingType.WORST_PERFORMING) }
+            binding.btnViewMoreActiveStocks.setOnClickListener { onViewMoreClick(Stock.PerformingType.ACTIVE_PERFORMING) }
+        }
 
-            binding.rvActiveStocks.apply {
+        private fun bindStocks(rv : RecyclerView, stockList : List<Stock>) {
+            rv.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                adapter =
-                    StockListAdapter(onStockClick).apply { submitList(activeStocks) }
+                adapter = StockListAdapter(onStockClick).apply { submitList(stockList) }
             }
-
-            binding.btnViewMoreBestStocks.setOnClickListener { onBestStocksViewMoreClick.invoke() }
-            binding.btnViewMoreWorstStocks.setOnClickListener { onWorstStocksViewMoreClick.invoke() }
-            binding.btnViewMoreActiveStocks.setOnClickListener { onActiveStocksViewMoreClick.invoke() }
         }
     }
 }

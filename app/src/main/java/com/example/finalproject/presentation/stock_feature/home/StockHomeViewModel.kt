@@ -1,16 +1,13 @@
 package com.example.finalproject.presentation.stock_feature.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.StocksToWatchUseCases
 import com.example.finalproject.presentation.stock_feature.home.event.StockHomeEvent
-import com.example.finalproject.presentation.stock_feature.home.mapper.toPresentation
 import com.example.finalproject.presentation.stock_feature.home.model.Stock
 import com.example.finalproject.presentation.stock_feature.home.state.StockListState
-import com.example.finalproject.presentation.util.getErrorMessage
+import com.example.finalproject.presentation.stock_feature.home.mapper.handleResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,73 +47,24 @@ class StockHomeViewModel @Inject constructor(
             val bestStocks = mutableListOf<Stock>()
             val worstStocks = mutableListOf<Stock>()
             val activeStocks = mutableListOf<Stock>()
-            var errorMessage: String? = null
+            val errorMessages: MutableList<String> = mutableListOf()
 
             val fetchJobs = listOf(
-                launch {
-                    stocksToWatchUseCases.getBestPerformingStocksUseCase().collect { result ->
-                        when (result) {
-                            is Resource.Success -> bestStocks.addAll(result.data.map {
-                                it.toPresentation(
-                                    Stock.PerformingType.BEST_PERFORMING
-                                )
-                            }.take(5))
-
-                            is Resource.Error -> errorMessage =
-                                errorMessage ?: getErrorMessage(result.errorType)
-
-                            else -> {}
-                        }
-                    }
-                },
-                launch {
-                    stocksToWatchUseCases.getWorstPerformingStocksUseCase().collect { result ->
-                        when (result) {
-                            is Resource.Success -> worstStocks.addAll(result.data.map {
-                                it.toPresentation(
-                                    Stock.PerformingType.WORST_PERFORMING
-                                )
-                            }.take(5))
-
-                            is Resource.Error -> errorMessage =
-                                errorMessage ?: getErrorMessage(result.errorType)
-
-                            else -> {}
-                        }
-                    }
-                },
-                launch {
-                    stocksToWatchUseCases.getActivePerformingStocksUseCase().collect { result ->
-                        when (result) {
-                            is Resource.Success -> activeStocks.addAll(result.data.map {
-                                it.toPresentation(
-                                    Stock.PerformingType.ACTIVE_PERFORMING
-                                )
-                            }.take(5))
-
-                            is Resource.Error -> errorMessage =
-                                errorMessage ?: getErrorMessage(result.errorType)
-
-                            else -> {}
-                        }
-                    }
-                }
+                launch { handleResponse(stocksToWatchUseCases.getBestPerformingStocksUseCase(), Stock.PerformingType.BEST_PERFORMING, bestStocks, errorMessages) },
+                launch { handleResponse(stocksToWatchUseCases.getWorstPerformingStocksUseCase(), Stock.PerformingType.WORST_PERFORMING, worstStocks, errorMessages) },
+                launch { handleResponse(stocksToWatchUseCases.getActivePerformingStocksUseCase(), Stock.PerformingType.ACTIVE_PERFORMING, activeStocks, errorMessages) }
             )
 
             fetchJobs.joinAll()
 
             _stockState.update { currentState ->
-                Log.d("ViewModel", "Updating state: isLoading = false")
-                if (errorMessage != null) {
-                    currentState.copy(errorMessage = errorMessage, isLoading = false)
-                } else {
-                    currentState.copy(
-                        bestPerformingStocks = bestStocks,
-                        worstPerformingStocks = worstStocks,
-                        activePerformingStocks = activeStocks,
-                        isLoading = false
-                    )
-                }
+                currentState.copy(
+                    bestPerformingStocks = bestStocks,
+                    worstPerformingStocks = worstStocks,
+                    activePerformingStocks = activeStocks,
+                    errorMessage = errorMessages.firstOrNull(),
+                    isLoading = false
+                )
             }
         }
     }

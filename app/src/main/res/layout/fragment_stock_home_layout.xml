@@ -52,5 +52,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/host_recycler_view"
         app:layout_constraintVertical_bias="0.117" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

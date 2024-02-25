@@ -77,7 +77,6 @@ class CompanyDetailsViewModel @Inject constructor(
     sealed interface CompanyDetailsNavigationEvents {
         data object NavigateToCompanyList : CompanyDetailsNavigationEvents
     }
-
 }
 
 

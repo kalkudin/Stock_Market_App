@@ -1,6 +1,6 @@
 package com.example.finalproject.presentation.stock_feature.home
 
-import android.util.Log
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,9 +21,10 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class StockHomeFragment : BaseFragment<FragmentStockHomeLayoutBinding>(FragmentStockHomeLayoutBinding::inflate){
+class StockHomeFragment :
+    BaseFragment<FragmentStockHomeLayoutBinding>(FragmentStockHomeLayoutBinding::inflate) {
 
-    private val stockHomeViewModel : StockHomeViewModel by viewModels()
+    private val stockHomeViewModel: StockHomeViewModel by viewModels()
 
     private lateinit var hostAdapter: StockHostAdapter
 
@@ -58,23 +59,13 @@ class StockHomeFragment : BaseFragment<FragmentStockHomeLayoutBinding>(FragmentS
             handleItemClick(stock)
         }
 
-        val onBestStocksViewMoreClick = {
-            handleViewMoreClicked(Stock.PerformingType.BEST_PERFORMING)
-        }
-
-        val onWorstStocksViewMoreClick = {
-            handleViewMoreClicked(Stock.PerformingType.WORST_PERFORMING)
-        }
-
-        val onActiveStocksViewMoreClick = {
-            handleViewMoreClicked(Stock.PerformingType.ACTIVE_PERFORMING)
+        val onViewMoreClick: (Stock.PerformingType) -> Unit = { type ->
+            handleViewMoreClicked(type)
         }
 
         hostAdapter = StockHostAdapter(
             onStockClick = onStockClick,
-            onBestStocksViewMoreClick = onBestStocksViewMoreClick,
-            onWorstStocksViewMoreClick = onWorstStocksViewMoreClick,
-            onActiveStocksViewMoreClick = onActiveStocksViewMoreClick
+            onViewMoreClick = onViewMoreClick
         )
 
         binding.hostRecyclerView.apply {
@@ -87,7 +78,7 @@ class StockHomeFragment : BaseFragment<FragmentStockHomeLayoutBinding>(FragmentS
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 stockHomeViewModel.navigationFlow.collect { event ->
-                    when(event) {
+                    when (event) {
                         is StockHomeNavigationEvent.LogOut -> logOut()
                         is StockHomeNavigationEvent.NavigateToExtendedStockList -> navigateToExtensiveListFragment(stockType = event.stockType)
                         is StockHomeNavigationEvent.NavigateToDetailsPage -> navigateToDetailsFragment(stock = event.stock)
@@ -108,42 +99,55 @@ class StockHomeFragment : BaseFragment<FragmentStockHomeLayoutBinding>(FragmentS
     }
 
     private fun handleState(state: StockListState) {
+        binding.hostRecyclerView.visibility = View.GONE
         binding.progressBar.isVisible = state.isLoading
 
         state.errorMessage?.let { errorMessage ->
+            binding.hostRecyclerView.visibility = View.GONE
             if (errorMessage.isNotEmpty()) {
                 showError(errorMessage)
             }
-        } ?: run {
-            if (!state.isLoading) {
-                hostAdapter.updateData(
-                    state.bestPerformingStocks ?: emptyList(),
-                    state.worstPerformingStocks ?: emptyList(),
-                    state.activePerformingStocks ?: emptyList()
-                )
-            }
+        }
+
+        if (!state.isLoading) {
+            binding.hostRecyclerView.visibility = View.VISIBLE
+            hostAdapter.updateData(
+                state.bestPerformingStocks ?: emptyList(),
+                state.worstPerformingStocks ?: emptyList(),
+                state.activePerformingStocks ?: emptyList()
+            )
         }
     }
 
-    private fun handleItemClick(stock : Stock) {
+    private fun handleItemClick(stock: Stock) {
+        stockHomeViewModel.onEvent(StockHomeEvent.NavigateToStockDetailsPage(stock = stock))
     }
 
     private fun handleViewMoreClicked(stockType: Stock.PerformingType) {
         stockHomeViewModel.onEvent(StockHomeEvent.NavigateToExtensiveListPage(stockType = stockType))
     }
-    private fun showError(errorMessage : String){
-        Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).setAction("OK"){}.show()
+
+    private fun showError(errorMessage: String) {
+        Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).setAction("OK") {}.show()
     }
 
     private fun logOut() {
         findNavController().navigate(R.id.action_stockHomeFragment_to_homeFragment)
     }
 
-    private fun navigateToExtensiveListFragment(stockType : Stock.PerformingType) {
-        //here logic for navigating with the stock-type action so i know which one to call in the next fragment
+    private fun navigateToExtensiveListFragment(stockType: Stock.PerformingType) {
+        findNavController().navigate(
+            StockHomeFragmentDirections.actionStockHomeFragmentToExtensiveStocksToWatchFragment(
+                type = stockType
+            )
+        )
     }
 
     private fun navigateToDetailsFragment(stock: Stock) {
-        //here logic for navigating over to details fragment
+        findNavController().navigate(
+            StockHomeFragmentDirections.actionStockHomeFragmentToCompanyDetailsFragment(
+                symbol = stock.symbol
+            )
+        )
     }
 }

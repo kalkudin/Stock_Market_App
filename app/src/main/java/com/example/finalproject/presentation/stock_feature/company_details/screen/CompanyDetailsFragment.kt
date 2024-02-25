@@ -24,11 +24,13 @@ class CompanyDetailsFragment : BaseFragment<FragmentCompanyDetailsBinding>(Fragm
     private val viewModel: CompanyDetailsViewModel by viewModels()
     private lateinit var companyDetailsAdapter : CompanyDetailsRecyclerAdapter
 
+    override fun bind() {
+        extractCompanySymbol()
+    }
+
     override fun bindViewActionListeners() {
         //move this in setup later
-        extractCompanySymbol()
         companyDetailsAdapterSetUp()
-
         handleBackButton()
     }
 
@@ -75,8 +77,8 @@ class CompanyDetailsFragment : BaseFragment<FragmentCompanyDetailsBinding>(Fragm
 
     private fun handleNavigation(event: CompanyDetailsViewModel.CompanyDetailsNavigationEvents) {
         when (event) {
-            is CompanyDetailsViewModel.CompanyDetailsNavigationEvents.NavigateToCompanyList -> { findNavController().navigate(
-                CompanyDetailsFragmentDirections.actionCompanyDetailsFragmentToCompanyListFragment())
+            is CompanyDetailsViewModel.CompanyDetailsNavigationEvents.NavigateToCompanyList -> {
+                findNavController().popBackStack()
             }
         }
     }
