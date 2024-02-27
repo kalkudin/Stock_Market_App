@@ -2,8 +2,11 @@ package com.example.finalproject.di
 
 import com.example.finalproject.data.common.HandleResponse
 import com.example.finalproject.data.remote.datasource.company_details.RemoteCompanyDetailsDataSourceImpl
+import com.example.finalproject.data.remote.datasource.company_details_chart.RemoteCompanyChartIntradayDataSourceImpl
+import com.example.finalproject.domain.datasource.company_details_chart.RemoteCompanyChartIntradayDataSource
 import com.example.finalproject.data.remote.datasource.company_list.RemoteCompanyListDataSourceImpl
 import com.example.finalproject.data.remote.service.company_details.CompanyDetailsApiService
+import com.example.finalproject.data.remote.service.company_details_chart.CompanyChartIntradayApiService
 import com.example.finalproject.data.remote.service.company_list.CompanyListApiService
 import com.example.finalproject.domain.datasource.company_details.RemoteCompanyDetailsDataSource
 import com.example.finalproject.domain.datasource.company_list.RemoteCompanyListDataSource
@@ -37,6 +40,18 @@ object DataSourceModule {
     ): RemoteCompanyDetailsDataSource {
         return RemoteCompanyDetailsDataSourceImpl(
             apiService = detailsApiService,
+            responseHandler = responseHandler
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteCompanyChartIntradayDataSource(
+        intradayChartApiService: CompanyChartIntradayApiService,
+        responseHandler: HandleResponse
+    ): RemoteCompanyChartIntradayDataSource {
+        return RemoteCompanyChartIntradayDataSourceImpl(
+            apiService = intradayChartApiService,
             responseHandler = responseHandler
         )
     }

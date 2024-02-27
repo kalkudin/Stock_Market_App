@@ -3,6 +3,7 @@ package com.example.finalproject.di
 import com.example.finalproject.BuildConfig
 import com.example.finalproject.data.common.HandleResponse
 import com.example.finalproject.data.remote.service.company_details.CompanyDetailsApiService
+import com.example.finalproject.data.remote.service.company_details_chart.CompanyChartIntradayApiService
 import com.example.finalproject.data.remote.service.company_list.CompanyListApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.moshi.Moshi
@@ -86,5 +87,13 @@ object AppModule {
         @Named("FMPRetrofit")detailsRetrofit: Retrofit
     ): CompanyDetailsApiService {
         return detailsRetrofit.create(CompanyDetailsApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCompanyChartIntradayService(
+        @Named("FMPRetrofit")detailsRetrofit: Retrofit
+    ): CompanyChartIntradayApiService {
+        return detailsRetrofit.create(CompanyChartIntradayApiService::class.java)
     }
 }

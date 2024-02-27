@@ -2,9 +2,11 @@ package com.example.finalproject.presentation.stock_feature.company_list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemCompanyListBinding
 import com.example.finalproject.presentation.stock_feature.company_list.model.CompanyListModel
 
@@ -38,9 +40,16 @@ class CompanyListRecyclerAdapter(
             binding.apply {
                 tvCompanyName.text = item.name
                 tvCompanySymbol.text = item.symbol
-                tvCompanyPrice.text = item.price.toString()
-                tvExchange.text = item.exchangeShortName
-                tvType.text = item.type
+                tvCompanyPrice.text = "${item.price}$"
+                tvCompanyPriceChange.text = "${item.priceChange}$"
+                tvCompanyPriceChangePercentage.text = "${item.percentageChange}%"
+                if (item.percentageChange > 0) {
+                    ivArrow.setImageResource(R.drawable.ic_arrow_up_list)
+                } else if (item.percentageChange < 0) {
+                    ivArrow.setImageResource(R.drawable.ic_arrow_down_list)
+                }else {
+                    ivArrow.isVisible = false
+                }
                 itemView.setOnClickListener {
                     onCompanyClick.invoke(item)
                 }

@@ -8,6 +8,8 @@ fun CompanyListDto.toDomain(): CompanyList {
         symbol = symbol,
         name = name,
         price = price,
+        priceChange = priceChange,
+        percentageChange = percentageChange,
         exchangeShortName = exchangeShortName,
         type = type
     )

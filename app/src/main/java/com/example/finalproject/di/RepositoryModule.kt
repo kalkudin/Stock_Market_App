@@ -10,14 +10,17 @@ import com.example.finalproject.data.repository.LoginRepositoryImpl
 import com.example.finalproject.data.repository.RegisterRepositoryImpl
 import com.example.finalproject.data.repository.ResetPasswordRepositoryImpl
 import com.example.finalproject.data.repository.company_details.CompanyDetailsRepositoryImpl
+import com.example.finalproject.data.repository.company_details_chart.CompanyChartIntradayRepositoryImpl
 import com.example.finalproject.data.repository.company_list.CompanyListRepositoryImpl
 import com.example.finalproject.domain.datasource.company_details.RemoteCompanyDetailsDataSource
+import com.example.finalproject.domain.datasource.company_details_chart.RemoteCompanyChartIntradayDataSource
 import com.example.finalproject.domain.datasource.company_list.RemoteCompanyListDataSource
 import com.example.finalproject.domain.repository.DataStoreRepository
 import com.example.finalproject.domain.repository.LoginRepository
 import com.example.finalproject.domain.repository.RegisterRepository
 import com.example.finalproject.domain.repository.ResetPasswordRepository
 import com.example.finalproject.domain.repository.company_details.CompanyDetailsRepository
+import com.example.finalproject.domain.repository.company_details_chart.CompanyChartIntradayRepository
 import com.example.finalproject.domain.repository.company_list.CompanyListRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
@@ -71,6 +74,16 @@ object RepositoryModule {
     ) : CompanyDetailsRepository {
         return CompanyDetailsRepositoryImpl(
             remoteCompanyDetailsDataSource = remoteCompanyDetailsDataSource,
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideCompanyChartIntradayRepository(
+        remoteCompanyChartIntradayDataSource: RemoteCompanyChartIntradayDataSource,
+    ) : CompanyChartIntradayRepository {
+        return CompanyChartIntradayRepositoryImpl(
+            remoteCompanyChartIntradayDataSource = remoteCompanyChartIntradayDataSource,
         )
     }
 }

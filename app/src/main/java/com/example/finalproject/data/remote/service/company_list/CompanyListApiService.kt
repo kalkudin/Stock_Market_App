@@ -5,6 +5,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface CompanyListApiService {
-    @GET("ed1af8aa-9319-44a0-ad15-24bfbe81ab2f")
+    @GET("91776aaa-ca12-4c57-8330-28ef21085895")
     suspend fun getCompanyList(): Response<List<CompanyListDto>>
 }

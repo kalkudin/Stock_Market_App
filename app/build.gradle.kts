@@ -115,6 +115,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     //
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+    //chart
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
 
 kapt {

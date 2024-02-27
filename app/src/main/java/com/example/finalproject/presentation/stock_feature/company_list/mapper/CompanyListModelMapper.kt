@@ -8,6 +8,8 @@ fun CompanyList.toPresentation(): CompanyListModel {
         symbol = symbol,
         name = name,
         price = price,
+        priceChange = priceChange,
+        percentageChange = percentageChange,
         exchangeShortName = exchangeShortName,
         type = type
     )

@@ -11,14 +11,13 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Named
 
-class RemoteCompanyListDataSourceImpl @Inject constructor(
+class   RemoteCompanyListDataSourceImpl @Inject constructor(
     @Named("MOCKYRetrofit")
     private val apiService: CompanyListApiService,
     private val responseHandler: HandleResponse) : RemoteCompanyListDataSource {
     override suspend fun getCompanyListRemotely(): Flow<Resource<List<CompanyList>>> {
         return responseHandler.safeApiCall {
-            apiService.getCompanyList()
-        }.mapToDomain { companyListDto ->
+            apiService.getCompanyList() }.mapToDomain { companyListDto ->
             companyListDto.map { it.toDomain() }
         }
     }

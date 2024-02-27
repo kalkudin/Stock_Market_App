@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
+import com.example.finalproject.domain.usecase.company_details_chart_usecase.GetCompanyChartIntradayUseCase
 import com.example.finalproject.domain.usecase.company_details_usecase.GetCompanyDetailsUseCase
 import com.example.finalproject.presentation.stock_feature.company_details.event.CompanyDetailsEvents
 import com.example.finalproject.presentation.stock_feature.company_details.mapper.toPresentation
@@ -21,7 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CompanyDetailsViewModel @Inject constructor(
-    private val getCompanyDetailsUseCase: GetCompanyDetailsUseCase
+    private val getCompanyDetailsUseCase: GetCompanyDetailsUseCase,
+    private val getCompanyChartIntradayUseCase: GetCompanyChartIntradayUseCase
 ) : ViewModel() {
 
     private val _companyDetailsState = MutableStateFlow(CompanyDetailsState())
@@ -33,6 +35,7 @@ class CompanyDetailsViewModel @Inject constructor(
     fun onEvent(event: CompanyDetailsEvents) {
         when (event) {
             is CompanyDetailsEvents.GetCompanyDetails -> getCompanyDetails(event.symbol)
+            is CompanyDetailsEvents.GetCompanyChartIntraday -> getCompanyChartIntraday(event.interval, event.symbol, event.from, event.to)
             is CompanyDetailsEvents.BackButtonPressed -> onBackButtonPressed()
         }
     }
@@ -42,6 +45,16 @@ class CompanyDetailsViewModel @Inject constructor(
             handleResource(getCompanyDetailsUseCase.invoke(symbol)) { data ->
                 _companyDetailsState.update { currentState ->
                     currentState.copy(companyDetails = data.map { it.toPresentation() })
+                }
+            }
+        }
+    }
+
+    private fun getCompanyChartIntraday(interval: String, symbol: String, from: String, to: String) {
+        viewModelScope.launch {
+            handleResource(getCompanyChartIntradayUseCase.invoke(interval, symbol, from, to)) { data ->
+                _companyDetailsState.update { currentState ->
+                    currentState.copy(companyChartIntraday = data.map { it.toPresentation() })
                 }
             }
         }
