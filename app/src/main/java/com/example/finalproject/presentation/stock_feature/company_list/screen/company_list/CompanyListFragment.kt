@@ -1,6 +1,7 @@
 package com.example.finalproject.presentation.stock_feature.company_list.screen.company_list
 
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +30,9 @@ class CompanyListFragment :
     override fun bindViewActionListeners() {
         //later change the base fragment to initialize adapters
         companyListAdapterSetUp()
+
+        //
+        searchListener()
     }
 
     override fun bindObservers() {
@@ -84,6 +88,17 @@ class CompanyListFragment :
             )
         }
     }
+
+    private fun searchListener() {
+        binding.etSearch.addTextChangedListener {
+            handleSearch(it.toString())
+        }
+    }
+
+    private fun handleSearch(query: String) {
+        viewModel.onEvent(CompanyListEvents.ListSearch(query = query))
+    }
+
 
     private fun handleCompanyClick(company: CompanyListModel) {
         viewModel.onEvent(CompanyListEvents.CompanyItemClick(company = company))

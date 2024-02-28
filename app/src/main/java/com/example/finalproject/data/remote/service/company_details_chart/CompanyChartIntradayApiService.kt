@@ -2,7 +2,6 @@ package com.example.finalproject.data.remote.service.company_details_chart
 
 
 import com.example.finalproject.BuildConfig
-import com.example.finalproject.data.remote.model.company_details.CompanyDetailsDto
 import com.example.finalproject.data.remote.model.company_details_chart.CompanyChartIntradayDto
 import retrofit2.Response
 import retrofit2.http.GET

@@ -19,4 +19,6 @@
     <string name="email">Email</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="create_account">Create Account</string>
+    <string name="search_with_company_name_or_symbol">Search with company name or symbol</string>
+    <string name="today_s_financial_news">Today\'s Financial News</string>
 </resources>

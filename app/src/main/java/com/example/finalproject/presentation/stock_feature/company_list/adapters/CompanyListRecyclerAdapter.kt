@@ -38,18 +38,24 @@ class CompanyListRecyclerAdapter(
         fun bind() {
             item = currentList[adapterPosition]
             binding.apply {
+                when {
+                    item.percentageChange > 0 -> {
+                        ivArrow.setImageResource(R.drawable.ic_arrow_up_list)
+                        ivArrow.isVisible = true
+                    }
+                    item.percentageChange < 0 -> {
+                        ivArrow.setImageResource(R.drawable.ic_arrow_down_list)
+                        ivArrow.isVisible = true
+                    }
+                    else -> {
+                        ivArrow.isVisible = false
+                    }
+                }
                 tvCompanyName.text = item.name
                 tvCompanySymbol.text = item.symbol
                 tvCompanyPrice.text = "${item.price}$"
                 tvCompanyPriceChange.text = "${item.priceChange}$"
                 tvCompanyPriceChangePercentage.text = "${item.percentageChange}%"
-                if (item.percentageChange > 0) {
-                    ivArrow.setImageResource(R.drawable.ic_arrow_up_list)
-                } else if (item.percentageChange < 0) {
-                    ivArrow.setImageResource(R.drawable.ic_arrow_down_list)
-                }else {
-                    ivArrow.isVisible = false
-                }
                 itemView.setOnClickListener {
                     onCompanyClick.invoke(item)
                 }

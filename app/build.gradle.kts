@@ -117,6 +117,13 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     //chart
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    //circular imageview
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    //jsoup for parsing html
+    implementation("org.jsoup:jsoup:1.14.3")
 }
 
 kapt {

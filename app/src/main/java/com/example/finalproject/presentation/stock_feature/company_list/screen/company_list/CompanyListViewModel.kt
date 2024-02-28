@@ -33,6 +33,7 @@ class CompanyListViewModel @Inject constructor(
     fun onEvent(event: CompanyListEvents) {
         when (event) {
             is CompanyListEvents.GetCompanyList -> getCompanyList()
+            is CompanyListEvents.ListSearch -> onListSearch(event.query)
             is CompanyListEvents.CompanyItemClick -> onCompanyListItemClick(event.company)
         }
     }
@@ -61,6 +62,23 @@ class CompanyListViewModel @Inject constructor(
                     company.symbol
                 )
             )
+        }
+    }
+
+    private fun onListSearch(query: String) {
+        viewModelScope.launch {
+            _companyListState.update { currentState ->
+                val originalList = currentState.originalCompanyList ?: currentState.companyList.orEmpty()
+                val filteredList = if (query.isEmpty()) {
+                    originalList
+                } else {
+                    originalList.filter { it.name.contains(query, true) || it.symbol.contains(query, true) }
+                }
+                currentState.copy(
+                    companyList = filteredList,
+                    originalCompanyList = currentState.originalCompanyList ?: currentState.companyList.orEmpty()
+                )
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import com.example.finalproject.presentation.stock_feature.company_list.model.Co
 
 data class CompanyListState (
     val companyList: List<CompanyListModel>? = null,
+    val originalCompanyList: List<CompanyListModel>? = null,
     val errorMessage: String? = null,
     val isLoading: Boolean = false,
 )

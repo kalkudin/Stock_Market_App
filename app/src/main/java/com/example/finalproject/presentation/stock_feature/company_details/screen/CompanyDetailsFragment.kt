@@ -1,8 +1,6 @@
 package com.example.finalproject.presentation.stock_feature.company_details.screen
 
 
-//
-//
 import android.R.layout.simple_spinner_dropdown_item
 import android.R.layout.simple_spinner_item
 import android.app.DatePickerDialog
@@ -17,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.finalproject.databinding.FragmentCompanyDetailsBinding
 import com.example.finalproject.presentation.base.BaseFragment
+import com.example.finalproject.presentation.extension.loadImage
 import com.example.finalproject.presentation.extension.showSnackBar
 import com.example.finalproject.presentation.stock_feature.company_details.event.CompanyDetailsEvents
 import com.example.finalproject.presentation.stock_feature.company_details.model.CompanyChartIntradayModel
@@ -47,7 +46,7 @@ class CompanyDetailsFragment :
 
         //move this in setup later
         extractCompanySymbol()
-        spinnerSetup()
+        spinnerForIntradaySetup()
         configureChart()
     }
 
@@ -80,6 +79,7 @@ class CompanyDetailsFragment :
         state.companyDetails?.let { companyDetailsList ->
             val firstCompanyDetails = companyDetailsList.first()
             binding.apply {
+                civLogo.loadImage(firstCompanyDetails.image)
                 tvSymbol.text = firstCompanyDetails.symbol
                 tvName.text = firstCompanyDetails.companyName
                 tvDesc.text = firstCompanyDetails.description
@@ -119,11 +119,24 @@ class CompanyDetailsFragment :
         viewModel.onEvent(CompanyDetailsEvents.GetCompanyDetails(symbol = symbol))
     }
 
-    ///
+    //
 
-    private fun spinnerSetup() {
+    private fun extractCompanyDetails(interval: String, fromDate: String, toDate: String) {
+        val symbol = arguments?.getString("symbol") ?: ""
+        viewModel.onEvent(CompanyDetailsEvents.GetCompanyDetails(symbol = symbol))
+        viewModel.onEvent(
+            CompanyDetailsEvents.GetCompanyChartIntraday(
+                interval,
+                symbol,
+                fromDate,
+                toDate
+            )
+        )
+    }
+
+    private fun spinnerForIntradaySetup() {
         val intervals = arrayOf("1min", "5min", "15min", "30min", "1hour", "4hour")
-        val adapter = ArrayAdapter(requireContext(),simple_spinner_item, intervals)
+        val adapter = ArrayAdapter(requireContext(), simple_spinner_item, intervals)
         adapter.setDropDownViewResource(simple_spinner_dropdown_item)
         binding.spinner.adapter = adapter
     }
@@ -151,11 +164,6 @@ class CompanyDetailsFragment :
         }
     }
 
-    private fun extractCompanyDetails(interval: String, fromDate: String, toDate: String) {
-        val symbol = arguments?.getString("symbol") ?: ""
-        viewModel.onEvent(CompanyDetailsEvents.GetCompanyChartIntraday(interval, symbol, fromDate, toDate))
-    }
-
     private fun showDatePickerDialog(onDateSelected: (String) -> Unit) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -163,12 +171,13 @@ class CompanyDetailsFragment :
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-            val selectedDate = String.format("%d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+            val selectedDate =
+                String.format("%d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
             onDateSelected(selectedDate)
         }, year, month, day).show()
     }
 
-    private fun configureChart() {
+        private fun configureChart() {
         lineChart.apply {
             description.isEnabled = false
             setTouchEnabled(true)
@@ -179,7 +188,7 @@ class CompanyDetailsFragment :
             // Customize the x-axis
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
-                textColor = Color.RED
+                textColor = Color.BLACK
                 textSize = 12f
                 setDrawGridLines(false)
                 valueFormatter = DateValueFormatter()

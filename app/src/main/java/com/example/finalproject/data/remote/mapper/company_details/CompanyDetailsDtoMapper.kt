@@ -7,6 +7,7 @@ fun CompanyDetailsDto.toDomain(): CompanyDetails {
     return CompanyDetails(
         symbol = symbol,
         companyName = companyName,
-        description = description
+        description = description,
+        image = image
     )
 }
