@@ -9,19 +9,18 @@ import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemStockCardLayoutBinding
 import com.example.finalproject.presentation.stock_feature.home.model.Stock
 
-class StockListAdapter (private val onItemClick: (Stock) -> Unit) : ListAdapter<Stock, StockListAdapter.StockViewHolder>(DiffCallback) {
+class StockListRecyclerAdapter(private val onItemClick: (Stock) -> Unit): ListAdapter<Stock, StockListRecyclerAdapter.StockViewHolder>(DiffCallback) {
 
     companion object DiffCallback : DiffUtil.ItemCallback<Stock>() {
         override fun areItemsTheSame(oldItem: Stock, newItem: Stock): Boolean {
             return oldItem.symbol == newItem.symbol
         }
-
         override fun areContentsTheSame(oldItem: Stock, newItem: Stock): Boolean {
             return oldItem == newItem
         }
     }
 
-    inner class StockViewHolder(private var binding: ItemStockCardLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class StockViewHolder(private var binding: ItemStockCardLayoutBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(stock: Stock) {
             with(binding) {
                 tvSymbol.text = stock.symbol

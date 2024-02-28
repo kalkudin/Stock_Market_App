@@ -11,6 +11,7 @@ import com.example.finalproject.data.repository.DataStoreRepositoryImpl
 import com.example.finalproject.data.repository.LoginRepositoryImpl
 import com.example.finalproject.data.repository.RegisterRepositoryImpl
 import com.example.finalproject.data.repository.ResetPasswordRepositoryImpl
+import com.example.finalproject.data.repository.UserFundsRepositoryImpl
 import com.example.finalproject.data.repository.company_details.CompanyDetailsRepositoryImpl
 import com.example.finalproject.data.repository.company_list.CompanyListRepositoryImpl
 import com.example.finalproject.data.repository.stocks_to_watch.StocksToWatchRepositoryImpl
@@ -20,10 +21,12 @@ import com.example.finalproject.domain.repository.DataStoreRepository
 import com.example.finalproject.domain.repository.LoginRepository
 import com.example.finalproject.domain.repository.RegisterRepository
 import com.example.finalproject.domain.repository.ResetPasswordRepository
+import com.example.finalproject.domain.repository.UserFundsRepository
 import com.example.finalproject.domain.repository.company_details.CompanyDetailsRepository
 import com.example.finalproject.domain.repository.company_list.CompanyListRepository
 import com.example.finalproject.domain.repository.stocks_to_watch.StocksToWatchRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -88,5 +91,11 @@ object RepositoryModule {
             stocksToWatchApiService = stocksToWatchApiService,
             handleResponse = handleResponse
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserFundsRepository(db : FirebaseFirestore) : UserFundsRepository {
+        return UserFundsRepositoryImpl(db = db)
     }
 }

@@ -6,6 +6,7 @@ import com.example.finalproject.data.remote.service.company_details.CompanyDetai
 import com.example.finalproject.data.remote.service.company_list.CompanyListApiService
 import com.example.finalproject.data.remote.service.stocks_to_watch.StocksToWatchApiService
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -27,6 +28,12 @@ object AppModule {
     @Singleton
     fun provideFireBaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseFireStore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
     }
 
     @Provides
@@ -94,7 +101,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideStocksToWatchService(
-        @Named("FMPRetrofit")
+        @Named("MOCKYRetrofit")
         retrofit: Retrofit
     ) : StocksToWatchApiService {
         return retrofit.create(StocksToWatchApiService::class.java)

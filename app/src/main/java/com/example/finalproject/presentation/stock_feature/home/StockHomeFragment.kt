@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentStockHomeLayoutBinding
 import com.example.finalproject.presentation.base.BaseFragment
-import com.example.finalproject.presentation.stock_feature.home.adapter.StockHostAdapter
+import com.example.finalproject.presentation.stock_feature.home.adapter.StockHostRecyclerAdapter
 import com.example.finalproject.presentation.stock_feature.home.event.StockHomeEvent
 import com.example.finalproject.presentation.stock_feature.home.model.Stock
 import com.example.finalproject.presentation.stock_feature.home.state.StockListState
@@ -19,17 +19,16 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
 class StockHomeFragment :
     BaseFragment<FragmentStockHomeLayoutBinding>(FragmentStockHomeLayoutBinding::inflate) {
 
     private val stockHomeViewModel: StockHomeViewModel by viewModels()
 
-    private lateinit var hostAdapter: StockHostAdapter
+    private lateinit var hostAdapter: StockHostRecyclerAdapter
 
     override fun bind() {
-        bindStocksToWatch()
+        bindStocksAndUserData()
     }
 
     override fun bindViewActionListeners() {
@@ -42,8 +41,8 @@ class StockHomeFragment :
         bindStockState()
     }
 
-    private fun bindStocksToWatch() {
-        stockHomeViewModel.onEvent(StockHomeEvent.GetStocksToWatch)
+    private fun bindStocksAndUserData() {
+        stockHomeViewModel.onEvent(StockHomeEvent.GetStocksAndUserData)
     }
 
     private fun bindBackBtn() {
@@ -63,9 +62,14 @@ class StockHomeFragment :
             handleViewMoreClicked(type)
         }
 
-        hostAdapter = StockHostAdapter(
+        val onAddFundsCLicked: () -> Unit = {
+            handleAddFundsClicked()
+        }
+
+        hostAdapter = StockHostRecyclerAdapter(
             onStockClick = onStockClick,
-            onViewMoreClick = onViewMoreClick
+            onViewMoreClick = onViewMoreClick,
+            onAddFundsCLicked
         )
 
         binding.hostRecyclerView.apply {
@@ -80,8 +84,9 @@ class StockHomeFragment :
                 stockHomeViewModel.navigationFlow.collect { event ->
                     when (event) {
                         is StockHomeNavigationEvent.LogOut -> logOut()
-                        is StockHomeNavigationEvent.NavigateToExtendedStockList -> navigateToExtensiveListFragment(stockType = event.stockType)
                         is StockHomeNavigationEvent.NavigateToDetailsPage -> navigateToDetailsFragment(stock = event.stock)
+                        is StockHomeNavigationEvent.NavigateToExtendedStockList -> navigateToExtensiveListFragment(stockType = event.stockType)
+                        is StockHomeNavigationEvent.NavigateToFundsPage -> navigateToAddFundsFragment()
                     }
                 }
             }
@@ -103,7 +108,6 @@ class StockHomeFragment :
         binding.progressBar.isVisible = state.isLoading
 
         state.errorMessage?.let { errorMessage ->
-            binding.hostRecyclerView.visibility = View.GONE
             if (errorMessage.isNotEmpty()) {
                 showError(errorMessage)
             }
@@ -114,7 +118,8 @@ class StockHomeFragment :
             hostAdapter.updateData(
                 state.bestPerformingStocks ?: emptyList(),
                 state.worstPerformingStocks ?: emptyList(),
-                state.activePerformingStocks ?: emptyList()
+                state.activePerformingStocks ?: emptyList(),
+                state.userFunds ?: "0.0"
             )
         }
     }
@@ -125,6 +130,10 @@ class StockHomeFragment :
 
     private fun handleViewMoreClicked(stockType: Stock.PerformingType) {
         stockHomeViewModel.onEvent(StockHomeEvent.NavigateToExtensiveListPage(stockType = stockType))
+    }
+
+    private fun handleAddFundsClicked() {
+        stockHomeViewModel.onEvent(StockHomeEvent.NavigateToAddFundsFragment)
     }
 
     private fun showError(errorMessage: String) {
@@ -149,5 +158,9 @@ class StockHomeFragment :
                 symbol = stock.symbol
             )
         )
+    }
+
+    private fun navigateToAddFundsFragment() {
+
     }
 }

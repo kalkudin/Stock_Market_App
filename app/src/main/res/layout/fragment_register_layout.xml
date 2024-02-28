@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="84dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/open_sauce_sans_bold"
         android:gravity="center"
@@ -30,7 +30,7 @@
         android:textColor="@color/text_main"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="332dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/style_custom_edit_text"
         android:fontFamily="@font/open_sauce_sans_regular"
@@ -83,7 +83,7 @@
         android:textColorHint="@color/light_gray"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -114,7 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/style_custom_edit_text"
         android:hint="@string/password"
@@ -155,7 +155,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/style_custom_edit_text"
         android:hint="@string/repeat_password"

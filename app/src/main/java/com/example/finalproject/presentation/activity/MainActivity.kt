@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         bottomNavigationSetUp()
+
+        
     }
 
     private fun bottomNavigationSetUp() {
@@ -44,4 +46,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun foo() {}
 }
