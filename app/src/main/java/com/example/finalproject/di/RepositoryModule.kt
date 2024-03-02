@@ -7,6 +7,7 @@ import com.example.finalproject.data.common.HandlePasswordReset
 import com.example.finalproject.data.common.HandleResponse
 import com.example.finalproject.data.remote.service.company_list.CompanyListApiService
 import com.example.finalproject.data.remote.service.stocks_to_watch.StocksToWatchApiService
+import com.example.finalproject.data.repository.AddCreditCardRepositoryImpl
 import com.example.finalproject.data.repository.DataStoreRepositoryImpl
 import com.example.finalproject.data.repository.LoginRepositoryImpl
 import com.example.finalproject.data.repository.RegisterRepositoryImpl
@@ -17,6 +18,7 @@ import com.example.finalproject.data.repository.company_list.CompanyListReposito
 import com.example.finalproject.data.repository.stocks_to_watch.StocksToWatchRepositoryImpl
 import com.example.finalproject.domain.datasource.company_details.RemoteCompanyDetailsDataSource
 import com.example.finalproject.domain.datasource.company_list.RemoteCompanyListDataSource
+import com.example.finalproject.domain.repository.AddCreditCardRepository
 import com.example.finalproject.domain.repository.DataStoreRepository
 import com.example.finalproject.domain.repository.LoginRepository
 import com.example.finalproject.domain.repository.RegisterRepository
@@ -97,5 +99,11 @@ object RepositoryModule {
     @Singleton
     fun provideUserFundsRepository(db : FirebaseFirestore) : UserFundsRepository {
         return UserFundsRepositoryImpl(db = db)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCreditCardRepository(db : FirebaseFirestore) : AddCreditCardRepository {
+        return AddCreditCardRepositoryImpl(db = db)
     }
 }

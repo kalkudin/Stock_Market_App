@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/stockHomeFragment">
+    app:startDestination="@id/addCreditCardFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -96,6 +96,9 @@
         <action
             android:id="@+id/action_stockHomeFragment_to_extensiveStocksToWatchFragment"
             app:destination="@id/extensiveStocksToWatchFragment" />
+        <action
+            android:id="@+id/action_stockHomeFragment_to_userFundsFragment"
+            app:destination="@id/userFundsFragment" />
     </fragment>
     <fragment
         android:id="@+id/companyListFragment"
@@ -139,5 +142,24 @@
                 android:name="symbol"
                 app:argType="string" />
         </action>
+    </fragment>
+    <fragment
+        android:id="@+id/userFundsFragment"
+        android:name="com.example.finalproject.presentation.stock_feature.funds.UserFundsFragment"
+        android:label="UserFundsFragment" >
+        <action
+            android:id="@+id/action_userFundsFragment_to_stockHomeFragment"
+            app:destination="@id/stockHomeFragment" />
+        <action
+            android:id="@+id/action_userFundsFragment_to_addCreditCardFragment"
+            app:destination="@id/addCreditCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCreditCardFragment"
+        android:name="com.example.finalproject.presentation.stock_feature.credit_card.AddCreditCardFragment"
+        android:label="AddCreditCardFragment" >
+        <action
+            android:id="@+id/action_addCreditCardFragment_to_userFundsFragment"
+            app:destination="@id/userFundsFragment" />
     </fragment>
 </navigation>

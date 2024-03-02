@@ -19,5 +19,7 @@ sealed class ErrorType {
     data object SSLHandshake:ErrorType()
     data object Http:ErrorType()
     data object IO:ErrorType()
-
+    data object InvalidCardNumber : ErrorType()
+    data object InvalidExpirationDate : ErrorType()
+    data object InvalidCCV : ErrorType()
 }

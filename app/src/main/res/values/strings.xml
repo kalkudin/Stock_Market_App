@@ -27,4 +27,9 @@
     <string name="_1_57">1.57$</string>
     <string name="_1_0206">1.0206$</string>
     <string name="view_more">View More</string>
+    <string name="card_number">Card Number</string>
+    <string name="mm_yy">mm / yy</string>
+    <string name="ccv">ccv</string>
+    <string name="yy">yy</string>
+    <string name="mm">mm</string>
 </resources>

@@ -161,6 +161,6 @@ class StockHomeFragment :
     }
 
     private fun navigateToAddFundsFragment() {
-
+        findNavController().navigate(R.id.action_stockHomeFragment_to_userFundsFragment)
     }
 }

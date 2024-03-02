@@ -21,6 +21,10 @@ fun getErrorMessage(errorType: ErrorType): String {
         ErrorType.Http -> "There was an error with the HTTP request."
         ErrorType.IO -> "There was an input/output error."
         //
+        ErrorType.InvalidCCV -> "Invalid CCV"
+        ErrorType.InvalidCardNumber -> "Invalid Card Number"
+        ErrorType.InvalidExpirationDate -> "Invalid Expiration Date"
+
         is ErrorType.UnknownError -> errorType.message
     }
 }

@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -43,6 +44,13 @@ class StockHomeViewModel @Inject constructor(
 
     private val _navigationFlow = MutableSharedFlow<StockHomeNavigationEvent>()
     val navigationFlow: SharedFlow<StockHomeNavigationEvent> = _navigationFlow.asSharedFlow()
+
+    init {
+        viewModelScope.launch {
+            val funds = userFundsUseCases.retrieveUserFundsUseCase("GUlfnYD49RSoQ9auGmRC0G1YMld2").first()
+            Log.d("StockHome", funds.toString())
+        }
+    }
 
     fun onEvent(event: StockHomeEvent) {
         when (event) {
@@ -62,8 +70,6 @@ class StockHomeViewModel @Inject constructor(
             val worstStocks = mutableListOf<Stock>()
             val activeStocks = mutableListOf<Stock>()
             val errorMessages: MutableList<String> = mutableListOf()
-
-
 
             coroutineScope {
                 userFundsUseCases.retrieveUserFundsUseCase(userId).collect { result ->

@@ -97,7 +97,7 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
     }
 
     private fun handleLoginState(state : LoginState) {
-        binding.progressBar.isVisible = state.isLoading
+//        binding.progressBar.isVisible = state.isLoading
 
         state.isSuccess?.takeIf { it.isNotEmpty() }?.let {
             showSuccess()
