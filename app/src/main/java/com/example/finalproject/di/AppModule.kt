@@ -5,6 +5,9 @@ import com.example.finalproject.data.common.HandleResponse
 import com.example.finalproject.data.remote.service.company_details.CompanyDetailsApiService
 import com.example.finalproject.data.remote.service.company_details_chart.CompanyChartIntradayApiService
 import com.example.finalproject.data.remote.service.company_list.CompanyListApiService
+import com.example.finalproject.data.remote.service.stock_news.StockNewsApiService
+import com.example.finalproject.domain.repository.stock_news.StockNewsRepository
+import com.example.finalproject.domain.usecase.stock_news_usecase.GetStockNewsUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -92,8 +95,15 @@ object AppModule {
     @Singleton
     @Provides
     fun provideCompanyChartIntradayService(
-        @Named("FMPRetrofit")detailsRetrofit: Retrofit
+        @Named("FMPRetrofit")chartRetrofit: Retrofit
     ): CompanyChartIntradayApiService {
-        return detailsRetrofit.create(CompanyChartIntradayApiService::class.java)
+        return chartRetrofit.create(CompanyChartIntradayApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideStockNewsService(
+        @Named("FMPRetrofit")newsRetrofit: Retrofit): StockNewsApiService{
+        return newsRetrofit.create(StockNewsApiService::class.java)
     }
 }

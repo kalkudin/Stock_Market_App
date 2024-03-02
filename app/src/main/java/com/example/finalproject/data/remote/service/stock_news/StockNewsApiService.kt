@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface StockNewsApiService {
     @GET("fmp/articles")
-    suspend fun getArticles(
+    suspend fun getStockNews(
         @Query("page") page: Int,
         @Query("size") size: Int,
         @Query("apikey") apikey: String = BuildConfig.API_KEY

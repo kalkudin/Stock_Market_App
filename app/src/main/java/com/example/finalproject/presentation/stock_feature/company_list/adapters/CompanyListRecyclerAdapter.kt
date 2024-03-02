@@ -68,7 +68,7 @@ class CompanyListRecyclerAdapter(
             oldItem: CompanyListModel,
             newItem: CompanyListModel
         ): Boolean {
-            return oldItem == newItem
+            return oldItem.symbol == newItem.symbol
         }
 
         override fun areContentsTheSame(

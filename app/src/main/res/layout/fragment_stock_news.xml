@@ -6,14 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/main_color"
     android:padding="10dp"
-    tools:context=".presentation.stock_feature.stock_news.StockNewsFragment">
+    tools:context=".presentation.stock_feature.stock_news.screen.StockNewsFragment">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:text="@string/today_s_financial_news"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

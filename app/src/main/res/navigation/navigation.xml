@@ -113,7 +113,7 @@
     </fragment>
     <fragment
         android:id="@+id/stockNewsFragment"
-        android:name="com.example.finalproject.presentation.stock_feature.stock_news.StockNewsFragment"
+        android:name="com.example.finalproject.presentation.stock_feature.stock_news.screen.StockNewsFragment"
         android:label="fragment_stock_news"
         tools:layout="@layout/fragment_stock_news" />
     <fragment
