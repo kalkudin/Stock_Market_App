@@ -9,7 +9,6 @@ import javax.inject.Inject
 class CreditCardValidationUtil @Inject constructor() {
 
     fun validateCreditCardNumber(cardNumber: String): Boolean {
-        Log.d("USECASE", cardNumber)
         val cleanedCardNumber = cardNumber.replace(" ", "")
         return cleanedCardNumber.length == 16 && cleanedCardNumber.all { it.isDigit() }
     }

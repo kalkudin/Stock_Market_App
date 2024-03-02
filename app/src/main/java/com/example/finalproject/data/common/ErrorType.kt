@@ -22,4 +22,8 @@ sealed class ErrorType {
     data object InvalidCardNumber : ErrorType()
     data object InvalidExpirationDate : ErrorType()
     data object InvalidCCV : ErrorType()
+    //
+    data object CardAlreadyExists : ErrorType()
+    data object NoSuchCreditCard : ErrorType()
+    data object InvalidFunds : ErrorType()
 }

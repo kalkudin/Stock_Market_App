@@ -100,6 +100,6 @@ class AddCreditCardFragment : BaseFragment<FragmentAddCreditCardLayoutBinding>(F
     }
 
     private fun navigateBack() {
-        findNavController().navigate(R.id.action_addCreditCardFragment_to_userFundsFragment)
+//        findNavController().navigate(R.id.action_addCreditCardFragment_to_userFundsFragment)
     }
 }

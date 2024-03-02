@@ -32,4 +32,12 @@
     <string name="ccv">ccv</string>
     <string name="yy">yy</string>
     <string name="mm">mm</string>
+    <string name="add_credit_card">Add Credit Card</string>
+    <string name="use_an_existing_card">Use An Existing Card</string>
+    <string name="pay_with_a_new_card">Pay With A New Card</string>
+    <string name="sample_cvv">***</string>
+    <string name="sample_date">MM/YY</string>
+    <string name="sample_number">———— ———— ———— ————</string>
+    <string name="add_funds">Add Funds</string>
+    <string name="_0_0">0.0$</string>
 </resources>

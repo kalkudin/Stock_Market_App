@@ -22,8 +22,11 @@ fun getErrorMessage(errorType: ErrorType): String {
         ErrorType.IO -> "There was an input/output error."
         //
         ErrorType.InvalidCCV -> "Invalid CCV"
-        ErrorType.InvalidCardNumber -> "Invalid Card Number"
-        ErrorType.InvalidExpirationDate -> "Invalid Expiration Date"
+        ErrorType.InvalidCardNumber -> "Invalid card number"
+        ErrorType.InvalidExpirationDate -> "Invalid expiration date"
+        ErrorType.CardAlreadyExists -> "This card already exists"
+        ErrorType.NoSuchCreditCard -> "This Credit Card Does Not Exist"
+        ErrorType.InvalidFunds -> "The amount entered is invalid, please try again"
 
         is ErrorType.UnknownError -> errorType.message
     }
