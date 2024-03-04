@@ -10,25 +10,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.finalproject.databinding.BottomSheetAddNewCardLayoutBinding
 import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.event.AddNewCardEvent
-import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.model.NewCardState
+import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.existing_cards.UserCreditCardsBottomSheetFragmentDirections
+import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.state.NewCardState
 import com.example.finalproject.presentation.stock_feature.funds.model.CreditCard
 import com.example.finalproject.presentation.util.formatExpirationDate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
-
-    interface OnNewCardAddedListener {
-        fun onNewCardAdded(cardNumber : String, expirationDate : String, ccv : String, type : CreditCard.CardType)
-    }
-
-    var onNewCardAddedListener: OnNewCardAddedListener? = null
 
     private var _binding: BottomSheetAddNewCardLayoutBinding? = null
     private val binding get() = _binding!!
@@ -42,10 +39,10 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         bindNumbersField()
         bindNewCreditCard()
         bindSuccessFlow()
+        bindNavigationFlow()
     }
 
     private fun bindNewCreditCard() {
@@ -77,14 +74,30 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
 
             if(state.success) {
                 progressBar.visibility = View.GONE
-                onNewCardAddedListener?.onNewCardAdded(
-                    cardNumber = etCardNumber.text.toString(),
-                    expirationDate = etExpiryMonth.text.toString() + "/" + etExpiryYear.text.toString(),
-                    ccv = etCvv.text.toString(),
-                    type = CreditCard.CardType.MASTER_CARD)
-                dismiss()
+                handleNewCardAdded()
             }
         }
+    }
+
+    private fun bindNavigationFlow() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                addNewCardViewModel.navigationFlow.collect { event ->
+                    when(event) {
+                        is NewCardNavigationFlow.NavigateBack -> handleNavigation(card = event.creditCard)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleNewCardAdded() {
+        Snackbar.make(binding.root, "Credit Card Added Successfully!", Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun handleNavigation(card : CreditCard) {
+        val action = AddNewCardBottomSheetFragmentDirections.actionAddNewCardBottomSheetFragmentToUserFundsFragment(card)
+        findNavController().navigate(action)
     }
 
     private fun handleErrorMessage(errorMessage : String) {

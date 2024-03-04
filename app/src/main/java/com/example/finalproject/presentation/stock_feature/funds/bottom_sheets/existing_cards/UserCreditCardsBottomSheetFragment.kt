@@ -1,7 +1,6 @@
 package com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.existing_cards
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,26 +8,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.finalproject.databinding.BottomSheetAddNewCardLayoutBinding
+import androidx.navigation.fragment.findNavController
 import com.example.finalproject.databinding.BottomSheetChooseExistingCardLayoutBinding
 import com.example.finalproject.presentation.stock_feature.funds.adapter.CreditCardRecyclerAdapter
 import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.event.GetUserCardsEvent
-import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.model.UserCardsState
+import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.state.UserCardsState
 import com.example.finalproject.presentation.stock_feature.funds.model.CreditCard
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class UserCreditCardsBottomSheetFragment : BottomSheetDialogFragment(){
-
-    interface OnCreditCardClickedListener {
-        fun onCreditCardClickedListener(creditCard : CreditCard)
-    }
-
-    var onCreditCardClickedListener : OnCreditCardClickedListener? = null
 
     private var _binding: BottomSheetChooseExistingCardLayoutBinding? = null
     private val binding get() = _binding!!
@@ -49,6 +41,7 @@ class UserCreditCardsBottomSheetFragment : BottomSheetDialogFragment(){
         bindCreditCards()
         bindCreditCardsAdapter()
         bindCardsFlow()
+        bindNavigationFlow()
     }
 
     private fun bindCreditCards() {
@@ -87,9 +80,25 @@ class UserCreditCardsBottomSheetFragment : BottomSheetDialogFragment(){
         }
     }
 
+    private fun bindNavigationFlow() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                userCreditCardsViewModel.navigationFlow.collect { event ->
+                    when(event) {
+                        is CreditCardsNavigationFlow.NavigateBack -> handleNavigation(card = event.creditCard)
+                    }
+                }
+            }
+        }
+    }
+
     private fun handleCardClicked(card : CreditCard) {
-        onCreditCardClickedListener?.onCreditCardClickedListener(creditCard = card)
-        dismiss()
+        userCreditCardsViewModel.onEvent(GetUserCardsEvent.NavigateBack(card = card))
+    }
+
+    private fun handleNavigation(card : CreditCard) {
+        val action = UserCreditCardsBottomSheetFragmentDirections.actionUserCreditCardsBottomSheetFragmentToUserFundsFragment(card)
+        findNavController().navigate(action)
     }
 
     private fun handleErrorMessage(errorMessage : String) {

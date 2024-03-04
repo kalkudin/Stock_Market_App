@@ -1,4 +1,4 @@
-package com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.model
+package com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.state
 
 data class NewCardState(
     val isLoading : Boolean = false,

@@ -1,17 +1,15 @@
 package com.example.finalproject.presentation.stock_feature.funds
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentFundsLayoutBinding
 import com.example.finalproject.presentation.base.BaseFragment
-import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.existing_cards.UserCreditCardsBottomSheetFragment
-import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.new_card.AddNewCardBottomSheetFragment
 import com.example.finalproject.presentation.stock_feature.funds.event.UserFundsEvent
 import com.example.finalproject.presentation.stock_feature.funds.mapper.maskAndFormatCardNumber
 import com.example.finalproject.presentation.stock_feature.funds.model.CreditCard
@@ -21,15 +19,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFundsLayoutBinding::inflate),
-    AddNewCardBottomSheetFragment.OnNewCardAddedListener,
-    UserCreditCardsBottomSheetFragment.OnCreditCardClickedListener{
+class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFundsLayoutBinding::inflate){
 
     private val fundsViewModel : UserFundsViewModel by viewModels()
 
     private var userCardNumber : String = ""
 
+//    private val args: UserFundsFragmentArgs by navArgs()
+
     override fun bind() {
+        bindArgs()
     }
 
     override fun bindViewActionListeners() {
@@ -63,10 +62,7 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
     private fun bindAddCreditCardBottomSheet() {
         with(binding) {
             btnNewCreditCard.setOnClickListener {
-                val bottomSheetFragment = AddNewCardBottomSheetFragment().apply {
-                    onNewCardAddedListener = this@UserFundsFragment
-                }
-                bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+                fundsViewModel.onEvent(UserFundsEvent.OpenNewCardBottomSheet)
             }
         }
     }
@@ -74,10 +70,7 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
     private fun bindGetCreditCardsBottomSheet() {
         with(binding) {
             btnGetAllCards.setOnClickListener {
-                val bottomSheetFragment = UserCreditCardsBottomSheetFragment().apply {
-                    onCreditCardClickedListener = this@UserFundsFragment
-                }
-                bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+                fundsViewModel.onEvent(UserFundsEvent.OpenCardsBottomSheet)
             }
         }
     }
@@ -88,10 +81,20 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
                 fundsViewModel.navigationFlow.collect { event ->
                     when(event) {
                         is FundsNavigationEvent.NavigateBack -> navigateBack()
+                        is FundsNavigationEvent.OpenCardsBottomSheet -> openCardsBottomSheet()
+                        is FundsNavigationEvent.OpenNewCardBottomSheet -> openNewCardBottomSheet()
                     }
                 }
             }
         }
+    }
+
+    private fun openNewCardBottomSheet() {
+        findNavController().navigate(R.id.action_userFundsFragment_to_addNewCardBottomSheetFragment)
+    }
+
+    private fun openCardsBottomSheet() {
+        findNavController().navigate(R.id.action_userFundsFragment_to_userCreditCardsBottomSheetFragment)
     }
 
     private fun bindSuccessFlow() {
@@ -133,26 +136,19 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
         fundsViewModel.onEvent(UserFundsEvent.ResetFlow)
     }
 
-    override fun onNewCardAdded(cardNumber: String, expirationDate: String, ccv: String, type: CreditCard.CardType) {
-        Log.d("HomeFragment", "Selected Account: $cardNumber, Number: $expirationDate")
-        userCardNumber = cardNumber
-        handleNewCardAdded()
-        bindCreditCardDisplayInformation(
-            cardNumber = cardNumber,
-            expirationDate = expirationDate,
-            ccv = ccv,
-            type = type)
-    }
+    private fun bindArgs() {
+        val creditCard = arguments?.getParcelable("creditCard", CreditCard::class.java)
 
-    override fun onCreditCardClickedListener(creditCard: CreditCard) {
-        Log.d("HomeFragment", creditCard.cardNumber)
-        userCardNumber = creditCard.cardNumber
-        bindCreditCardDisplayInformation(
-            cardNumber = creditCard.cardNumber,
-            expirationDate = creditCard.expirationDate,
-            ccv = creditCard.ccv,
-            type = creditCard.cardType
-        )
+        creditCard?.let {
+            userCardNumber = creditCard.cardNumber
+
+            bindCreditCardDisplayInformation(
+                cardNumber = creditCard.cardNumber,
+                expirationDate = creditCard.expirationDate,
+                ccv = creditCard.ccv,
+                type = creditCard.cardType
+            )
+        }
     }
 
     private fun bindCreditCardDisplayInformation(cardNumber : String, expirationDate: String, ccv: String, type : CreditCard.CardType) {
@@ -161,10 +157,6 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
             tvExpiryDate.text = expirationDate
             tvCcv.text = ccv
         }
-    }
-
-    private fun handleNewCardAdded() {
-        Snackbar.make(binding.root, "Credit Card Added Successfully!", Snackbar.LENGTH_LONG).show()
     }
 
     private fun handleFundsAdded(amount : String) {

@@ -114,7 +114,6 @@ class ExtensiveStocksToWatchFragment : BaseFragment<FragmentExtensiveStockListLa
 
     private fun navigateToDetails(stock: Stock) {
         findNavController().navigate(ExtensiveStocksToWatchFragmentDirections.actionExtensiveStocksToWatchFragmentToCompanyDetailsFragment(symbol = stock.symbol))
-
     }
 
     private fun navigateBack() {

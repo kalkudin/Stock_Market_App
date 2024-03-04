@@ -40,13 +40,23 @@ class UserFundsViewModel @Inject constructor(
             when(event) {
                 is UserFundsEvent.BackButtonPressed -> navigateBack()
                 is UserFundsEvent.AddFunds -> addFundsToUsersAccount(amount = event.amount, cardNumber = event.cardNumber)
-                UserFundsEvent.ResetFlow -> resetFlow()
+                is UserFundsEvent.ResetFlow -> resetFlow()
+                is UserFundsEvent.OpenCardsBottomSheet -> openCardsBottomSheet()
+                is UserFundsEvent.OpenNewCardBottomSheet -> openNewCardBottomSheet()
             }
         }
     }
 
     private suspend fun navigateBack() {
         _navigationFlow.emit(FundsNavigationEvent.NavigateBack)
+    }
+
+    private suspend fun openCardsBottomSheet() {
+        _navigationFlow.emit(FundsNavigationEvent.OpenCardsBottomSheet)
+    }
+
+    private suspend fun openNewCardBottomSheet() {
+        _navigationFlow.emit(FundsNavigationEvent.OpenNewCardBottomSheet)
     }
 
     private suspend fun addFundsToUsersAccount(amount : String, cardNumber : String) {
@@ -75,4 +85,6 @@ class UserFundsViewModel @Inject constructor(
 
 sealed class FundsNavigationEvent {
     data object NavigateBack : FundsNavigationEvent()
+    data object OpenCardsBottomSheet : FundsNavigationEvent()
+    data object OpenNewCardBottomSheet : FundsNavigationEvent()
 }

@@ -25,6 +25,7 @@
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.finalproject.presentation.auth_feature.login.LoginFragment"
@@ -48,6 +49,7 @@
             android:id="@+id/action_loginFragment_to_stockHomeFragment"
             app:destination="@id/stockHomeFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.finalproject.presentation.auth_feature.register.RegisterFragment"
@@ -63,6 +65,7 @@
             app:popUpTo="@id/navigation"
             app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.finalproject.presentation.auth_feature.forgot_password.ForgotPasswordFragment"
@@ -78,6 +81,7 @@
             app:popUpTo="@id/navigation"
             app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/stockHomeFragment"
         android:name="com.example.finalproject.presentation.stock_feature.home.StockHomeFragment"
@@ -100,6 +104,7 @@
             android:id="@+id/action_stockHomeFragment_to_userFundsFragment"
             app:destination="@id/userFundsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/companyListFragment"
         android:name="com.example.finalproject.presentation.stock_feature.company_list.screen.company_list.CompanyListFragment"
@@ -113,6 +118,7 @@
                 app:argType="string" />
         </action>
     </fragment>
+
     <fragment
         android:id="@+id/companyDetailsFragment"
         android:name="com.example.finalproject.presentation.stock_feature.company_details.screen.CompanyDetailsFragment"
@@ -124,6 +130,7 @@
             app:popUpTo="@id/navigation"
             app:popUpToInclusive="true"/>
     </fragment>
+
     <fragment
         android:id="@+id/extensiveStocksToWatchFragment"
         android:name="com.example.finalproject.presentation.stock_feature.ones_to_watch_extensive_list.ExtensiveStocksToWatchFragment"
@@ -143,6 +150,7 @@
                 app:argType="string" />
         </action>
     </fragment>
+
     <fragment
         android:id="@+id/userFundsFragment"
         android:name="com.example.finalproject.presentation.stock_feature.funds.UserFundsFragment"
@@ -150,5 +158,57 @@
         <action
             android:id="@+id/action_userFundsFragment_to_stockHomeFragment"
             app:destination="@id/stockHomeFragment" />
+        <argument
+            android:name="creditCard"
+            app:argType="com.example.finalproject.presentation.stock_feature.funds.model.CreditCard" />
+        <action
+            android:id="@+id/action_userFundsFragment_to_addNewCardBottomSheetFragment"
+            app:destination="@id/addNewCardBottomSheetFragment" />
+        <action
+            android:id="@+id/action_userFundsFragment_to_userCreditCardsBottomSheetFragment"
+            app:destination="@id/userCreditCardsBottomSheetFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.example.finalproject.presentation.profile_feature.user_profile.UserProfileFragment"
+        android:label="UserProfileFragment" >
+        <action
+            android:id="@+id/action_userProfileFragment_to_favoriteStocksFragment"
+            app:destination="@id/favoriteStocksFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoriteStocksFragment"
+        android:name="com.example.finalproject.presentation.profile_feature.screens.favorites.FavoriteStocksFragment"
+        android:label="FavoriteStocksFragment" >
+        <action
+            android:id="@+id/action_favoriteStocksFragment_to_companyDetailsFragment"
+            app:destination="@id/companyDetailsFragment">
+            <argument
+                android:name="symbol"
+                app:argType="string" />
+        </action>
+        <action
+            android:id="@+id/action_favoriteStocksFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/addNewCardBottomSheetFragment"
+        android:name="com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.new_card.AddNewCardBottomSheetFragment"
+        android:label="AddNewCardBottomSheetFragment" >
+        <action
+            android:id="@+id/action_addNewCardBottomSheetFragment_to_userFundsFragment"
+            app:destination="@id/userFundsFragment" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/userCreditCardsBottomSheetFragment"
+        android:name="com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.existing_cards.UserCreditCardsBottomSheetFragment"
+        android:label="UserCreditCardsBottomSheetFragment" >
+        <action
+            android:id="@+id/action_userCreditCardsBottomSheetFragment_to_userFundsFragment"
+            app:destination="@id/userFundsFragment" />
+    </dialog>
 </navigation>

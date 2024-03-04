@@ -7,11 +7,15 @@ import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.CreditCardUseCases
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.event.AddNewCardEvent
-import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.model.NewCardState
+import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.state.NewCardState
+import com.example.finalproject.presentation.stock_feature.funds.model.CreditCard
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
@@ -27,6 +31,9 @@ class AddNewCardViewModel @Inject constructor(
     private val _successFlow = MutableStateFlow(NewCardState())
     val successFlow : StateFlow<NewCardState> = _successFlow.asStateFlow()
 
+    private val _navigationFlow = MutableSharedFlow<NewCardNavigationFlow>()
+    val navigationFlow : SharedFlow<NewCardNavigationFlow> = _navigationFlow.asSharedFlow()
+
     fun onEvent(event : AddNewCardEvent) {
         viewModelScope.launch {
             when(event) {
@@ -37,7 +44,7 @@ class AddNewCardViewModel @Inject constructor(
 
     private suspend fun addCreditCard(expirationDate: String, cardNumber: List<String>, ccv: String) {
         val uid = dataStoreUseCases.readUserUidUseCase().first()
-        creditCardUseCases.addCreditCardUseCase(uid = uid, cardNumber, expirationDate, ccv).collect { resource ->
+        creditCardUseCases.addCreditCardUseCase(uid = uid, cardNumber = cardNumber, expirationDate = expirationDate, ccv = ccv).collect { resource ->
             Log.d("NewCardVM", resource.toString())
             when(resource) {
                 is Resource.Error -> {
@@ -48,8 +55,20 @@ class AddNewCardViewModel @Inject constructor(
                 }
                 is Resource.Success -> {
                     _successFlow.update { state -> state.copy(success = true, isLoading = false) }
+
+                    _navigationFlow.emit(NewCardNavigationFlow.NavigateBack(
+                        creditCard = CreditCard(
+                            cardNumber = cardNumber.joinToString(separator = ""),
+                            expirationDate = expirationDate,
+                            ccv = ccv,
+                            cardType = CreditCard.CardType.VISA))
+                    )
                 }
             }
         }
     }
+}
+
+sealed class NewCardNavigationFlow() {
+    data class NavigateBack(val creditCard : CreditCard) : NewCardNavigationFlow()
 }
