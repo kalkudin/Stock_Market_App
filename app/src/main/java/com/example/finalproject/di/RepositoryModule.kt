@@ -12,6 +12,7 @@ import com.example.finalproject.data.repository.LoginRepositoryImpl
 import com.example.finalproject.data.repository.RegisterRepositoryImpl
 import com.example.finalproject.data.repository.ResetPasswordRepositoryImpl
 import com.example.finalproject.data.repository.SavedStocksRepositoryImpl
+import com.example.finalproject.data.repository.TransactionsRepositoryImpl
 import com.example.finalproject.data.repository.UserFundsRepositoryImpl
 import com.example.finalproject.data.repository.company_details.CompanyDetailsRepositoryImpl
 import com.example.finalproject.data.repository.company_list.CompanyListRepositoryImpl
@@ -23,6 +24,7 @@ import com.example.finalproject.domain.repository.DataStoreRepository
 import com.example.finalproject.domain.repository.LoginRepository
 import com.example.finalproject.domain.repository.RegisterRepository
 import com.example.finalproject.domain.repository.ResetPasswordRepository
+import com.example.finalproject.domain.repository.TransactionsRepository
 import com.example.finalproject.domain.repository.UserFundsRepository
 import com.example.finalproject.domain.repository.company_details.CompanyDetailsRepository
 import com.example.finalproject.domain.repository.company_list.CompanyListRepository
@@ -112,5 +114,11 @@ object RepositoryModule {
     @Singleton
     fun provideSavedStocksRepository() : SavedStocksRepository {
         return SavedStocksRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTransactionsRepository(db : FirebaseFirestore) : TransactionsRepository {
+        return TransactionsRepositoryImpl(db = db)
     }
 }

@@ -10,7 +10,6 @@ import com.example.finalproject.presentation.stock_feature.funds.mapper.maskAndF
 import com.example.finalproject.presentation.stock_feature.funds.model.CreditCard
 
 class CreditCardRecyclerAdapter (private val onItemClick: (CreditCard) -> Unit): ListAdapter<CreditCard, CreditCardRecyclerAdapter.CreditCardViewHolder>(DiffCallback) {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditCardViewHolder {
         val binding = ItemCreditCardLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CreditCardViewHolder(binding)

@@ -4,7 +4,6 @@ import com.example.finalproject.domain.usecase.credit_card_usecase.AddCreditCard
 import com.example.finalproject.domain.usecase.credit_card_usecase.GetUserCreditCardsUseCase
 import com.example.finalproject.domain.usecase.credit_card_usecase.RemoveUserCreditCardUseCase
 import javax.inject.Inject
-
 data class CreditCardUseCases @Inject constructor(
     val addCreditCardUseCase: AddCreditCardUseCase,
     val removeUserCreditCardUseCase: RemoveUserCreditCardUseCase,

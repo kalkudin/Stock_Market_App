@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/userFundsFragment">
+    app:startDestination="@id/transactionFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -176,6 +176,9 @@
         <action
             android:id="@+id/action_userProfileFragment_to_favoriteStocksFragment"
             app:destination="@id/favoriteStocksFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
     </fragment>
 
     <fragment
@@ -211,4 +214,12 @@
             android:id="@+id/action_userCreditCardsBottomSheetFragment_to_userFundsFragment"
             app:destination="@id/userFundsFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="com.example.finalproject.presentation.profile_feature.screens.transactions.TransactionFragment"
+        android:label="TransactionFragment" >
+        <action
+            android:id="@+id/action_transactionFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
 </navigation>

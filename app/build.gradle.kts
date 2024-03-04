@@ -117,6 +117,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
     //
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
 
 kapt {
