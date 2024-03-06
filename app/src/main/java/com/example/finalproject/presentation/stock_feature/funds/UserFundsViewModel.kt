@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.CreditCardUseCases
 import com.example.finalproject.domain.usecase.DataStoreUseCases
+import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.domain.usecase.UserFundsUseCases
+import com.example.finalproject.presentation.profile_feature.model.Transaction
 import com.example.finalproject.presentation.stock_feature.funds.event.UserFundsEvent
 import com.example.finalproject.presentation.stock_feature.funds.state.FundsState
 import com.example.finalproject.presentation.util.getErrorMessage
@@ -27,6 +29,7 @@ import javax.inject.Inject
 class UserFundsViewModel @Inject constructor(
     private val dataStoreUseCases: DataStoreUseCases,
     private val fundsUseCases: UserFundsUseCases,
+    private val transactionsUseCases: TransactionsUseCases,
 ) : ViewModel() {
 
     private val _navigationFlow = MutableSharedFlow<FundsNavigationEvent>()
@@ -73,6 +76,13 @@ class UserFundsViewModel @Inject constructor(
                 }
                 is Resource.Success -> {
                     _successFlow.update { state -> state.copy(isLoading = false, success = true)}
+
+                    transactionsUseCases.saveTransactionUseCase(
+                        uid = uid,
+                        amount = amount.toDouble(),
+                        description = "Added $amount $ to account",
+                        type = "outgoing"
+                    ).collect()
                 }
             }
         }

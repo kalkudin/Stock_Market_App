@@ -27,7 +27,7 @@
         android:fontFamily="@font/open_sauce_sans_bold"
         android:gravity="center"
         android:text="@string/create_an_account"
-        android:textColor="@color/text_main"
+        android:textColor="@color/sky_blue"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

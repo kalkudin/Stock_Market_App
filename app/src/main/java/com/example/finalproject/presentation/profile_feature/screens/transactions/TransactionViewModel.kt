@@ -40,6 +40,7 @@ class TransactionViewModel @Inject constructor(
             when(event) {
                 is TransactionEvent.NavigateBack -> {navigateBack()}
                 is TransactionEvent.GetTransactions -> {getTransactions()}
+                is TransactionEvent.SortTransactions -> {sortTransactions(event.sort)}
             }
         }
     }
@@ -66,6 +67,22 @@ class TransactionViewModel @Inject constructor(
                         state -> state.copy(isLoading = false, transactionList = resource.data.map { it.toPresentation() }) }
                 }
             }
+        }
+    }
+
+    private fun sortTransactions(sort : String){
+        val currentList = transactionFlow.value.transactionList
+
+        currentList?.let {
+            val sortedList = when(sort) {
+                "Date - Earliest" -> currentList.sortedBy { it.date }
+                "Date - Latest" -> currentList.sortedByDescending { it.date }
+                "Amount" -> currentList.sortedByDescending { it.amount}
+                "Type" -> currentList.sortedBy { it.type }
+                else -> currentList
+            }
+
+            _transactionFlow.update { state -> state.copy(transactionList = sortedList) }
         }
     }
 }

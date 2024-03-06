@@ -3,15 +3,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="ghost_white">#95999F</color>
-    <color name="grey">#2A3442</color>
-    <color name="darker_blue">#2E3233</color>
-    <color name="main_color">#060B12</color>
-    <color name="secondary_color">#0f1d36</color>
+    <color name="grey_blue">#2A3442</color>
+    <color name="grey">#2E3233</color>
+    <color name="black_blue">#060B12</color>
+    <color name="dark_blue">#0f1d36</color>
     <color name="light_blue">#ADD8E6</color>
     <color name="light_gray">#bebebe</color>
-    <color name="text_main">#45C0E6</color>
-    <color name="text_main_dark">#3977AE</color>
-    <color name="green">#91E46E</color>
-    <color name="red">#E46E6E</color>
-
+    <color name="sky_blue">#45C0E6</color>
+    <color name="ocean_blue">#3977AE</color>
+    <color name="light_green">#91E46E</color>
+    <color name="light_red">#E46E6E</color>
+    <color name="light_orange">#DD914D</color>
 </resources>

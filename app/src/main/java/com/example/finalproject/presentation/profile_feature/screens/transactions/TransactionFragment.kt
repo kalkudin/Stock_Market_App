@@ -1,13 +1,19 @@
 package com.example.finalproject.presentation.profile_feature.screens.transactions
 
+import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentFavoriteStocksLayoutBinding
 import com.example.finalproject.databinding.FragmentTransactionsLayoutBinding
 import com.example.finalproject.presentation.base.BaseFragment
+import com.example.finalproject.presentation.extension.setOnItemSelected
+import com.example.finalproject.presentation.profile_feature.adapter.TransactionRecyclerAdapter
 import com.example.finalproject.presentation.profile_feature.event.TransactionEvent
 import com.example.finalproject.presentation.profile_feature.state.TransactionState
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +26,8 @@ class TransactionFragment : BaseFragment<FragmentTransactionsLayoutBinding>(Frag
 
     private val transactionsViewModel : TransactionViewModel by viewModels()
 
+    private lateinit var transactionAdapter : TransactionRecyclerAdapter
+
     override fun bind() {
         bindAdapter()
         bindTransactions()
@@ -27,6 +35,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionsLayoutBinding>(Frag
 
     override fun bindViewActionListeners() {
         bindBackBnt()
+        bindSpinner()
     }
 
     override fun bindObservers() {
@@ -35,15 +44,35 @@ class TransactionFragment : BaseFragment<FragmentTransactionsLayoutBinding>(Frag
     }
 
     private fun bindBackBnt() {
-
+        with(binding) {
+            btnBack.setOnClickListener() {
+                transactionsViewModel.onEvent(TransactionEvent.NavigateBack)
+            }
+        }
     }
 
     private fun bindTransactions() {
         transactionsViewModel.onEvent(TransactionEvent.GetTransactions)
     }
 
-    private fun bindAdapter() {
+    private fun bindSpinner() {
+        with(binding) {
+            val sortOptions = resources.getStringArray(R.array.sort_options)
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sortOptions).apply {
+                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
+            spinnerSortingOptions.adapter = adapter
+            spinnerSortingOptions.setOnItemSelected { selectedItem ->
+                sortTransactions(selectedItem)
+            }
+        }
+    }
 
+    private fun bindAdapter() {
+        with(binding) {
+            transactionAdapter = TransactionRecyclerAdapter()
+            rvTransactions.adapter = transactionAdapter
+        }
     }
 
     private fun bindNavigationFlow() {
@@ -82,13 +111,17 @@ class TransactionFragment : BaseFragment<FragmentTransactionsLayoutBinding>(Frag
 
             state.transactionList?.let { list ->
                 hideView(progressBar)
-                //submit the list to the adapter here
+                transactionAdapter.submitList(list)
             }
         }
     }
 
-    private fun navigateBack() {
+    private fun sortTransactions(sort : String) {
+        transactionsViewModel.onEvent(TransactionEvent.SortTransactions(sort = sort))
+    }
 
+    private fun navigateBack() {
+        findNavController().navigate(R.id.action_transactionFragment_to_userProfileFragment)
     }
 
     private fun handleErrorMessage(errorMessage : String) {

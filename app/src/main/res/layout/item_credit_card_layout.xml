@@ -5,7 +5,7 @@
     android:layout_marginTop="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/style_rounded_corners"
-    android:backgroundTint="@color/text_main_dark"
+    android:backgroundTint="@color/ocean_blue"
     android:layout_gravity="center_horizontal">
 
     <androidx.appcompat.widget.AppCompatTextView

@@ -42,4 +42,20 @@
     <string name="_0_0">0.0$</string>
     <string name="sample_name">Sample Name</string>
     <string name="view_more">View More...</string>
+
+    <string name="spinner_prompt">Select Sorting Option</string>
+    <string name="your_transaction_history">Your Transaction History</string>
+    <string name="view_more_transactions">View Transaction History…</string>
+    <string name="your_credit_cards">Your Credit Cards</string>
+    <string name="manage_cards">Manage Cards...</string>
+    <string name="your_favorite_stocks">Your Favorite Stocks</string>
+    <string name="view_favorite_stock">View Favorite Stock...</string>
+
+    <string-array name="sort_options">
+        <item>Type</item>
+        <item>Date - Latest</item>
+        <item>Date - Earliest</item>
+        <item>Amount</item>
+    </string-array>
+
 </resources>

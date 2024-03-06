@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/transactionFragment">
+    app:startDestination="@id/userProfileFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -171,7 +171,7 @@
 
     <fragment
         android:id="@+id/userProfileFragment"
-        android:name="com.example.finalproject.presentation.profile_feature.user_profile.UserProfileFragment"
+        android:name="com.example.finalproject.presentation.profile_feature.screens.user_profile.UserProfileFragment"
         android:label="UserProfileFragment" >
         <action
             android:id="@+id/action_userProfileFragment_to_favoriteStocksFragment"

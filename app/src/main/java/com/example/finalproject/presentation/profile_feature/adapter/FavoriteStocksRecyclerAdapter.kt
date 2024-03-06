@@ -35,11 +35,11 @@ class FavoriteStocksRecyclerAdapter(
                     true
                 }
 
-                root.setCustomGradientBackground()
-
                 btnViewMore.setOnClickListener {
                     onViewMoreClick(companyDetails)
                 }
+
+                root.setCustomGradientBackground()
             }
         }
     }
