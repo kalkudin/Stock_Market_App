@@ -7,5 +7,6 @@ fun CreditCardDomainModel.toDataModel(): CreditCardDataModel = CreditCardDataMod
     id = id,
     cardNumber = cardNumber,
     expirationDate = expirationDate,
-    ccv = ccv
+    ccv = ccv,
+    cardType = type
 )

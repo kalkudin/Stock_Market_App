@@ -37,14 +37,14 @@ class AddNewCardViewModel @Inject constructor(
     fun onEvent(event : AddNewCardEvent) {
         viewModelScope.launch {
             when(event) {
-                is AddNewCardEvent.AddCreditCard -> addCreditCard(expirationDate = event.expirationDate, cardNumber = event.cardNumber, ccv = event.ccv)
+                is AddNewCardEvent.AddCreditCard -> addCreditCard(expirationDate = event.expirationDate, cardNumber = event.cardNumber, ccv = event.ccv, cardType = event.cardType)
             }
         }
     }
 
-    private suspend fun addCreditCard(expirationDate: String, cardNumber: List<String>, ccv: String) {
+    private suspend fun addCreditCard(expirationDate: String, cardNumber: List<String>, ccv: String, cardType : String) {
         val uid = dataStoreUseCases.readUserUidUseCase().first()
-        creditCardUseCases.addCreditCardUseCase(uid = uid, cardNumber = cardNumber, expirationDate = expirationDate, ccv = ccv).collect { resource ->
+        creditCardUseCases.addCreditCardUseCase(uid = uid, cardNumber = cardNumber, expirationDate = expirationDate, ccv = ccv, cardType = cardType).collect { resource ->
             Log.d("NewCardVM", resource.toString())
             when(resource) {
                 is Resource.Error -> {

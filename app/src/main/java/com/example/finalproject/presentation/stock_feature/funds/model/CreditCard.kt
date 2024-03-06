@@ -12,6 +12,7 @@ data class CreditCard(
 ) : Parcelable {
     enum class CardType {
         VISA,
-        MASTER_CARD
+        MASTER_CARD,
+        UNKOWN
     }
 }

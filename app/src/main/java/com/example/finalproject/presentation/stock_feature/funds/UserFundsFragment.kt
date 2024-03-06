@@ -25,8 +25,6 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
 
     private var userCardNumber : String = ""
 
-//    private val args: UserFundsFragmentArgs by navArgs()
-
     override fun bind() {
         bindArgs()
     }

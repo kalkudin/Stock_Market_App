@@ -1,17 +1,22 @@
 package com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.new_card
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.finalproject.R
 import com.example.finalproject.databinding.BottomSheetAddNewCardLayoutBinding
+import com.example.finalproject.presentation.extension.setOnItemSelected
 import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.event.AddNewCardEvent
 import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.existing_cards.UserCreditCardsBottomSheetFragmentDirections
 import com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.state.NewCardState
@@ -39,6 +44,7 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindCardTypeAdapter()
         bindNumbersField()
         bindNewCreditCard()
         bindSuccessFlow()
@@ -51,8 +57,21 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
                 addNewCardViewModel.onEvent(AddNewCardEvent.AddCreditCard(
                     cardNumber = etCardNumber.text?.chunked(size = 4) ?: emptyList(),
                     expirationDate = formatExpirationDate(etExpiryMonth, etExpiryYear),
-                    ccv = etCvv.text.toString()))
+                    ccv = etCcv.text.toString(),
+                    cardType = getCardType()))
             }
+        }
+    }
+
+    private fun bindCardTypeAdapter() {
+        val cardTypes = resources.getStringArray(R.array.card_type_options)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, cardTypes).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+        binding.spinnerCardType.adapter = adapter
+
+        binding.spinnerCardType.setOnItemSelected { cardType ->
+            updateCardIcon(cardType)
         }
     }
 
@@ -74,7 +93,6 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
 
             if(state.success) {
                 progressBar.visibility = View.GONE
-                handleNewCardAdded()
             }
         }
     }
@@ -91,10 +109,6 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun handleNewCardAdded() {
-        Snackbar.make(binding.root, "Credit Card Added Successfully!", Snackbar.LENGTH_LONG).show()
-    }
-
     private fun handleNavigation(card : CreditCard) {
         val action = AddNewCardBottomSheetFragmentDirections.actionAddNewCardBottomSheetFragmentToUserFundsFragment(card)
         findNavController().navigate(action)
@@ -102,6 +116,37 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun handleErrorMessage(errorMessage : String) {
         Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).setAction("OK"){}.show()
+    }
+
+    private fun updateCardIcon(cardType: String) {
+        with(binding) {
+            val iconResId: Int
+            val backgroundColorResId: Int
+            when(cardType) {
+                "Visa" -> {
+                    iconResId = R.drawable.ic_visa
+                    backgroundColorResId = R.color.sky_blue
+                }
+                "MasterCard" -> {
+                    iconResId = R.drawable.ic_master_card
+                    backgroundColorResId = R.color.light_orange
+                }
+                else -> {
+                    iconResId = R.drawable.ic_visa
+                    backgroundColorResId = R.color.sky_blue
+                }
+            }
+            ivCardType.setImageResource(iconResId)
+            cardContainer.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), backgroundColorResId))
+        }
+    }
+
+    private fun getCardType(): String {
+        return when (binding.spinnerCardType.selectedItem.toString()) {
+            getString(R.string.visa) -> "visa"
+            getString(R.string.mastercard) -> "master_card"
+            else -> "unkown"
+        }
     }
 
     private fun bindNumbersField() {
@@ -130,7 +175,6 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
                     } else if (cursorPosition < formattedString.length) {
                         binding.etCardNumber.setSelection(cursorPosition + 1)
                     }
-
                     isFormatting = false
                 }
             }

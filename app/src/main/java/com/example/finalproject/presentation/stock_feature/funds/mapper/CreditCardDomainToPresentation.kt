@@ -9,7 +9,11 @@ fun CreditCardDomainModel.toPresentation() : CreditCard{
         cardNumber = cardNumber,
         expirationDate = expirationDate,
         ccv = ccv,
-        cardType = CreditCard.CardType.VISA
+        cardType = when(type) {
+            "visa" -> CreditCard.CardType.VISA
+            "master_card" -> CreditCard.CardType.MASTER_CARD
+            else -> CreditCard.CardType.UNKOWN
+        }
     )
 }
 

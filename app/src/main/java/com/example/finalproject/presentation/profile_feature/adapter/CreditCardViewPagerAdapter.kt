@@ -41,6 +41,8 @@ class CreditCardViewPagerAdapter(private val onDeleteCardClick: (CreditCard) -> 
                         ivCardType.setImageResource(R.drawable.ic_master_card)
                         cardContainer.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.light_orange)
                     }
+
+                    else -> {}
                 }
 
                 btnRemoveCard.setOnClickListener {

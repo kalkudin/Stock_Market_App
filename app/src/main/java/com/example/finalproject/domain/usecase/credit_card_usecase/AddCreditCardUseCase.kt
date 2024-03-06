@@ -15,7 +15,7 @@ class AddCreditCardUseCase @Inject constructor(
     private val validationUtil: CreditCardValidationUtil,
     private val creditCardRepository: CreditCardRepository
 ) {
-    suspend operator fun invoke(uid: String, cardNumber: List<String>, expirationDate: String, ccv: String): Flow<Resource<Boolean>> {
+    suspend operator fun invoke(uid: String, cardNumber: List<String>, expirationDate: String, ccv: String, cardType : String): Flow<Resource<Boolean>> {
 
         if(cardNumber.joinToString(separator = "").isEmpty() && expirationDate.isEmpty() && ccv.isEmpty()) {
             return flowOf(Resource.Error(ErrorType.FieldsEmpty))
@@ -44,7 +44,8 @@ class AddCreditCardUseCase @Inject constructor(
                 id = validationUtil.generateUniqueId(),
                 cardNumber = cardNumber.joinToString(separator = ""),
                 expirationDate = expirationDate,
-                ccv =ccv)
+                ccv =ccv,
+                type = cardType)
         )
     }
 }

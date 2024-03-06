@@ -51,11 +51,20 @@
     <string name="your_favorite_stocks">Your Favorite Stocks</string>
     <string name="view_favorite_stock">View Favorite Stock...</string>
 
+    <string name="visa">Visa</string>
+    <string name="mastercard">MasterCard</string>
+
     <string-array name="sort_options">
         <item>Type</item>
         <item>Date - Latest</item>
         <item>Date - Earliest</item>
         <item>Amount</item>
     </string-array>
+
+    <string-array name="card_type_options">
+        <item>Visa</item>
+        <item>MasterCard</item>
+    </string-array>
+
 
 </resources>

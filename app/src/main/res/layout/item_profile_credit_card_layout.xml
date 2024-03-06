@@ -63,10 +63,12 @@
         android:id="@+id/btn_remove_card"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="276dp"
-        android:layout_marginBottom="172dp"
-        android:background="@drawable/style_rounded_corners"
-        android:backgroundTint="@color/dark_blue"
+        android:layout_marginStart="260dp"
+        android:layout_marginBottom="164dp"
+        android:background="@drawable/style_circle_corners"
+        android:backgroundTint="@color/light_red"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_delete"
         app:layout_constraintBottom_toBottomOf="@+id/card_container"
         app:layout_constraintStart_toStartOf="@+id/card_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>

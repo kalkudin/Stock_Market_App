@@ -4,129 +4,115 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/card_number_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/card_container"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
+        android:background="@drawable/style_rounded_corners"
+        android:backgroundTint="@color/sky_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_card_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/style_et_without_bottom_line"
+        android:hint="@string/sample_number"
+        android:maxLength="19"
+        android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="@+id/card_container" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_card_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/style_custom_edit_text"
-            android:digits="0123456789 "
-            android:hint="@string/card_number"
-            android:inputType="number"
-            android:maxLength="19"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/expiry_month_layout"
-        android:layout_width="120dp"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_expiry_month"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/mm"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/card_number_layout"
-        app:layout_constraintTop_toBottomOf="@+id/card_number_layout">
+        android:layout_marginTop="52dp"
+        android:background="@drawable/style_et_without_bottom_line"
+        android:hint="MM"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/et_card_number"
+        app:layout_constraintTop_toBottomOf="@+id/et_card_number" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_expiry_month"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/style_custom_edit_text"
-            android:inputType="number"
-            android:maxLength="2"
-            android:textColor="@color/white"
-            app:hintTextColor="@color/white" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/expiry_year_layout"
-        android:layout_width="120dp"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_expiry_year"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:hint="@string/yy"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/expiry_month_layout"
-        app:layout_constraintTop_toBottomOf="@+id/card_number_layout"
-        app:layout_constraintWidth_percent="0.4">
+        android:layout_marginStart="24dp"
+        android:background="@drawable/style_et_without_bottom_line"
+        android:hint="YY"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/et_expiry_month"
+        app:layout_constraintTop_toTopOf="@+id/et_expiry_month" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_expiry_year"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/style_custom_edit_text"
-            android:inputType="number"
-            android:maxLength="2"
-            android:textColor="@color/white" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/cvv_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="120dp"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_ccv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/expiry_year_layout"
-        app:layout_constraintTop_toBottomOf="@+id/card_number_layout">
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/style_et_without_bottom_line"
+        android:hint="@string/sample_cvv"
+        android:maxLength="3"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/et_card_number"
+        app:layout_constraintTop_toTopOf="@+id/et_expiry_year" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_cvv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/style_custom_edit_text"
-            android:hint="@string/ccv"
-            android:inputType="number"
-            android:maxLength="3"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.appcompat.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btn_add_credit_card"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/add_credit_card"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="216dp"
+        android:src="@drawable/ic_plus"
+        android:scaleType="centerInside"
+        android:background="@drawable/style_circle_corners"
+        android:backgroundTint="@color/grey_blue"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expiry_year_layout"
-        app:layout_constraintVertical_bias="0.33" />
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.035" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_card_type"
+        android:layout_width="61dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="128dp"
+        android:src="@drawable/ic_visa"
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
+        app:layout_constraintHorizontal_bias="0.948"
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="@+id/et_card_number" />
+
+    <Spinner
+        android:id="@+id/spinner_card_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:entries="@array/card_type_options"
+        app:layout_constraintStart_toStartOf="@+id/et_card_number"
+        app:layout_constraintTop_toTopOf="@+id/card_container" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btn_add_credit_card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintBottom_toBottomOf="@+id/card_container"
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expiry_year_layout"
-        app:layout_constraintVertical_bias="0.484" />
+        app:layout_constraintTop_toTopOf="@+id/card_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,5 +7,6 @@ fun CreditCardDataModel.toDomainModel(): CreditCardDomainModel = CreditCardDomai
     id = id,
     cardNumber = cardNumber,
     expirationDate = expirationDate,
-    ccv = ccv
+    ccv = ccv,
+    type = cardType
 )
