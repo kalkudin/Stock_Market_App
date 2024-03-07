@@ -3,7 +3,6 @@ package com.example.finalproject.data.repository
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.model.company_details.CompanyDetails
 import com.example.finalproject.domain.repository.saved_stocks.SavedStocksRepository
-import com.example.finalproject.presentation.stock_feature.company_details.model.CompanyDetailsModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

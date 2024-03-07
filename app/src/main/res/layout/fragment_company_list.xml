@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="30dp"
     android:orientation="vertical"
-    tools:context=".presentation.stock_feature.company_list.screen.company_list.CompanyListFragment">
+    tools:context=".presentation.screen.company_list.CompanyListFragment">
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etSearch"

@@ -3,7 +3,7 @@ package com.example.finalproject.domain.usecase.extensive_stocks_usecase
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.model.stocks_to_watch.StockListItem
 import com.example.finalproject.domain.repository.stocks_to_watch.StocksToWatchRepository
-import com.example.finalproject.presentation.stock_feature.home.model.Stock
+import com.example.finalproject.presentation.model.home.Stock
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

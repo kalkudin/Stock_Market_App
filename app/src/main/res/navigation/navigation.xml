@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.finalproject.presentation.auth_feature.home.HomeFragment"
+        android:name="com.example.finalproject.presentation.screen.welcome.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.finalproject.presentation.auth_feature.login.LoginFragment"
+        android:name="com.example.finalproject.presentation.screen.login.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
@@ -52,7 +52,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.finalproject.presentation.auth_feature.register.RegisterFragment"
+        android:name="com.example.finalproject.presentation.screen.register.RegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
@@ -68,7 +68,7 @@
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.finalproject.presentation.auth_feature.forgot_password.ForgotPasswordFragment"
+        android:name="com.example.finalproject.presentation.screen.forgot_password.ForgotPasswordFragment"
         android:label="ForgotPasswordFragment" >
         <action
             android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
@@ -84,7 +84,7 @@
 
     <fragment
         android:id="@+id/stockHomeFragment"
-        android:name="com.example.finalproject.presentation.stock_feature.home.StockHomeFragment"
+        android:name="com.example.finalproject.presentation.screen.home.StockHomeFragment"
         android:label="StockHomeFragment" >
 
         <action
@@ -107,7 +107,7 @@
 
     <fragment
         android:id="@+id/companyListFragment"
-        android:name="com.example.finalproject.presentation.stock_feature.company_list.screen.company_list.CompanyListFragment"
+        android:name="com.example.finalproject.presentation.screen.company_list.CompanyListFragment"
         android:label="fragment_company_list"
         tools:layout="@layout/fragment_company_list" >
         <action
@@ -121,7 +121,7 @@
 
     <fragment
         android:id="@+id/companyDetailsFragment"
-        android:name="com.example.finalproject.presentation.stock_feature.company_details.screen.CompanyDetailsFragment"
+        android:name="com.example.finalproject.presentation.screen.company_details.CompanyDetailsFragment"
         android:label="fragment_company_details"
         tools:layout="@layout/fragment_company_details" >
         <action
@@ -133,14 +133,14 @@
 
     <fragment
         android:id="@+id/extensiveStocksToWatchFragment"
-        android:name="com.example.finalproject.presentation.stock_feature.ones_to_watch_extensive_list.ExtensiveStocksToWatchFragment"
+        android:name="com.example.finalproject.presentation.screen.to_watch.ExtensiveStocksToWatchFragment"
         android:label="ExtensiveStocksToWatchFragment" >
         <action
             android:id="@+id/action_extensiveStocksToWatchFragment_to_stockHomeFragment"
             app:destination="@id/stockHomeFragment" />
         <argument
             android:name="type"
-            app:argType="com.example.finalproject.presentation.stock_feature.home.model.Stock$PerformingType"
+            app:argType="com.example.finalproject.presentation.model.home.Stock$PerformingType"
             android:defaultValue="BEST_PERFORMING" />
         <action
             android:id="@+id/action_extensiveStocksToWatchFragment_to_companyDetailsFragment"
@@ -153,14 +153,14 @@
 
     <fragment
         android:id="@+id/userFundsFragment"
-        android:name="com.example.finalproject.presentation.stock_feature.funds.UserFundsFragment"
+        android:name="com.example.finalproject.presentation.screen.funds.UserFundsFragment"
         android:label="UserFundsFragment" >
         <action
             android:id="@+id/action_userFundsFragment_to_stockHomeFragment"
             app:destination="@id/stockHomeFragment" />
         <argument
             android:name="creditCard"
-            app:argType="com.example.finalproject.presentation.stock_feature.funds.model.CreditCard" />
+            app:argType="com.example.finalproject.presentation.model.funds.CreditCard" />
         <action
             android:id="@+id/action_userFundsFragment_to_addNewCardBottomSheetFragment"
             app:destination="@id/addNewCardBottomSheetFragment" />
@@ -171,7 +171,7 @@
 
     <fragment
         android:id="@+id/userProfileFragment"
-        android:name="com.example.finalproject.presentation.profile_feature.screens.user_profile.UserProfileFragment"
+        android:name="com.example.finalproject.presentation.screen.user_profile.UserProfileFragment"
         android:label="UserProfileFragment" >
         <action
             android:id="@+id/action_userProfileFragment_to_favoriteStocksFragment"
@@ -183,7 +183,7 @@
 
     <fragment
         android:id="@+id/favoriteStocksFragment"
-        android:name="com.example.finalproject.presentation.profile_feature.screens.favorites.FavoriteStocksFragment"
+        android:name="com.example.finalproject.presentation.screen.favorites.FavoriteStocksFragment"
         android:label="FavoriteStocksFragment" >
         <action
             android:id="@+id/action_favoriteStocksFragment_to_companyDetailsFragment"
@@ -199,7 +199,7 @@
 
     <dialog
         android:id="@+id/addNewCardBottomSheetFragment"
-        android:name="com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.new_card.AddNewCardBottomSheetFragment"
+        android:name="com.example.finalproject.presentation.bottom_sheets.new_card.AddNewCardBottomSheetFragment"
         android:label="AddNewCardBottomSheetFragment" >
         <action
             android:id="@+id/action_addNewCardBottomSheetFragment_to_userFundsFragment"
@@ -208,7 +208,7 @@
 
     <dialog
         android:id="@+id/userCreditCardsBottomSheetFragment"
-        android:name="com.example.finalproject.presentation.stock_feature.funds.bottom_sheets.existing_cards.UserCreditCardsBottomSheetFragment"
+        android:name="com.example.finalproject.presentation.bottom_sheets.existing_cards.UserCreditCardsBottomSheetFragment"
         android:label="UserCreditCardsBottomSheetFragment" >
         <action
             android:id="@+id/action_userCreditCardsBottomSheetFragment_to_userFundsFragment"
@@ -216,7 +216,7 @@
     </dialog>
     <fragment
         android:id="@+id/transactionFragment"
-        android:name="com.example.finalproject.presentation.profile_feature.screens.transactions.TransactionFragment"
+        android:name="com.example.finalproject.presentation.screen.transactions.TransactionFragment"
         android:label="TransactionFragment" >
         <action
             android:id="@+id/action_transactionFragment_to_userProfileFragment"
