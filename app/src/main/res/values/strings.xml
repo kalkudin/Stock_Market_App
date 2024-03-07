@@ -3,7 +3,7 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="password">Password</string>
-    <string name="sample_email">name@company.com</string>
+    <string name="sample_email">Name@company.com</string>
     <string name="remember_me">Remember Me</string>
     <string name="Back">Back</string>
     <string name="forgot_password">Forgot Password? Click Here To Reset</string>
@@ -12,7 +12,7 @@
     <string name="return_to_login">Return To Login</string>
     <string name="welcome">Investing For Everybody</string>
     <string name="or">or</string>
-    <string name="not_registered_sign_up">Not Registered? Sign Up</string>
+    <string name="not_registered_sign_up">Not Registered Yet? Sign Up Now!</string>
     <string name="repeat_password">Repeat Password</string>
     <string name="description_main">Investing is not as complicated as you think, you just need to know where to start.</string>
     <string name="create_an_account">Create an Account</string>
@@ -53,6 +53,10 @@
 
     <string name="visa">Visa</string>
     <string name="mastercard">MasterCard</string>
+    <string name="last_name">Last Name</string>
+    <string name="jemali">Shamqor</string>
+    <string name="first_name">First Name</string>
+    <string name="malphiti">Malphiti</string>
 
     <string-array name="sort_options">
         <item>Type</item>

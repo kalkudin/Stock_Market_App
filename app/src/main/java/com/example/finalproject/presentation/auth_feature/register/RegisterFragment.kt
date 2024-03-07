@@ -1,32 +1,41 @@
 package com.example.finalproject.presentation.auth_feature.register
 
-import android.view.View
+import android.util.Log
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentRegisterLayoutBinding
+import com.example.finalproject.presentation.auth_feature.adapter.RegisterPageRecyclerViewAdapter
 import com.example.finalproject.presentation.auth_feature.event.RegisterEvent
+import com.example.finalproject.presentation.auth_feature.model.UserRegisterInformation
 import com.example.finalproject.presentation.auth_feature.state.RegisterState
 import com.example.finalproject.presentation.base.BaseFragment
+import com.example.finalproject.presentation.extension.hideView
+import com.example.finalproject.presentation.extension.showView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RegisterFragment : BaseFragment<FragmentRegisterLayoutBinding>(FragmentRegisterLayoutBinding::inflate){
+class RegisterFragment :
+    BaseFragment<FragmentRegisterLayoutBinding>(FragmentRegisterLayoutBinding::inflate) {
 
-    private val registerViewModel : RegisterViewModel by viewModels()
+    private val registerViewModel: RegisterViewModel by viewModels()
+
+    private lateinit var registerRecyclerAdapter: RegisterPageRecyclerViewAdapter
+
+    override fun bind() {
+        bindAdapter()
+    }
 
     override fun bindViewActionListeners() {
         bindBackBtn()
-        bindUserAlreadyRegisteredBtn()
-        bindRegisterBtn()
     }
 
     override fun bindObservers() {
@@ -42,32 +51,44 @@ class RegisterFragment : BaseFragment<FragmentRegisterLayoutBinding>(FragmentReg
         }
     }
 
-    private fun bindUserAlreadyRegisteredBtn() {
+    private fun bindAdapter() {
         with(binding) {
-            btnAlreadyRegistered.setOnClickListener {
-                registerViewModel.onEvent(RegisterEvent.UserAlreadyExistsPressed)
-            }
+            registerRecyclerAdapter = RegisterPageRecyclerViewAdapter(
+                onAlreadyRegisteredCLicked = {
+                    bindUserAlreadyRegisteredBtn()
+                },
+                registerUser = { user ->
+                    registerUser(user = user)
+                })
+
+            rvRegisterPage.adapter = registerRecyclerAdapter
+            rvRegisterPage.layoutManager = LinearLayoutManager(context)
         }
     }
 
-    private fun bindRegisterBtn() {
-        with(binding) {
-            btnRegister.setOnClickListener {
-                registerViewModel.onEvent(event = RegisterEvent.Register(
-                    email = etEmail.text.toString(),
-                    password = etPassword.text.toString(),
-                    repeatPassword = etRepeatPassword.text.toString()
-                ))
-                sendRegisterResult()
-            }
-        }
+    private fun bindUserAlreadyRegisteredBtn() {
+        Log.d("RegisterViewModel", "btn pressed")
+        registerViewModel.onEvent(RegisterEvent.UserAlreadyExistsPressed)
+    }
+
+    private fun registerUser(user: UserRegisterInformation) {
+        Log.d("RegisterViewModel", user.toString())
+        registerViewModel.onEvent(
+            event = RegisterEvent.Register(
+                email = user.email,
+                password = user.password,
+                repeatPassword = user.repeatPassword,
+                firstName = user.firstName,
+                lastName = user.lastName)
+        )
+        sendRegisterResult(user = user)
     }
 
     private fun bindNavigationFlow() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 registerViewModel.navigationFlow.collect { event ->
-                    when(event) {
+                    when (event) {
                         is RegisterNavigationEvent.NavigateToHome -> navigateBack()
                         is RegisterNavigationEvent.NavigateToLogin -> navigateUserToLogin()
                     }
@@ -87,34 +108,38 @@ class RegisterFragment : BaseFragment<FragmentRegisterLayoutBinding>(FragmentReg
     }
 
     private fun handleRegisterState(state: RegisterState) {
-        binding.progressBar.isVisible = state.isLoading
-        if (state.isLoading) View.VISIBLE else View.GONE
+        with(binding) {
+            if (state.isLoading) {
+                showView(progressBar)
+            }
 
-        if(state.isSuccess) {
-            showSuccess()
-        }
+            if (state.isSuccess) {
+                showSuccess()
+                hideView(rvRegisterPage)
+                hideView(progressBar)
+            }
 
-        state.errorMessage?.let { errorMessage ->
-            showError(errorMessage = errorMessage)
-            registerViewModel.onEvent(RegisterEvent.ResetFlow)
+            state.errorMessage?.let { errorMessage ->
+                showError(errorMessage = errorMessage)
+                hideView(progressBar)
+                registerViewModel.onEvent(RegisterEvent.ResetFlow)
+            }
         }
     }
 
-    private fun sendRegisterResult() {
-        setFragmentResult(
-            "registerResult",
-            bundleOf(
-                "email" to binding.etEmail.text.toString(),
-                "password" to binding.etPassword.text.toString()
+    private fun sendRegisterResult(user : UserRegisterInformation) {
+        setFragmentResult("registerResult", bundleOf(
+                "email" to user.email,
+                "password" to user.password
             )
         )
     }
 
-    private fun showSuccess(){
+    private fun showSuccess() {
         Snackbar.make(binding.root, "Registration successful", Snackbar.LENGTH_LONG).show()
     }
 
-    private fun showError(errorMessage : String){
+    private fun showError(errorMessage: String) {
         Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).setAction("OK") {}.show()
     }
 

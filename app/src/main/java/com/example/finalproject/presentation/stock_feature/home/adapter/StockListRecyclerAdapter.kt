@@ -31,6 +31,7 @@ class StockListRecyclerAdapter(private val onItemClick: (Stock) -> Unit): ListAd
                 icGrowthIndicator.setImageResource(
                     if (stock.changeValue >= 0) R.drawable.ic_up else R.drawable.ic_down
                 )
+
                 root.setOnClickListener { onItemClick(stock) }
             }
         }

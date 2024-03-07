@@ -20,20 +20,13 @@ class StockHostRecyclerAdapter(
     private var userFunds: String = "0.0"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockHostViewHolder {
-        val binding = ItemStockHomeHostRecyclerBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
+        val binding = ItemStockHomeHostRecyclerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StockHostViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: StockHostViewHolder, position: Int) {
         holder.bind()
     }
-
-    override fun getItemCount(): Int = 1
-
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(best: List<Stock>, worst: List<Stock>, active: List<Stock>, funds: String = "") {
         bestStocks = best
@@ -54,6 +47,7 @@ class StockHostRecyclerAdapter(
                 btnViewMoreBestStocks.setOnClickListener { onViewMoreClick(Stock.PerformingType.BEST_PERFORMING) }
                 btnViewMoreWorstStocks.setOnClickListener { onViewMoreClick(Stock.PerformingType.WORST_PERFORMING) }
                 btnViewMoreActiveStocks.setOnClickListener { onViewMoreClick(Stock.PerformingType.ACTIVE_PERFORMING) }
+
                 btnAddMoreFunds.setOnClickListener { onAddFundsClick() }
 
                 binding.tvAmount.text = userFunds
@@ -67,4 +61,5 @@ class StockHostRecyclerAdapter(
             }
         }
     }
+    override fun getItemCount(): Int = 1
 }

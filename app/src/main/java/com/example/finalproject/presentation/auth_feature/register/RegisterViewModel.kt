@@ -1,5 +1,6 @@
 package com.example.finalproject.presentation.auth_feature.register
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -38,19 +40,25 @@ class RegisterViewModel @Inject constructor(
             is RegisterEvent.Register -> registerUser(
                 email = event.email,
                 password = event.password,
-                repeatPassword = event.repeatPassword
+                repeatPassword = event.repeatPassword,
+                firstName = event.firstName,
+                lastName =  event.lastName,
             )
         }
     }
 
-    private fun registerUser(email: String, password: String, repeatPassword: String) {
+    private fun registerUser(email: String, password: String, repeatPassword: String, firstName: String, lastName: String) {
         viewModelScope.launch {
-            authUseCases.registerUserUseCase(email, password, repeatPassword).collect { resource ->
+            authUseCases.registerUserUseCase(email, password, repeatPassword, firstName, lastName).collect { resource ->
                 when (resource) {
-                    is Resource.Loading -> _registerFlow.update { it.copy(isLoading = true) }
+                    is Resource.Loading -> _registerFlow.update {
+                        it.copy(isLoading = true) }
 
                     is Resource.Success -> {
-                        _registerFlow.update { it.copy(isSuccess = true, isLoading = false) }
+                        _registerFlow.update {
+                            it.copy(isSuccess = true, isLoading = false)
+                        }
+                        saveUserInitials(uid = resource.data, firstName = firstName, lastName = lastName)
                         navigateToLogin()
                     }
 
@@ -66,6 +74,15 @@ class RegisterViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private suspend fun saveUserInitials(uid: String, firstName : String, lastName : String) {
+        val job = viewModelScope.launch {
+            authUseCases.saveUserInitialsUseCase(uid = uid, firstName = "jemal", lastName = "jiblibegashvili").collect { resource ->
+                Log.d("RegisterVM", resource.toString())
+            }
+        }
+        job.join()
     }
 
     private fun navigateToHome() {

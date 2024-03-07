@@ -13,9 +13,9 @@ class RegisterUserUseCase @Inject constructor(
     private val registerRepository: RegisterRepository,
     private val authenticationUtil: AuthenticationUtil
 ) {
-    operator fun invoke(email: String, password: String, repeatPassword : String): Flow<Resource<Boolean>> {
+    operator fun invoke(email: String, password: String, repeatPassword : String, firstName : String, lastName : String): Flow<Resource<String>> {
 
-        if (!authenticationUtil.areFieldsNotEmpty(email, password)) {
+        if (!authenticationUtil.areFieldsNotEmpty(email, password, repeatPassword, firstName, lastName)) {
             return flowOf(Resource.Error(ErrorType.FieldsEmpty))
         }
 

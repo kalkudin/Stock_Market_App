@@ -4,21 +4,19 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.domain.model.UserFunds
+import com.example.finalproject.domain.usecase.AuthUseCases
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.StocksToWatchUseCases
 import com.example.finalproject.domain.usecase.UserFundsUseCases
+import com.example.finalproject.presentation.profile_feature.mapper.toPresentation
 import com.example.finalproject.presentation.stock_feature.home.event.StockHomeEvent
-import com.example.finalproject.presentation.stock_feature.home.mapper.formatUserFunds
-import com.example.finalproject.presentation.stock_feature.home.mapper.handleResponse
-import com.example.finalproject.presentation.stock_feature.home.mapper.handleUserFundsResult
+import com.example.finalproject.presentation.stock_feature.home.mapper.handleResourceUpdateHomePage
+import com.example.finalproject.presentation.stock_feature.home.mapper.toPresentation
 import com.example.finalproject.presentation.stock_feature.home.model.Stock
 import com.example.finalproject.presentation.stock_feature.home.state.StockListState
-import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -26,7 +24,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -37,6 +34,7 @@ class StockHomeViewModel @Inject constructor(
     private val dataStoreUseCases: DataStoreUseCases,
     private val userFundsUseCases: UserFundsUseCases,
     private val stocksToWatchUseCases: StocksToWatchUseCases,
+    private val authUseCases: AuthUseCases
 ) : ViewModel() {
 
     private val _stockState = MutableStateFlow(StockListState())
@@ -44,13 +42,6 @@ class StockHomeViewModel @Inject constructor(
 
     private val _navigationFlow = MutableSharedFlow<StockHomeNavigationEvent>()
     val navigationFlow: SharedFlow<StockHomeNavigationEvent> = _navigationFlow.asSharedFlow()
-
-    init {
-        viewModelScope.launch {
-            val funds = userFundsUseCases.retrieveUserFundsUseCase("GUlfnYD49RSoQ9auGmRC0G1YMld2").first()
-            Log.d("StockHome", funds.toString())
-        }
-    }
 
     fun onEvent(event: StockHomeEvent) {
         when (event) {
@@ -64,36 +55,68 @@ class StockHomeViewModel @Inject constructor(
 
     private fun getStocksAndUserData() {
         viewModelScope.launch {
-            _stockState.update { it.copy(isLoading = true) }
+            _stockState.update { state -> state.copy(isLoading = true) }
+
             val userId = dataStoreUseCases.readUserUidUseCase().first()
-            val bestStocks = mutableListOf<Stock>()
-            val worstStocks = mutableListOf<Stock>()
-            val activeStocks = mutableListOf<Stock>()
-            val errorMessages: MutableList<String> = mutableListOf()
 
-            coroutineScope {
-                userFundsUseCases.retrieveUserFundsUseCase(userId).collect { result ->
-                    handleUserFundsResult(result, _stockState, ::formatUserFunds, ::getErrorMessage) }
-
-                val fetchBest = async {
-                    handleResponse(stocksToWatchUseCases.getBestPerformingStocksUseCase(), Stock.PerformingType.BEST_PERFORMING, bestStocks, errorMessages) }
-                val fetchWorst = async {
-                    handleResponse(stocksToWatchUseCases.getWorstPerformingStocksUseCase(), Stock.PerformingType.WORST_PERFORMING, worstStocks, errorMessages) }
-                val fetchActive = async {
-                    handleResponse(stocksToWatchUseCases.getActivePerformingStocksUseCase(), Stock.PerformingType.ACTIVE_PERFORMING, activeStocks, errorMessages) }
-
-                awaitAll(fetchBest, fetchWorst, fetchActive)
-
-                _stockState.update { currentState ->
-                    currentState.copy(
-                        bestPerformingStocks = bestStocks,
-                        worstPerformingStocks = worstStocks,
-                        activePerformingStocks = activeStocks,
-                        errorMessage = errorMessages.firstOrNull(),
-                        isLoading = false
+            val userInfoJob = async {
+                authUseCases.getUserInitialsUseCase(uid = userId).collect { resource ->
+                    handleResourceUpdateHomePage(
+                        resource = resource,
+                        stateFlow = _stockState,
+                        onSuccess = {initials -> this.copy(userInitials = initials.toPresentation())},
+                        onError = {errorMessage -> this.copy(errorMessage = errorMessage)}
                     )
                 }
             }
+
+            val fundsJob = async {
+                userFundsUseCases.retrieveUserFundsUseCase(uid = userId).collect { resource ->
+                    handleResourceUpdateHomePage(
+                        resource = resource,
+                        stateFlow = _stockState,
+                        onSuccess = {funds -> this.copy(userFunds = funds.amount.toString())},
+                        onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
+                        )
+                }
+            }
+
+            val bestStocksJob = async {
+                stocksToWatchUseCases.getBestPerformingStocksUseCase().collect { resource ->
+                    handleResourceUpdateHomePage(
+                        resource = resource,
+                        stateFlow = _stockState,
+                        onSuccess = {bestStocks -> this.copy(bestPerformingStocks = bestStocks.take(6).map { stock -> stock.toPresentation(Stock.PerformingType.BEST_PERFORMING) })},
+                        onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
+                    )
+                }
+            }
+
+            val worstStocksJob = async {
+                stocksToWatchUseCases.getWorstPerformingStocksUseCase().collect { resource ->
+                    handleResourceUpdateHomePage(
+                        resource = resource,
+                        stateFlow = _stockState,
+                        onSuccess = {worstStocks -> this.copy(worstPerformingStocks = worstStocks.take(6).map { stock -> stock.toPresentation(Stock.PerformingType.WORST_PERFORMING) })},
+                        onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
+                    )
+                }
+            }
+
+            val activeStocksJob = async {
+                stocksToWatchUseCases.getActivePerformingStocksUseCase().collect { resource ->
+                    handleResourceUpdateHomePage(
+                        resource = resource,
+                        stateFlow = _stockState,
+                        onSuccess = {activeStocks -> this.copy(activePerformingStocks = activeStocks.take(6).map { stock -> stock.toPresentation(Stock.PerformingType.ACTIVE_PERFORMING) })},
+                        onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
+                    )
+                }
+            }
+
+            awaitAll(fundsJob, bestStocksJob, worstStocksJob, activeStocksJob, userInfoJob)
+
+            _stockState.update { state -> state.copy(isLoading = false)}
         }
     }
 

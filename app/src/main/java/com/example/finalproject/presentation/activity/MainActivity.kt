@@ -25,13 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         bottomNavigationSetUp()
-
-        
     }
 
     private fun bottomNavigationSetUp() {
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         navController = navHostFragment.findNavController()
         binding.navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -46,6 +43,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun foo() {}
 }

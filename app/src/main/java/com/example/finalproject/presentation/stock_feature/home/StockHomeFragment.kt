@@ -54,22 +54,16 @@ class StockHomeFragment :
     }
 
     private fun bindHostRecyclerView() {
-        val onStockClick: (Stock) -> Unit = { stock ->
-            handleItemClick(stock)
-        }
-
-        val onViewMoreClick: (Stock.PerformingType) -> Unit = { type ->
-            handleViewMoreClicked(type)
-        }
-
-        val onAddFundsCLicked: () -> Unit = {
-            handleAddFundsClicked()
-        }
-
         hostAdapter = StockHostRecyclerAdapter(
-            onStockClick = onStockClick,
-            onViewMoreClick = onViewMoreClick,
-            onAddFundsCLicked
+            onStockClick = { stock ->
+                handleItemClick(stock)
+            },
+            onViewMoreClick = { type ->
+                handleViewMoreClicked(type)
+            },
+            onAddFundsClick = {
+                handleAddFundsClicked()
+            }
         )
 
         binding.hostRecyclerView.apply {
@@ -84,8 +78,14 @@ class StockHomeFragment :
                 stockHomeViewModel.navigationFlow.collect { event ->
                     when (event) {
                         is StockHomeNavigationEvent.LogOut -> logOut()
-                        is StockHomeNavigationEvent.NavigateToDetailsPage -> navigateToDetailsFragment(stock = event.stock)
-                        is StockHomeNavigationEvent.NavigateToExtendedStockList -> navigateToExtensiveListFragment(stockType = event.stockType)
+                        is StockHomeNavigationEvent.NavigateToDetailsPage -> navigateToDetailsFragment(
+                            stock = event.stock
+                        )
+
+                        is StockHomeNavigationEvent.NavigateToExtendedStockList -> navigateToExtensiveListFragment(
+                            stockType = event.stockType
+                        )
+
                         is StockHomeNavigationEvent.NavigateToFundsPage -> navigateToAddFundsFragment()
                     }
                 }
@@ -104,23 +104,25 @@ class StockHomeFragment :
     }
 
     private fun handleState(state: StockListState) {
-        binding.hostRecyclerView.visibility = View.GONE
-        binding.progressBar.isVisible = state.isLoading
+        with(binding) {
+            hostRecyclerView.visibility = View.GONE
+            progressBar.isVisible = state.isLoading
 
-        state.errorMessage?.let { errorMessage ->
-            if (errorMessage.isNotEmpty()) {
-                showError(errorMessage)
+            state.errorMessage?.let { errorMessage ->
+                if (errorMessage.isNotEmpty()) {
+                    showError(errorMessage)
+                }
             }
-        }
 
-        if (!state.isLoading) {
-            binding.hostRecyclerView.visibility = View.VISIBLE
-            hostAdapter.updateData(
-                state.bestPerformingStocks ?: emptyList(),
-                state.worstPerformingStocks ?: emptyList(),
-                state.activePerformingStocks ?: emptyList(),
-                state.userFunds ?: "0.0"
-            )
+            if (!state.isLoading) {
+                hostRecyclerView.visibility = View.VISIBLE
+                hostAdapter.updateData(
+                    state.bestPerformingStocks ?: emptyList(),
+                    state.worstPerformingStocks ?: emptyList(),
+                    state.activePerformingStocks ?: emptyList(),
+                    state.userFunds ?: "0.0"
+                )
+            }
         }
     }
 

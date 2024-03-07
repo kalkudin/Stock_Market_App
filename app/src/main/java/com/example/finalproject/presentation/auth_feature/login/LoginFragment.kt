@@ -12,6 +12,7 @@ import com.example.finalproject.databinding.FragmentLoginLayoutBinding
 import com.example.finalproject.presentation.auth_feature.event.LoginEvent
 import com.example.finalproject.presentation.auth_feature.state.LoginState
 import com.example.finalproject.presentation.base.BaseFragment
+import com.example.finalproject.presentation.extension.setupPasswordToggle
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -21,18 +22,27 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
 
     private val loginViewModel : LoginViewModel by viewModels()
 
+    override fun bind() {
+        bindPasswordVisibility()
+    }
+
     override fun bindViewActionListeners() {
         bindBackBtn()
         bindLoginBtn()
         bindForgotPassword()
         bindUserNotAuthenticated()
-        //create separate setup in base fragment
         retrieveAndSetRegisterResult()
     }
 
     override fun bindObservers() {
         bindNavigationFlow()
         bindLoginFlow()
+    }
+
+    private fun bindPasswordVisibility(){
+        with(binding) {
+            etPassword.setupPasswordToggle()
+        }
     }
 
     private fun bindBackBtn() {

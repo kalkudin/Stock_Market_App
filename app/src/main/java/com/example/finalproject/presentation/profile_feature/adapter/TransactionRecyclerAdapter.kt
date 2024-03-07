@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.databinding.ItemTransactionLayoutBinding
 import com.example.finalproject.presentation.profile_feature.model.Transaction
+import com.example.finalproject.presentation.stock_feature.home.mapper.formatUserFunds
 
 class TransactionRecyclerAdapter : ListAdapter<Transaction, TransactionRecyclerAdapter.TransactionViewHolder>(DiffUtilCallback) {
     companion object DiffUtilCallback: DiffUtil.ItemCallback<Transaction>() {
@@ -22,7 +23,7 @@ class TransactionRecyclerAdapter : ListAdapter<Transaction, TransactionRecyclerA
     inner class TransactionViewHolder(private val binding : ItemTransactionLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(transaction: Transaction) {
             with(binding) {
-                tvAmount.text = "${transaction.amount} $"
+                tvAmount.text = formatUserFunds(transaction.amount)
                 tvDate.text = transaction.date
                 tvDescription.text = transaction.description
                 tvType.text = transaction.type.toString()

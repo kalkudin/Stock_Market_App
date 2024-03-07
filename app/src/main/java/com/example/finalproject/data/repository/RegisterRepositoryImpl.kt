@@ -14,11 +14,11 @@ class RegisterRepositoryImpl @Inject constructor(
     private val handleAuthentication: HandleAuthentication,
     private val firebaseAuth: FirebaseAuth
 ) : RegisterRepository {
-    override fun registerUser(user: User): Flow<Resource<Boolean>> {
+    override fun registerUser(user: User): Flow<Resource<String>> {
         return handleAuthentication.authenticate(
             user.toDto(),
             operation = { email, password -> firebaseAuth.createUserWithEmailAndPassword(email, password)},
-            onSuccess = { true }
+            onSuccess = { authResult -> authResult.user?.uid ?: throw IllegalStateException("User ID not found") }
         )
     }
 }

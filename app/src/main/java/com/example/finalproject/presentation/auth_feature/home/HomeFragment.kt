@@ -17,6 +17,10 @@ class HomeFragment : BaseFragment<FragmentHomeLayoutBinding>(FragmentHomeLayoutB
 
     private val homeViewModel : HomeViewModel by viewModels()
 
+    override fun bind() {
+        bindUserSession()
+    }
+
     override fun bindViewActionListeners() {
         bindLoginBtn()
         bindRegisterBtn()
@@ -24,6 +28,10 @@ class HomeFragment : BaseFragment<FragmentHomeLayoutBinding>(FragmentHomeLayoutB
 
     override fun bindObservers() {
         bindNavigationFlow()
+    }
+
+    private fun bindUserSession() {
+        homeViewModel.onEvent(HomeEvent.CheckCurrentSession)
     }
 
     private fun bindLoginBtn() {

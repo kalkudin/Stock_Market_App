@@ -22,14 +22,11 @@ class HomeViewModel @Inject constructor(
     private val _navigationFlow = MutableSharedFlow<HomeNavigationEvent>()
     val navigationFlow : SharedFlow<HomeNavigationEvent> = _navigationFlow.asSharedFlow()
 
-    init {
-        checkCurrentSession()
-    }
-
     fun onEvent(event : HomeEvent) {
         when(event) {
             is HomeEvent.LoginPressed -> navigateUserToLogin()
             is HomeEvent.RegisterPressed -> navigateUserToRegister()
+            is HomeEvent.CheckCurrentSession -> checkCurrentSession()
         }
     }
 

@@ -5,5 +5,5 @@ import com.example.finalproject.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface RegisterRepository {
-    fun registerUser(user : User): Flow<Resource<Boolean>>
+    fun registerUser(user : User): Flow<Resource<String>>
 }
