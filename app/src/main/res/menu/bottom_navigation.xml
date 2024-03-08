@@ -2,13 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/companyListFragment"
+        android:icon="@drawable/ic_list"
+        android:title="" />
+
+    <item
         android:id="@+id/stockHomeFragment"
         android:icon="@drawable/ic_home"
         android:title=""/>
 
     <item
-        android:id="@+id/companyListFragment"
-        android:icon="@drawable/ic_list"
+        android:id="@+id/favoriteStocksFragment"
+        android:icon="@drawable/ic_watchlist"
+        android:title=""/>
+
+    <item
+        android:id="@+id/userProfileFragment"
+        android:icon="@drawable/ic_profile"
         android:title="" />
 
 </menu>
