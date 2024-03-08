@@ -28,13 +28,13 @@ class FavoriteStocksFragment : BaseFragment<FragmentFavoriteStocksLayoutBinding>
     private val stocksToRemoveList: MutableList<String> = mutableListOf()
 
     override fun bind() {
-        bindStocks()
+//        bindStocks()
         bindStocksAdapter()
     }
 
     override fun bindViewActionListeners() {
         bindBackBtn()
-        bindDeleteButton()
+//        bindDeleteButton()
     }
 
     override fun bindObservers() {
@@ -42,9 +42,9 @@ class FavoriteStocksFragment : BaseFragment<FragmentFavoriteStocksLayoutBinding>
         bindSuccessFlow()
     }
 
-    private fun bindStocks() {
-        favoriteStocksViewModel.onEvent(FavoriteStocksEvent.GetFavoriteStocks)
-    }
+//    private fun bindStocks() {
+//        favoriteStocksViewModel.onEvent(FavoriteStocksEvent.GetFavoriteStocks)
+//    }
 
     private fun bindBackBtn() {
         with(binding) {
@@ -52,14 +52,14 @@ class FavoriteStocksFragment : BaseFragment<FragmentFavoriteStocksLayoutBinding>
         }
     }
 
-    private fun bindDeleteButton() {
-        //selection does not include an option to unselect
-        with(binding) {
-            btnDeleteAll.setOnClickListener {
-                favoriteStocksViewModel.onEvent(FavoriteStocksEvent.RemoveSelectedStocks(stocksToRemoveList))
-            }
-        }
-    }
+//    private fun bindDeleteButton() {
+//        //selection does not include an option to unselect
+//        with(binding) {
+//            btnDeleteAll.setOnClickListener {
+//                favoriteStocksViewModel.onEvent(FavoriteStocksEvent.RemoveSelectedStocks(stocksToRemoveList))
+//            }
+//        }
+//    }
 
     private fun bindStocksAdapter() {
         with(binding) {

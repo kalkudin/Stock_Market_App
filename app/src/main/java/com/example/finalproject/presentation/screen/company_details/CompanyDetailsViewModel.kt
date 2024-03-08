@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
+import com.example.finalproject.domain.usecase.company_details_chart_usecase.GetCompanyChartIntradayUseCase
 import com.example.finalproject.domain.usecase.company_details_usecase.GetCompanyDetailsUseCase
 import com.example.finalproject.presentation.event.company_details.CompanyDetailsEvents
 import com.example.finalproject.presentation.mapper.company_details.toPresentation
@@ -20,19 +21,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CompanyDetailsViewModel @Inject constructor(
-    private val getCompanyDetailsUseCase: GetCompanyDetailsUseCase
+    private val getCompanyDetailsUseCase: GetCompanyDetailsUseCase,
+    private val getCompanyChartIntradayUseCase: GetCompanyChartIntradayUseCase
 ) : ViewModel() {
 
     private val _companyDetailsState = MutableStateFlow(CompanyDetailsState())
     val companyDetailsState: SharedFlow<CompanyDetailsState> get() = _companyDetailsState
 
-    private val _navigationEvent = MutableSharedFlow<CompanyDetailsNavigationEvents>()
-    val navigationEvent: SharedFlow<CompanyDetailsNavigationEvents> get() = _navigationEvent
-
     fun onEvent(event: CompanyDetailsEvents) {
         when (event) {
             is CompanyDetailsEvents.GetCompanyDetails -> getCompanyDetails(event.symbol)
-            is CompanyDetailsEvents.BackButtonPressed -> onBackButtonPressed()
+            is CompanyDetailsEvents.GetCompanyChartIntraday -> getCompanyChartIntraday(event.interval, event.symbol, event.from, event.to)
         }
     }
 
@@ -41,6 +40,16 @@ class CompanyDetailsViewModel @Inject constructor(
             handleResource(getCompanyDetailsUseCase.invoke(symbol)) { data ->
                 _companyDetailsState.update { currentState ->
                     currentState.copy(companyDetails = data.map { it.toPresentation() })
+                }
+            }
+        }
+    }
+
+    private fun getCompanyChartIntraday(interval: String, symbol: String, from: String, to: String) {
+        viewModelScope.launch {
+            handleResource(getCompanyChartIntradayUseCase.invoke(interval, symbol, from, to)) { data ->
+                _companyDetailsState.update { currentState ->
+                    currentState.copy(companyChartIntraday = data.map { it.toPresentation() })
                 }
             }
         }
@@ -65,16 +74,6 @@ class CompanyDetailsViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun onBackButtonPressed() {
-        viewModelScope.launch {
-            _navigationEvent.emit(CompanyDetailsNavigationEvents.NavigateToCompanyList)
-        }
-    }
-
-    sealed interface CompanyDetailsNavigationEvents {
-        data object NavigateToCompanyList : CompanyDetailsNavigationEvents
     }
 }
 

@@ -83,7 +83,7 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("com.google.firebase:firebase-firestore:24.10.2")
+    implementation("com.google.firebase:firebase-firestore:24.10.3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -118,6 +118,16 @@ dependencies {
     //
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    //circular imageview
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    //jsoup for parsing html
+    implementation("org.jsoup:jsoup:1.14.3")
+    //chart
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }
 
 kapt {

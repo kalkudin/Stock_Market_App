@@ -8,9 +8,12 @@
     tools:context=".presentation.screen.company_list.CompanyListFragment">
 
     <androidx.appcompat.widget.AppCompatEditText
+
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/search_with_company_name_or_symbol"
+        android:textColorHint="@color/light_gray"
         android:padding="15dp"
         />
 

@@ -57,6 +57,7 @@
     <string name="jemali">Shamqor</string>
     <string name="first_name">First Name</string>
     <string name="malphiti">Malphiti</string>
+    <string name="search_with_company_name_or_symbol">Search with Company name or symbol</string>
 
     <string-array name="sort_options">
         <item>Type</item>

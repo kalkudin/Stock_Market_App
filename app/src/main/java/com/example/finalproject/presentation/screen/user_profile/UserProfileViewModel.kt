@@ -5,15 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.CreditCardUseCases
 import com.example.finalproject.domain.usecase.DataStoreUseCases
-import com.example.finalproject.domain.usecase.SavedStocksUseCases
 import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.presentation.event.profile.UserProfileEvent
+import com.example.finalproject.presentation.mapper.funds.toPresentation
 import com.example.finalproject.presentation.mapper.profile.handleResourceUpdate
 import com.example.finalproject.presentation.mapper.profile.toPresentation
-import com.example.finalproject.presentation.state.profile.ProfileState
-import com.example.finalproject.presentation.mapper.company_details.toPresentation
-import com.example.finalproject.presentation.mapper.funds.toPresentation
 import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.state.profile.ProfileState
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -34,7 +32,6 @@ class UserProfileViewModel @Inject constructor(
     private val dataStoreUseCases: DataStoreUseCases,
     private val transactionsUseCases: TransactionsUseCases,
     private val creditCardsUseCases : CreditCardUseCases,
-    private val savedStocksUseCases: SavedStocksUseCases
 ) : ViewModel(){
 
     private val _profileState = MutableStateFlow(ProfileState())
@@ -95,18 +92,18 @@ class UserProfileViewModel @Inject constructor(
                 }
             }
 
-            val savedStocksJob = async {
-                savedStocksUseCases.getSavedStocksUseCase(uid).collect { result ->
-                    handleResourceUpdate(
-                        resource = result,
-                        stateFlow = _profileState,
-                        onSuccess = { stocks -> this.copy(favoriteStockList = stocks.take(6).map { it.toPresentation() }) },
-                        onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
-                    )
-                }
-            }
+//            val savedStocksJob = async {
+//                savedStocksUseCases.getSavedStocksUseCase(uid).collect { result ->
+//                    handleResourceUpdate(
+//                        resource = result,
+//                        stateFlow = _profileState,
+//                        onSuccess = { stocks -> this.copy(favoriteStockList = stocks.take(6).map { it.toPresentation() }) },
+//                        onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
+//                    )
+//                }
+//            }
 
-            awaitAll(transactionsJob, cardsJob, savedStocksJob)
+            awaitAll(transactionsJob, cardsJob)
             _profileState.update { it.copy(isLoading = false) }
         }
     }

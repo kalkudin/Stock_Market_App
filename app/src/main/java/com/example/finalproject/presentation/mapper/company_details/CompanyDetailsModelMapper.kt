@@ -7,6 +7,7 @@ fun CompanyDetails.toPresentation(): CompanyDetailsModel {
     return CompanyDetailsModel(
         symbol = symbol,
         companyName = companyName,
-        description = description
+        description = description,
+        image = image
     )
 }

@@ -4,4 +4,5 @@ data class CompanyDetailsDto(
     val symbol: String,
     val companyName: String,
     val description: String,
+    val image: String
 )

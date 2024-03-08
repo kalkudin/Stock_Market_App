@@ -3,4 +3,5 @@ data class CompanyDetails (
     val symbol: String,
     val companyName: String,
     val description: String,
+    val image: String
 )

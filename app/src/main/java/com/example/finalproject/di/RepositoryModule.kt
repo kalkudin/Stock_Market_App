@@ -11,14 +11,15 @@ import com.example.finalproject.data.repository.DataStoreRepositoryImpl
 import com.example.finalproject.data.repository.LoginRepositoryImpl
 import com.example.finalproject.data.repository.RegisterRepositoryImpl
 import com.example.finalproject.data.repository.ResetPasswordRepositoryImpl
-import com.example.finalproject.data.repository.SavedStocksRepositoryImpl
 import com.example.finalproject.data.repository.TransactionsRepositoryImpl
 import com.example.finalproject.data.repository.UserFundsRepositoryImpl
 import com.example.finalproject.data.repository.UserInitialsRepositoryImpl
 import com.example.finalproject.data.repository.company_details.CompanyDetailsRepositoryImpl
+import com.example.finalproject.data.repository.company_details_chart.CompanyChartIntradayRepositoryImpl
 import com.example.finalproject.data.repository.company_list.CompanyListRepositoryImpl
 import com.example.finalproject.data.repository.stocks_to_watch.StocksToWatchRepositoryImpl
 import com.example.finalproject.domain.datasource.company_details.RemoteCompanyDetailsDataSource
+import com.example.finalproject.domain.datasource.company_details_chart.RemoteCompanyChartIntradayDataSource
 import com.example.finalproject.domain.datasource.company_list.RemoteCompanyListDataSource
 import com.example.finalproject.domain.repository.CreditCardRepository
 import com.example.finalproject.domain.repository.DataStoreRepository
@@ -29,8 +30,8 @@ import com.example.finalproject.domain.repository.TransactionsRepository
 import com.example.finalproject.domain.repository.UserFundsRepository
 import com.example.finalproject.domain.repository.UserInitialsRepository
 import com.example.finalproject.domain.repository.company_details.CompanyDetailsRepository
+import com.example.finalproject.domain.repository.company_details_chart.CompanyChartIntradayRepository
 import com.example.finalproject.domain.repository.company_list.CompanyListRepository
-import com.example.finalproject.domain.repository.saved_stocks.SavedStocksRepository
 import com.example.finalproject.domain.repository.stocks_to_watch.StocksToWatchRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -114,12 +115,6 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideSavedStocksRepository() : SavedStocksRepository {
-        return SavedStocksRepositoryImpl()
-    }
-
-    @Provides
-    @Singleton
     fun provideTransactionsRepository(db : FirebaseFirestore) : TransactionsRepository {
         return TransactionsRepositoryImpl(db = db)
     }
@@ -128,5 +123,15 @@ object RepositoryModule {
     @Singleton
     fun provideUserInitialsRepository(db : FirebaseFirestore) : UserInitialsRepository {
         return UserInitialsRepositoryImpl(db = db)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCompanyChartIntradayRepository(
+        remoteCompanyChartIntradayDataSource: RemoteCompanyChartIntradayDataSource,
+    ) : CompanyChartIntradayRepository {
+        return CompanyChartIntradayRepositoryImpl(
+            remoteCompanyChartIntradayDataSource = remoteCompanyChartIntradayDataSource,
+        )
     }
 }
