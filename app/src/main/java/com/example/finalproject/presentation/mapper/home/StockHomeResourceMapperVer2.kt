@@ -2,14 +2,15 @@ package com.example.finalproject.presentation.mapper.home
 
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.presentation.state.home.StockListState
+import com.example.finalproject.presentation.util.getErrorMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-fun <T> handleResourceUpdateHomePage(
+fun <T, S : Any> handleResourceUpdateHomePage(
     resource: Resource<T>,
-    stateFlow: MutableStateFlow<StockListState>,
-    onSuccess: StockListState.(T) -> StockListState,
-    onError: StockListState.(String) -> StockListState
+    stateFlow: MutableStateFlow<S>,
+    onSuccess: S.(T) -> S,
+    onError: S.(String) -> S
 ){
     when (resource) {
         is Resource.Success -> {
@@ -21,7 +22,7 @@ fun <T> handleResourceUpdateHomePage(
         }
         is Resource.Error -> {
             stateFlow.update { currentState ->
-                onError(currentState, resource.errorType.toString())
+                onError(currentState, getErrorMessage(resource.errorType))
             }
         }
         else -> {}

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/style_background_wave">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btn_back"
@@ -15,6 +17,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_grid_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    <com.google.android.material.imageview.ShapeableImageView-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:background="@drawable/style_stocks_to_watch_active_gradient"-->
+<!--        app:shapeAppearanceOverlay="@style/RoundedShapeAppearanceOverlay"-->
+<!--        tools:layout_editor_absoluteX="56dp"-->
+<!--        tools:layout_editor_absoluteY="223dp" />-->
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_container"
         android:layout_width="300dp"
@@ -24,6 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_back">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -70,23 +92,35 @@
         android:layout_marginEnd="20dp"
         android:gravity="center"
         android:hint="@string/_0_0"
-        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:background="@null"
+        android:textColorHint="@color/ghost_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_container" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_funds"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/sky_blue"
+        android:fontFamily="@font/open_sauce_sans_medium"
         android:text="@string/add_funds"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_add_funds" />
+        app:layout_constraintTop_toBottomOf="@+id/et_add_funds"
+        app:rippleColor="@color/light_blue"
+        app:strokeColor="@color/light_blue"
+        app:strokeWidth="2dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_new_credit_card"
@@ -105,9 +139,9 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_new_credit_card"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_add_funds" />
 

@@ -21,24 +21,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         bottomNavigationSetUp()
     }
 
     private fun bottomNavigationSetUp() {
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
-        navController = navHostFragment.findNavController()
-        binding.navView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.homeFragment, R.id.forgotPasswordFragment, R.id.loginFragment, R.id.registerFragment -> {
-                    binding.navView.visibility = View.GONE
-                }
+        with(binding) {
+            navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+            navController = navHostFragment.findNavController()
+            navView.setupWithNavController(navController)
 
-                else -> {
-                    binding.navView.visibility = View.VISIBLE
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.homeFragment, R.id.forgotPasswordFragment, R.id.loginFragment, R.id.registerFragment -> {
+                        navView.visibility = View.GONE
+                    }
+
+                    else -> {
+                        navView.visibility = View.VISIBLE
+                    }
                 }
             }
         }

@@ -13,6 +13,7 @@ import com.example.finalproject.presentation.mapper.profile.toPresentation
 import com.example.finalproject.presentation.state.profile.ProfileState
 import com.example.finalproject.presentation.mapper.company_details.toPresentation
 import com.example.finalproject.presentation.mapper.funds.toPresentation
+import com.example.finalproject.presentation.mapper.home.handleResourceUpdateHomePage
 import com.example.finalproject.presentation.model.funds.CreditCard
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -75,7 +76,7 @@ class UserProfileViewModel @Inject constructor(
 
             val transactionsJob = async {
                 transactionsUseCases.getTransactionsUseCase(uid).collect { result ->
-                    handleResourceUpdate(
+                    handleResourceUpdateHomePage(
                         resource = result,
                         stateFlow = _profileState,
                         onSuccess = { transactions -> this.copy(transactionList = transactions.take(3).map { it.toPresentation() }) },
@@ -86,7 +87,7 @@ class UserProfileViewModel @Inject constructor(
 
             val cardsJob = async {
                 creditCardsUseCases.getUserCreditCardsUseCase(uid).collect { result ->
-                    handleResourceUpdate(
+                    handleResourceUpdateHomePage(
                         resource = result,
                         stateFlow = _profileState,
                         onSuccess = { cards -> this.copy(cardList = cards.map { it.toPresentation() }) },
@@ -97,7 +98,7 @@ class UserProfileViewModel @Inject constructor(
 
             val savedStocksJob = async {
                 savedStocksUseCases.getSavedStocksUseCase(uid).collect { result ->
-                    handleResourceUpdate(
+                    handleResourceUpdateHomePage(
                         resource = result,
                         stateFlow = _profileState,
                         onSuccess = { stocks -> this.copy(favoriteStockList = stocks.take(6).map { it.toPresentation() }) },

@@ -19,9 +19,9 @@
     <string name="email">Email</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="create_account">Create Account</string>
-    <string name="best_stocks">Best Performing Stocks Of Today</string>
-    <string name="worst_stocks">Worst Performing Stocks Of Today</string>
-    <string name="active_stocks">Most Active Stocks Of Today</string>
+    <string name="best_stocks">Today\'s Choice Stocks</string>
+    <string name="worst_stocks">You Might Want To Avoid…</string>
+    <string name="active_stocks">You Might Find Interesting…</string>
     <string name="sample_symbol">sample symbol</string>
     <string name="ocean_biomedical_inc">Ocean Biomedical, Inc.</string>
     <string name="_1_57">1.57$</string>
@@ -38,10 +38,10 @@
     <string name="sample_cvv">***</string>
     <string name="sample_date">MM/YY</string>
     <string name="sample_number">———— ———— ———— ————</string>
-    <string name="add_funds">Add Funds</string>
+    <string name="add_funds">Pay Now</string>
     <string name="_0_0">0.0$</string>
     <string name="sample_name">Sample Name</string>
-    <string name="view_more">View More...</string>
+    <string name="view_more">View More</string>
 
     <string name="spinner_prompt">Select Sorting Option</string>
     <string name="your_transaction_history">Your Transaction History</string>
@@ -57,6 +57,11 @@
     <string name="jemali">Shamqor</string>
     <string name="first_name">First Name</string>
     <string name="malphiti">Malphiti</string>
+    <string name="current_funds">$</string>
+    <string name="add_more_funds">Add More Funds</string>
+    <string name="sample_greeting">Hey, Charlie</string>
+    <string name="tv_funds_currently_available">Your Total Assets :</string>
+    <string name="tv_welcome_text">Welcome To Trader</string>
 
     <string-array name="sort_options">
         <item>Type</item>

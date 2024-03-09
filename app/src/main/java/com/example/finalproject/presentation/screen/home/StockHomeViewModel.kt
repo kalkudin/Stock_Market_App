@@ -8,6 +8,7 @@ import com.example.finalproject.domain.usecase.StocksToWatchUseCases
 import com.example.finalproject.domain.usecase.UserFundsUseCases
 import com.example.finalproject.presentation.mapper.profile.toPresentation
 import com.example.finalproject.presentation.event.home.StockHomeEvent
+import com.example.finalproject.presentation.mapper.home.formatFirstName
 import com.example.finalproject.presentation.mapper.home.handleResourceUpdateHomePage
 import com.example.finalproject.presentation.mapper.home.toPresentation
 import com.example.finalproject.presentation.model.home.Stock
@@ -61,7 +62,7 @@ class StockHomeViewModel @Inject constructor(
                     handleResourceUpdateHomePage(
                         resource = resource,
                         stateFlow = _stockState,
-                        onSuccess = {initials -> this.copy(userInitials = initials.toPresentation())},
+                        onSuccess = {initials -> this.copy(userFirstName = initials.formatFirstName())},
                         onError = {errorMessage -> this.copy(errorMessage = errorMessage)}
                     )
                 }

@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentStockHomeLayoutBinding
-import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.adapters.home.StockHostRecyclerAdapter
+import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.home.StockHomeEvent
 import com.example.finalproject.presentation.model.home.Stock
 import com.example.finalproject.presentation.state.home.StockListState
@@ -32,7 +32,6 @@ class StockHomeFragment :
     }
 
     override fun bindViewActionListeners() {
-        bindBackBtn()
         bindHostRecyclerView()
     }
 
@@ -44,15 +43,6 @@ class StockHomeFragment :
     private fun bindStocksAndUserData() {
         stockHomeViewModel.onEvent(StockHomeEvent.GetStocksAndUserData)
     }
-
-    private fun bindBackBtn() {
-        with(binding) {
-            btnBack.setOnClickListener {
-                stockHomeViewModel.onEvent(StockHomeEvent.LogOut)
-            }
-        }
-    }
-
     private fun bindHostRecyclerView() {
         hostAdapter = StockHostRecyclerAdapter(
             onStockClick = { stock ->
@@ -63,6 +53,9 @@ class StockHomeFragment :
             },
             onAddFundsClick = {
                 handleAddFundsClicked()
+            },
+            onLogOutClicked = {
+                handleLogOut()
             }
         )
 
@@ -120,7 +113,8 @@ class StockHomeFragment :
                     state.bestPerformingStocks ?: emptyList(),
                     state.worstPerformingStocks ?: emptyList(),
                     state.activePerformingStocks ?: emptyList(),
-                    state.userFunds ?: "0.0"
+                    state.userFunds ?: "0.0",
+                    state.userFirstName ?: ""
                 )
             }
         }
@@ -136,6 +130,10 @@ class StockHomeFragment :
 
     private fun handleAddFundsClicked() {
         stockHomeViewModel.onEvent(StockHomeEvent.NavigateToAddFundsFragment)
+    }
+
+    private fun handleLogOut() {
+        stockHomeViewModel.onEvent(StockHomeEvent.LogOut)
     }
 
     private fun showError(errorMessage: String) {

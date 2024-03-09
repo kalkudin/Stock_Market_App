@@ -7,10 +7,10 @@ fun StockListItem.toPresentation(performingType : Stock.PerformingType) : Stock 
     return Stock(
         symbol = symbol,
         name = name,
-        price = "$price $",
-        change = "($change $)",
+        price = "$ $price ",
+        change = if(change >= 0) "+$change" else "$change",
         changeValue = change,
-        changesPercentage = "$changesPercentage %",
+        changesPercentage = "($changesPercentage %)",
         performingType = performingType
     )
 }
