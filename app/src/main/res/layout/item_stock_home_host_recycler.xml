@@ -138,4 +138,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rv_worst_stocks" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>

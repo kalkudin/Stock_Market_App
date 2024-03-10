@@ -38,6 +38,25 @@
             app:layout_constraintTop_toBottomOf="@id/btnBack" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toStartOf="@id/tvChange"
+            app:layout_constraintTop_toBottomOf="@id/btnBack"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBack"
+            />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,13 +84,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSymbol" />
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnAddToFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_watchlist"
+            android:background="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDesc"/>
+
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc" />
+            app:layout_constraintTop_toBottomOf="@id/btnAddToFav" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFromDate"
@@ -79,7 +107,7 @@
             android:layout_height="wrap_content"
             android:text="From"
             app:layout_constraintStart_toEndOf="@id/spinner"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc" />
+            app:layout_constraintTop_toBottomOf="@id/btnAddToFav" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnToDate"
@@ -87,7 +115,7 @@
             android:layout_height="wrap_content"
             android:text="To"
             app:layout_constraintStart_toEndOf="@id/btnFromDate"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc" />
+            app:layout_constraintTop_toBottomOf="@id/btnAddToFav" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFetch"
@@ -95,7 +123,7 @@
             android:layout_height="wrap_content"
             android:text="Fetch"
             app:layout_constraintStart_toEndOf="@id/btnToDate"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc" />
+            app:layout_constraintTop_toBottomOf="@id/btnAddToFav" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/lineChart"

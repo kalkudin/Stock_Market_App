@@ -11,7 +11,8 @@ import com.example.finalproject.presentation.model.home.Stock
 class StockHostRecyclerAdapter(
     private val onStockClick: (Stock) -> Unit,
     private val onViewMoreClick: (Stock.PerformingType) -> Unit,
-    private val onAddFundsClick: () -> Unit
+    private val onAddFundsClick: () -> Unit,
+    private val onStockNewsClick: () -> Unit
 ) : RecyclerView.Adapter<StockHostRecyclerAdapter.StockHostViewHolder>() {
 
     private var bestStocks: List<Stock> = emptyList()

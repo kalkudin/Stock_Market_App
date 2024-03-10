@@ -11,7 +11,6 @@ class CompanyDetailsRepositoryImpl @Inject constructor(
     private val remoteCompanyDetailsDataSource: RemoteCompanyDetailsDataSource,
 ) : CompanyDetailsRepository {
 
-    //later functions will be added to store items locally and fetch data from local storage
     override suspend fun getCompanyDetailsRemotely(symbol:String): Flow<Resource<List<CompanyDetails>>> {
         return remoteCompanyDetailsDataSource.getCompanyDetailsRemotely(symbol)
     }

@@ -38,6 +38,7 @@ class AddNewCardViewModel @Inject constructor(
         viewModelScope.launch {
             when(event) {
                 is AddNewCardEvent.AddCreditCard -> addCreditCard(expirationDate = event.expirationDate, cardNumber = event.cardNumber, ccv = event.ccv, cardType = event.cardType)
+                else -> {}
             }
         }
     }
@@ -67,6 +68,8 @@ class AddNewCardViewModel @Inject constructor(
                         )
                     )
                 }
+
+                else -> {}
             }
         }
     }

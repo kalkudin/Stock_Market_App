@@ -13,20 +13,24 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentCompanyDetailsBinding
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.company_details.CompanyDetailsEvents
 import com.example.finalproject.presentation.extension.loadImage
 import com.example.finalproject.presentation.extension.showSnackBar
 import com.example.finalproject.presentation.model.company_details.CompanyChartIntradayModel
+import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
+import com.example.finalproject.presentation.model.company_details.UserIdModel
 import com.example.finalproject.presentation.state.company_details.CompanyDetailsState
 import com.example.finalproject.presentation.util.DateValueFormatter
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -51,6 +55,7 @@ class CompanyDetailsFragment :
     override fun bindViewActionListeners() {
         handleBackButton()
         buttonSetup()
+        favouriteButtonSetup()
     }
 
     override fun bindObservers() {
@@ -72,6 +77,8 @@ class CompanyDetailsFragment :
             val firstCompanyDetails = companyDetailsList.first()
             binding.apply {
                 civLogo.loadImage(firstCompanyDetails.image)
+                tvPrice.text = firstCompanyDetails.price?.toString() ?: "N/A"
+                tvChange.text = firstCompanyDetails.changes?.toString()
                 tvSymbol.text = firstCompanyDetails.symbol
                 tvName.text = firstCompanyDetails.companyName
                 tvDesc.text = firstCompanyDetails.description
@@ -124,18 +131,6 @@ class CompanyDetailsFragment :
         var fromDate = ""
         var toDate = ""
 
-//        binding.btnFromDate.setOnClickListener {
-//            showDatePickerDialog { date ->
-//                fromDate = date
-//            }
-//        }
-//
-//        binding.btnToDate.setOnClickListener {
-//            showDatePickerDialog { date ->
-//                toDate = date
-//            }
-//
-//        }
         binding.btnFromDate.setOnClickListener {
             showDatePickerDialog(binding.btnFromDate) { date ->
                 fromDate = date
@@ -155,18 +150,6 @@ class CompanyDetailsFragment :
         }
     }
 
-//    private fun showDatePickerDialog(onDateSelected: (String) -> Unit) {
-//        val calendar = Calendar.getInstance()
-//        val year = calendar.get(Calendar.YEAR)
-//        val month = calendar.get(Calendar.MONTH)
-//        val day = calendar.get(Calendar.DAY_OF_MONTH)
-//
-//        DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-//            val selectedDate =
-//                String.format("%d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
-//            onDateSelected(selectedDate)
-//        }, year, month, day).show()
-//    }
 private fun showDatePickerDialog(button: Button, onDateSelected: (String) -> Unit) {
     val calendar = Calendar.getInstance()
     val year = calendar.get(Calendar.YEAR)
@@ -238,5 +221,49 @@ private fun showDatePickerDialog(button: Button, onDateSelected: (String) -> Uni
 
         lineChart.data = LineData(dataSet)
         lineChart.invalidate()
+    }
+
+    private fun favouriteButtonSetup() {
+        binding.btnAddToFav.setOnClickListener {
+            val symbol = arguments?.getString("symbol") ?: ""
+            Log.d("CompanyDetailsFragment", "Favourite button clicked. Symbol: $symbol")
+            viewModel.onEvent(CompanyDetailsEvents.GetCompanyDetails(symbol = symbol))
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.companyDetailsState.collect { state ->
+                    state.companyDetails?.firstOrNull()?.let { stock ->
+                        Log.d("CompanyDetailsFragment", "Handling wishlist selection for stock: ${stock.symbol}")
+                        handleUserStocksWishlistSelection(stock)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleUserStocksWishlistSelection(stocks: CompanyDetailsModel)  {
+        Log.d("CompanyDetailsFragment", "Initial favourite status for ${stocks.symbol}: ${stocks.isFavorite}")
+        stocks.isFavorite = !stocks.isFavorite
+        Log.d("CompanyDetailsFragment", "Updated favourite status for ${stocks.symbol}: ${stocks.isFavorite}")
+
+        val drawableRes = if (stocks.isFavorite) {
+            R.drawable.ic_watchlist_selected
+        } else {
+            R.drawable.ic_watchlist
+        }
+        binding.btnAddToFav.setImageResource(drawableRes)
+
+        val firebaseUser = Firebase.auth.currentUser
+        val userId = firebaseUser?.uid
+        val user = UserIdModel(userId!!)
+        Log.d("CompanyDetailsFragment", "User ID: $userId")
+        viewModel.onEvent(CompanyDetailsEvents.InsertUser(user))
+        viewModel.onEvent(CompanyDetailsEvents.InsertStocks(stocks))
+
+        if (stocks.isFavorite) {
+            // If it is, remove it from the watchlist
+            viewModel.onEvent(CompanyDetailsEvents.DeleteWatchlistedStocks(stocks, user))
+        } else {
+            // If it's not, add it to the watchlist
+            viewModel.onEvent(CompanyDetailsEvents.InsertStocksToWatchlist(stocks, user))
+        }
     }
 }

@@ -63,6 +63,9 @@ class StockHomeFragment :
             },
             onAddFundsClick = {
                 handleAddFundsClicked()
+            },
+            onStockNewsClick = {
+                handleNewsClicked()
             }
         )
 
@@ -87,6 +90,7 @@ class StockHomeFragment :
                         )
 
                         is StockHomeNavigationEvent.NavigateToFundsPage -> navigateToAddFundsFragment()
+                        is StockHomeNavigationEvent.NavigateToStockNews -> navigateToStockNewsFragment()
                     }
                 }
             }
@@ -138,6 +142,10 @@ class StockHomeFragment :
         stockHomeViewModel.onEvent(StockHomeEvent.NavigateToAddFundsFragment)
     }
 
+    private fun handleNewsClicked() {
+        stockHomeViewModel.onEvent(StockHomeEvent.NavigateToStockNews)
+    }
+
     private fun showError(errorMessage: String) {
         Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).setAction("OK") {}.show()
     }
@@ -164,5 +172,9 @@ class StockHomeFragment :
 
     private fun navigateToAddFundsFragment() {
         findNavController().navigate(R.id.action_stockHomeFragment_to_userFundsFragment)
+    }
+
+    private fun navigateToStockNewsFragment() {
+        findNavController().navigate(StockHomeFragmentDirections.actionStockHomeFragmentToStockNewsFragment())
     }
 }

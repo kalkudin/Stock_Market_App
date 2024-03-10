@@ -27,6 +27,10 @@ fun getErrorMessage(errorType: ErrorType): String {
         ErrorType.CardAlreadyExists -> "This card already exists"
         ErrorType.NoSuchCreditCard -> "This Credit Card Does Not Exist"
         ErrorType.InvalidFunds -> "The amount entered is invalid, please try again"
+        //
+        ErrorType.LocalDatabaseError -> "There was an error with the local database."
+        ErrorType.LocalDatabaseEmpty -> "The local database is empty."
+        ErrorType.LocalDatabaseErrorDelete -> "There was an error deleting from the local database."
 
         is ErrorType.UnknownError -> errorType.message
     }

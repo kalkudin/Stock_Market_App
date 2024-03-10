@@ -7,12 +7,17 @@
         android:title="" />
 
     <item
+        android:id="@+id/stockNewsFragment"
+        android:icon="@drawable/ic_news"
+        android:title="" />
+
+    <item
         android:id="@+id/stockHomeFragment"
         android:icon="@drawable/ic_home"
         android:title=""/>
 
     <item
-        android:id="@+id/favoriteStocksFragment"
+        android:id="@+id/watchlistedStocksFragment"
         android:icon="@drawable/ic_watchlist"
         android:title=""/>
 
