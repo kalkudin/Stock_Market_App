@@ -2,6 +2,7 @@ package com.example.finalproject.presentation.mapper.funds
 
 import com.example.finalproject.domain.model.CreditCardDomainModel
 import com.example.finalproject.presentation.model.funds.CreditCard
+import java.util.Locale
 
 fun CreditCardDomainModel.toPresentation() : CreditCard {
     return CreditCard(
@@ -9,10 +10,10 @@ fun CreditCardDomainModel.toPresentation() : CreditCard {
         cardNumber = cardNumber,
         expirationDate = expirationDate,
         ccv = ccv,
-        cardType = when(type) {
+        cardType = when(type.lowercase(Locale.ROOT)) {
             "visa" -> CreditCard.CardType.VISA
-            "master_card" -> CreditCard.CardType.MASTER_CARD
-            else -> CreditCard.CardType.UNKOWN
+            "mastercard" -> CreditCard.CardType.MASTER_CARD
+            else -> CreditCard.CardType.UNKNOWN
         }
     )
 }
@@ -20,9 +21,9 @@ fun CreditCardDomainModel.toPresentation() : CreditCard {
 fun maskAndFormatCardNumber(cardNumber: String): String {
     val maskedNumber = StringBuilder()
     cardNumber.forEachIndexed { index, c ->
-        if (c == ' ' && index < 14) {
+        if (c == ' ' && index < 12) {
             maskedNumber.append(' ')
-        } else if (index < 14) {
+        } else if (index < 12) {
             maskedNumber.append('*')
         } else {
             maskedNumber.append(c)

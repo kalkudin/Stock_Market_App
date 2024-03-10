@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/userProfileFragment">
+    app:startDestination="@id/stockHomeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -214,6 +214,7 @@
             android:id="@+id/action_userCreditCardsBottomSheetFragment_to_userFundsFragment"
             app:destination="@id/userFundsFragment" />
     </dialog>
+
     <fragment
         android:id="@+id/transactionFragment"
         android:name="com.example.finalproject.presentation.screen.transactions.TransactionFragment"

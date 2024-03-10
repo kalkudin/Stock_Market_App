@@ -6,10 +6,9 @@ import com.example.finalproject.domain.usecase.AuthUseCases
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.StocksToWatchUseCases
 import com.example.finalproject.domain.usecase.UserFundsUseCases
-import com.example.finalproject.presentation.mapper.profile.toPresentation
 import com.example.finalproject.presentation.event.home.StockHomeEvent
 import com.example.finalproject.presentation.mapper.home.formatFirstName
-import com.example.finalproject.presentation.mapper.home.handleResourceUpdateHomePage
+import com.example.finalproject.presentation.mapper.home.handleStateUpdate
 import com.example.finalproject.presentation.mapper.home.toPresentation
 import com.example.finalproject.presentation.model.home.Stock
 import com.example.finalproject.presentation.state.home.StockListState
@@ -59,7 +58,7 @@ class StockHomeViewModel @Inject constructor(
 
             val userInfoJob = async {
                 authUseCases.getUserInitialsUseCase(uid = userId).collect { resource ->
-                    handleResourceUpdateHomePage(
+                    handleStateUpdate(
                         resource = resource,
                         stateFlow = _stockState,
                         onSuccess = {initials -> this.copy(userFirstName = initials.formatFirstName())},
@@ -70,7 +69,7 @@ class StockHomeViewModel @Inject constructor(
 
             val fundsJob = async {
                 userFundsUseCases.retrieveUserFundsUseCase(uid = userId).collect { resource ->
-                    handleResourceUpdateHomePage(
+                    handleStateUpdate(
                         resource = resource,
                         stateFlow = _stockState,
                         onSuccess = {funds -> this.copy(userFunds = funds.amount.toString())},
@@ -81,7 +80,7 @@ class StockHomeViewModel @Inject constructor(
 
             val bestStocksJob = async {
                 stocksToWatchUseCases.getBestPerformingStocksUseCase().collect { resource ->
-                    handleResourceUpdateHomePage(
+                    handleStateUpdate(
                         resource = resource,
                         stateFlow = _stockState,
                         onSuccess = {bestStocks -> this.copy(bestPerformingStocks = bestStocks.take(6).map { stock -> stock.toPresentation(
@@ -93,7 +92,7 @@ class StockHomeViewModel @Inject constructor(
 
             val worstStocksJob = async {
                 stocksToWatchUseCases.getWorstPerformingStocksUseCase().collect { resource ->
-                    handleResourceUpdateHomePage(
+                    handleStateUpdate(
                         resource = resource,
                         stateFlow = _stockState,
                         onSuccess = {worstStocks -> this.copy(worstPerformingStocks = worstStocks.take(6).map { stock -> stock.toPresentation(
@@ -105,7 +104,7 @@ class StockHomeViewModel @Inject constructor(
 
             val activeStocksJob = async {
                 stocksToWatchUseCases.getActivePerformingStocksUseCase().collect { resource ->
-                    handleResourceUpdateHomePage(
+                    handleStateUpdate(
                         resource = resource,
                         stateFlow = _stockState,
                         onSuccess = {activeStocks -> this.copy(activePerformingStocks = activeStocks.take(6).map { stock -> stock.toPresentation(

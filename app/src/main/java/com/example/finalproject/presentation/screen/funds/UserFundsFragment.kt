@@ -1,5 +1,6 @@
 package com.example.finalproject.presentation.screen.funds
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -135,6 +136,7 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
 
     private fun bindArgs() {
         val creditCard = arguments?.getParcelable("creditCard", CreditCard::class.java)
+        Log.d("FundsFragment", creditCard.toString())
 
         creditCard?.let {
             userCardNumber = creditCard.cardNumber
@@ -153,6 +155,24 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
             tvCardNumber.text = maskAndFormatCardNumber(cardNumber)
             tvExpiryDate.text = expirationDate
             tvCcv.text = ccv
+
+            when(type) {
+                CreditCard.CardType.VISA -> {
+                    cardContainer.setImageResource(R.drawable.style_card_visa)
+                    backgroundScreen.setImageResource(R.drawable.style_card_visa)
+                    ivCardType.setImageResource(R.drawable.ic_visa_icon)
+                }
+                CreditCard.CardType.MASTER_CARD -> {
+                    cardContainer.setImageResource(R.drawable.style_card_mastercard)
+                    backgroundScreen.setImageResource(R.drawable.style_card_mastercard)
+                    ivCardType.setImageResource(R.drawable.ic_master_card_icon)
+                }
+                CreditCard.CardType.UNKNOWN -> {
+                    cardContainer.setImageResource(R.drawable.style_card_type_unknown)
+                    backgroundScreen.setImageResource(R.drawable.style_card_type_unknown)
+                    ivCardType.setImageResource(R.drawable.ic_blank_card_icon)
+                }
+            }
         }
     }
 

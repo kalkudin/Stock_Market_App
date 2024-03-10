@@ -5,8 +5,8 @@
     <corners android:radius="12dp" />
 
     <gradient
-        android:startColor="#304031"
-        android:endColor="#17171B"
+        android:startColor="#253326"
+        android:endColor="#131317"
         android:angle="60" />
 
     <stroke

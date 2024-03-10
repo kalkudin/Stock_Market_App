@@ -39,7 +39,7 @@
     <string name="sample_date">MM/YY</string>
     <string name="sample_number">———— ———— ———— ————</string>
     <string name="add_funds">Pay Now</string>
-    <string name="_0_0">0.0$</string>
+    <string name="_0_0">$0.0</string>
     <string name="sample_name">Sample Name</string>
     <string name="view_more">View More</string>
 
@@ -62,6 +62,7 @@
     <string name="sample_greeting">Hey, Charlie</string>
     <string name="tv_funds_currently_available">Your Total Assets :</string>
     <string name="tv_welcome_text">Welcome To Trader</string>
+    <string name="dollarsing">$</string>
 
     <string-array name="sort_options">
         <item>Type</item>

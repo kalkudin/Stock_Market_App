@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-typealias inflater<VB> = (LayoutInflater, ViewGroup?, Boolean) -> VB
-abstract class BaseFragment<VB : ViewBinding>(private val inflate: inflater<VB>) : Fragment() {
-
+abstract class BaseBottomSheet<VB : ViewBinding>(private val inflate: inflater<VB>) : BottomSheetDialogFragment() {
     private var _binding: VB? = null
-    val binding: VB get() = _binding!!
+    protected val binding: VB get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = inflate.invoke(inflater, container, false)
         return binding.root
     }
@@ -24,7 +24,7 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: inflater<VB>)
         super.onViewCreated(view, savedInstanceState)
         bind()
         bindViewActionListeners()
-        bindObservers()
+        bindObserves()
     }
 
     override fun onDestroyView() {
@@ -32,9 +32,9 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: inflater<VB>)
         _binding = null
     }
 
-    open fun bind() {}
+    abstract fun bind()
 
     abstract fun bindViewActionListeners()
 
-    abstract fun bindObservers()
+    abstract fun bindObserves()
 }

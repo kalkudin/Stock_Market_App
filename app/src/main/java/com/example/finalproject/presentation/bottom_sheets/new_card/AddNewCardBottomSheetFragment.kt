@@ -1,51 +1,58 @@
 package com.example.finalproject.presentation.bottom_sheets.new_card
 
-import android.content.res.ColorStateList
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finalproject.R
 import com.example.finalproject.databinding.BottomSheetAddNewCardLayoutBinding
-import com.example.finalproject.presentation.extension.setOnItemSelected
+import com.example.finalproject.presentation.adapters.bottom_sheet.CardTypeRecyclerViewAdapter
+import com.example.finalproject.presentation.base.BaseBottomSheet
 import com.example.finalproject.presentation.bottom_sheets.event.AddNewCardEvent
 import com.example.finalproject.presentation.bottom_sheets.state.NewCardState
+import com.example.finalproject.presentation.model.bottom_sheets.NewCardType
 import com.example.finalproject.presentation.model.funds.CreditCard
 import com.example.finalproject.presentation.util.formatExpirationDate
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
-class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
+class AddNewCardBottomSheetFragment : BaseBottomSheet<BottomSheetAddNewCardLayoutBinding>(BottomSheetAddNewCardLayoutBinding::inflate){
 
-    private var _binding: BottomSheetAddNewCardLayoutBinding? = null
-    private val binding get() = _binding!!
+    private val addNewCardViewModel: AddNewCardViewModel by viewModels()
 
-    private val addNewCardViewModel : AddNewCardViewModel by viewModels()
+    private lateinit var cardTypeRecyclerViewAdapter : CardTypeRecyclerViewAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = BottomSheetAddNewCardLayoutBinding.inflate(inflater, container, false)
-        return binding.root
+    private var cardType : CreditCard.CardType = CreditCard.CardType.UNKNOWN
+
+    override fun bind() {
+        bindCardTypeAdapter()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        bindCardTypeAdapter()
-        bindNumbersField()
+    override fun bindViewActionListeners() {
         bindNewCreditCard()
+    }
+
+    override fun bindObserves() {
         bindSuccessFlow()
         bindNavigationFlow()
+    }
+
+    private fun bindCardTypeAdapter() {
+        with(binding) {
+            cardTypeRecyclerViewAdapter = CardTypeRecyclerViewAdapter { type ->
+                handleCardTypeSelected(type)
+            }
+            rvCardType.apply {
+                adapter = cardTypeRecyclerViewAdapter
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            }
+        }
     }
 
     private fun bindNewCreditCard() {
@@ -53,23 +60,13 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
             btnAddCreditCard.setOnClickListener {
                 addNewCardViewModel.onEvent(
                     AddNewCardEvent.AddCreditCard(
-                    cardNumber = etCardNumber.text?.chunked(size = 4) ?: emptyList(),
-                    expirationDate = formatExpirationDate(etExpiryMonth, etExpiryYear),
-                    ccv = etCcv.text.toString(),
-                    cardType = getCardType()))
+                        cardNumber = etCardNumber.text?.chunked(size = 4) ?: emptyList(),
+                        expirationDate = formatExpirationDate(etExpiryMonth, etExpiryYear),
+                        ccv = etCcv.text.toString(),
+                        cardType = cardType.toString().lowercase()
+                    )
+                )
             }
-        }
-    }
-
-    private fun bindCardTypeAdapter() {
-        val cardTypes = resources.getStringArray(R.array.card_type_options)
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, cardTypes).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        }
-        binding.spinnerCardType.adapter = adapter
-
-        binding.spinnerCardType.setOnItemSelected { cardType ->
-            updateCardIcon(cardType)
         }
     }
 
@@ -83,14 +80,28 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun handleState(state : NewCardState) {
+    private fun handleState(state: NewCardState) {
         with(binding) {
-            if(state.isLoading) progressBar.visibility = View.VISIBLE
+            if (state.isLoading) progressBar.visibility = View.VISIBLE
 
-            state.errorMessage?.let { message -> handleErrorMessage(errorMessage = message) }
+            state.errorMessage?.let { message ->
+                handleErrorMessage(errorMessage = message)
+                addNewCardViewModel.onEvent(event = AddNewCardEvent.ResetErrorMessage)
+            }
 
-            if(state.success) {
+            state.cardTypeList?.let { list ->
+                cardTypeRecyclerViewAdapter.submitList(list)
+            }
+
+            if (state.success) {
                 progressBar.visibility = View.GONE
+
+                addNewCardViewModel.onEvent(AddNewCardEvent.NavigateToFundsFragment(
+                    cardNumber = etCardNumber.text?.chunked(size = 4) ?: emptyList(),
+                    expirationDate = formatExpirationDate(etExpiryMonth, etExpiryYear),
+                    ccv = etCcv.text.toString(),
+                    cardType = cardType
+                ))
             }
         }
     }
@@ -99,7 +110,7 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 addNewCardViewModel.navigationFlow.collect { event ->
-                    when(event) {
+                    when (event) {
                         is NewCardNavigationFlow.NavigateBack -> handleNavigation(card = event.creditCard)
                     }
                 }
@@ -107,80 +118,35 @@ class AddNewCardBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun handleNavigation(card : CreditCard) {
+    private fun handleNavigation(card: CreditCard) {
         val action = AddNewCardBottomSheetFragmentDirections.actionAddNewCardBottomSheetFragmentToUserFundsFragment(card)
         findNavController().navigate(action)
     }
 
-    private fun handleErrorMessage(errorMessage : String) {
-        Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).setAction("OK"){}.show()
+    private fun handleErrorMessage(errorMessage: String) {
+        Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).setAction("OK") {}.show()
     }
 
-    private fun updateCardIcon(cardType: String) {
+    private fun handleCardTypeSelected(card : NewCardType) {
         with(binding) {
-            val iconResId: Int
-            val backgroundColorResId: Int
-            when(cardType) {
-                "Visa" -> {
-                    iconResId = R.drawable.ic_visa
-                    backgroundColorResId = R.color.sky_blue
+            when (card.type) {
+                CreditCard.CardType.VISA -> {
+                    cardType = CreditCard.CardType.VISA
+                    cardContainer.setImageResource(R.drawable.style_card_visa)
+
+                    ivCardType.setImageResource(R.drawable.ic_visa_icon)
                 }
-                "MasterCard" -> {
-                    iconResId = R.drawable.ic_master_card
-                    backgroundColorResId = R.color.light_orange
+                CreditCard.CardType.MASTER_CARD -> {
+                    cardType = CreditCard.CardType.MASTER_CARD
+                    cardContainer.setImageResource(R.drawable.style_card_mastercard)
+                    ivCardType.setImageResource(R.drawable.ic_master_card_icon)
                 }
-                else -> {
-                    iconResId = R.drawable.ic_visa
-                    backgroundColorResId = R.color.sky_blue
+                CreditCard.CardType.UNKNOWN -> {
+                    cardType = CreditCard.CardType.UNKNOWN
+                    cardContainer.setImageResource(R.drawable.style_card_type_unknown)
+                    ivCardType.setImageResource(R.drawable.ic_blank_card_icon)
                 }
             }
-            ivCardType.setImageResource(iconResId)
-            cardContainer.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), backgroundColorResId))
         }
-    }
-
-    private fun getCardType(): String {
-        return when (binding.spinnerCardType.selectedItem.toString()) {
-            getString(R.string.visa) -> "visa"
-            getString(R.string.mastercard) -> "master_card"
-            else -> "unkown"
-        }
-    }
-
-    private fun bindNumbersField() {
-        binding.etCardNumber.addTextChangedListener(object : TextWatcher {
-            private var isFormatting = false
-            private var backspacingFlag = false
-            private var cursorPosition = 0
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                cursorPosition = binding.etCardNumber.selectionStart
-                backspacingFlag = count > after
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-            override fun afterTextChanged(s: Editable?) {
-                if (!isFormatting) {
-                    isFormatting = true
-                    val inputLength = s!!.length
-                    val formattedString = s.toString().replace(" ", "").chunked(4).joinToString(" ")
-                    s.replace(0, s.length, formattedString)
-
-                    if (backspacingFlag && cursorPosition != inputLength) {
-                        if (cursorPosition > formattedString.length) cursorPosition = formattedString.length
-                        binding.etCardNumber.setSelection(cursorPosition)
-                    } else if (cursorPosition < formattedString.length) {
-                        binding.etCardNumber.setSelection(cursorPosition + 1)
-                    }
-                    isFormatting = false
-                }
-            }
-        })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

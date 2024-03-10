@@ -9,6 +9,7 @@ import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.presentation.bottom_sheets.event.GetUserCardsEvent
 import com.example.finalproject.presentation.bottom_sheets.state.UserCardsState
 import com.example.finalproject.presentation.mapper.funds.toPresentation
+import com.example.finalproject.presentation.mapper.home.handleStateUpdate
 import com.example.finalproject.presentation.model.funds.CreditCard
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.sign
 
 @HiltViewModel
 class UserCreditCardsViewModel @Inject constructor(
@@ -40,6 +42,7 @@ class UserCreditCardsViewModel @Inject constructor(
             when (event) {
                 is GetUserCardsEvent.GetUserCreditCards -> { getUserCreditCards() }
                 is GetUserCardsEvent.NavigateBack -> navigateBack(card = event.card)
+                is GetUserCardsEvent.UpdateDots -> updateDots(position = event.position)
             }
         }
     }
@@ -47,20 +50,22 @@ class UserCreditCardsViewModel @Inject constructor(
     private suspend fun getUserCreditCards() {
         val uid = dataStoreUseCases.readUserUidUseCase().first()
 
-        creditCardUseCases.getUserCreditCardsUseCase(uid = uid).collect() { resource ->
-            Log.d("UserCreditsVM", resource.toString())
-            when(resource) {
-                is Resource.Error -> { _creditCardsFlow.update { state ->
-                    state.copy(isLoading = false, errorMessage = getErrorMessage(resource.errorType)) }
-                }
-                is Resource.Loading -> { _creditCardsFlow.update { state ->
-                    state.copy(isLoading = true) }
-                }
-                is Resource.Success -> { _creditCardsFlow.update { state ->
-                    state.copy(isLoading = false, cardList = resource.data.map { it.toPresentation() })}
-                }
-            }
+        _creditCardsFlow.update { state -> state.copy(isLoading = true) }
+
+        creditCardUseCases.getUserCreditCardsUseCase(uid = uid).collect { resource ->
+            handleStateUpdate(
+                resource = resource,
+                stateFlow = _creditCardsFlow,
+                onSuccess = {list -> this.copy(cardList = list.map { it.toPresentation() })},
+                onError = {errorMessage -> this.copy(errorMessage = errorMessage)}
+            )
         }
+        _creditCardsFlow.update { state -> state.copy(isLoading = false) }
+
+    }
+
+    private fun updateDots(position : Int) {
+
     }
 
     private suspend fun navigateBack(card : CreditCard) {

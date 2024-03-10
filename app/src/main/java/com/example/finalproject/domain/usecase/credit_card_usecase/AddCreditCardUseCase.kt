@@ -17,6 +17,10 @@ class AddCreditCardUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(uid: String, cardNumber: List<String>, expirationDate: String, ccv: String, cardType : String): Flow<Resource<Boolean>> {
 
+        if(cardType.isEmpty()) {
+            return flowOf(Resource.Error(ErrorType.InvalidCardType))
+        }
+
         if(cardNumber.joinToString(separator = "").isEmpty() && expirationDate.isEmpty() && ccv.isEmpty()) {
             return flowOf(Resource.Error(ErrorType.FieldsEmpty))
         }

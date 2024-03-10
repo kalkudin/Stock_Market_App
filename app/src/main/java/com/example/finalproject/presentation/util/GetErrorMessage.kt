@@ -27,6 +27,7 @@ fun getErrorMessage(errorType: ErrorType): String {
         ErrorType.CardAlreadyExists -> "This card already exists"
         ErrorType.NoSuchCreditCard -> "This Credit Card Does Not Exist"
         ErrorType.InvalidFunds -> "The amount entered is invalid, please try again"
+        ErrorType.InvalidCardType -> "Please Select A Valid Card Type"
 
         is ErrorType.UnknownError -> errorType.message
     }

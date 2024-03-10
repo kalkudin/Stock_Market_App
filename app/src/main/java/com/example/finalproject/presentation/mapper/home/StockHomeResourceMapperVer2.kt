@@ -1,12 +1,11 @@
 package com.example.finalproject.presentation.mapper.home
 
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.presentation.state.home.StockListState
 import com.example.finalproject.presentation.util.getErrorMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
-fun <T, S : Any> handleResourceUpdateHomePage(
+fun <T, S : Any> handleStateUpdate(
     resource: Resource<T>,
     stateFlow: MutableStateFlow<S>,
     onSuccess: S.(T) -> S,

@@ -13,6 +13,6 @@ data class CreditCard(
     enum class CardType {
         VISA,
         MASTER_CARD,
-        UNKOWN
+        UNKNOWN
     }
 }
