@@ -68,6 +68,8 @@ class AddNewCardViewModel @Inject constructor(
                 is Resource.Success -> {
                     _successFlow.update { state -> state.copy(success = true, isLoading = false) }
                 }
+
+                else -> {}
             }
         }
     }

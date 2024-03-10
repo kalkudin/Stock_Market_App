@@ -26,6 +26,9 @@ sealed class ErrorType {
     data object CardAlreadyExists : ErrorType()
     data object NoSuchCreditCard : ErrorType()
     data object InvalidFunds : ErrorType()
-
     data object InvalidCardType : ErrorType()
+    //
+    data object LocalDatabaseError : ErrorType()
+    data object LocalDatabaseEmpty : ErrorType()
+    data object LocalDatabaseErrorDelete : ErrorType()
 }

@@ -15,7 +15,7 @@ class StockHostRecyclerAdapter(
     private val onStockClick: (Stock) -> Unit,
     private val onViewMoreClick: (Stock.PerformingType) -> Unit,
     private val onAddFundsClick: () -> Unit,
-    private val onLogOutClicked : () -> Unit
+    private val onLogOutClicked : () -> Unit,
 ) : RecyclerView.Adapter<StockHostRecyclerAdapter.StockHostViewHolder>() {
 
     private var bestStocks: List<Stock> = emptyList()

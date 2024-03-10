@@ -7,13 +7,18 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCompanyName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:text="Company Name"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:singleLine="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvCompanyPrice"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCompanySymbol"
@@ -34,22 +39,32 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvExchange"
+        android:id="@+id/tvCompanyPriceChange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exchange"
+        android:text="CompanyPriceChange"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCompanyPrice" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvType"
+        android:id="@+id/tvCompanyPriceChangePercentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Type"
+        android:text="0.52"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvExchange" />
+        app:layout_constraintTop_toBottomOf="@id/tvCompanyPriceChange" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_up_list"
+        app:layout_constraintEnd_toStartOf="@id/tvCompanyPriceChangePercentage"
+        app:layout_constraintTop_toBottomOf="@id/tvCompanyPriceChange"/>
+
+
 
 
 

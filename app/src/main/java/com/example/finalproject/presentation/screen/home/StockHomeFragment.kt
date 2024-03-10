@@ -56,7 +56,7 @@ class StockHomeFragment :
             },
             onLogOutClicked = {
                 handleLogOut()
-            }
+            },
         )
 
         binding.hostRecyclerView.apply {
@@ -80,6 +80,7 @@ class StockHomeFragment :
                         )
 
                         is StockHomeNavigationEvent.NavigateToFundsPage -> navigateToAddFundsFragment()
+                        is StockHomeNavigationEvent.NavigateToStockNews -> navigateToStockNewsFragment()
                     }
                 }
             }
@@ -162,5 +163,9 @@ class StockHomeFragment :
 
     private fun navigateToAddFundsFragment() {
         findNavController().navigate(R.id.action_stockHomeFragment_to_userFundsFragment)
+    }
+
+    private fun navigateToStockNewsFragment() {
+        findNavController().navigate(StockHomeFragmentDirections.actionStockHomeFragmentToStockNewsFragment())
     }
 }

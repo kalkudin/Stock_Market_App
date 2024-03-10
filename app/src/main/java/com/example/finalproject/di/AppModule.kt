@@ -3,7 +3,9 @@ package com.example.finalproject.di
 import com.example.finalproject.BuildConfig
 import com.example.finalproject.data.common.HandleResponse
 import com.example.finalproject.data.remote.service.company_details.CompanyDetailsApiService
+import com.example.finalproject.data.remote.service.company_details_chart.CompanyChartIntradayApiService
 import com.example.finalproject.data.remote.service.company_list.CompanyListApiService
+import com.example.finalproject.data.remote.service.stock_news.StockNewsApiService
 import com.example.finalproject.data.remote.service.stocks_to_watch.StocksToWatchApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -105,5 +107,21 @@ object AppModule {
         retrofit: Retrofit
     ) : StocksToWatchApiService {
         return retrofit.create(StocksToWatchApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCompanyChartIntradayService(
+        @Named("FMPRetrofit")chartRetrofit: Retrofit
+    ): CompanyChartIntradayApiService {
+        return chartRetrofit.create(CompanyChartIntradayApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideStockNewsService(
+        @Named("FMPRetrofit")newsRetrofit: Retrofit
+    ): StockNewsApiService {
+        return newsRetrofit.create(StockNewsApiService::class.java)
     }
 }

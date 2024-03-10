@@ -63,18 +63,19 @@
     <string name="tv_funds_currently_available">Your Total Assets :</string>
     <string name="tv_welcome_text">Welcome To Trader</string>
     <string name="dollarsing">$</string>
-
+    <string name="search_with_company_name_or_symbol">Search with Company name or symbol</string>
+    <string name="today_s_financial_news">Today\'s Financial News</string>
+    <string name="sample_text">sample text</string>
+    <string name="_1">1</string>
+    <string name="search_with_company_symbol">Search With Company Symbol</string>
     <string-array name="sort_options">
         <item>Type</item>
         <item>Date - Latest</item>
         <item>Date - Earliest</item>
         <item>Amount</item>
     </string-array>
-
     <string-array name="card_type_options">
         <item>Visa</item>
         <item>MasterCard</item>
     </string-array>
-
-
 </resources>

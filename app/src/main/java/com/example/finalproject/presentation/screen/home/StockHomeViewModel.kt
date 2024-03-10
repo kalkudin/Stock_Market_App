@@ -47,6 +47,7 @@ class StockHomeViewModel @Inject constructor(
             is StockHomeEvent.NavigateToStockDetailsPage -> goToDetailsPage(stock = event.stock)
             is StockHomeEvent.NavigateToExtensiveListPage -> goToExtensiveListPage(stockType = event.stockType)
             is StockHomeEvent.NavigateToAddFundsFragment -> goToFundsPage()
+            is StockHomeEvent.NavigateToStockNews -> goToStockNews()
         }
     }
 
@@ -144,6 +145,12 @@ class StockHomeViewModel @Inject constructor(
             _navigationFlow.emit(StockHomeNavigationEvent.LogOut)
         }
     }
+
+    private fun goToStockNews() {
+        viewModelScope.launch {
+            _navigationFlow.emit(StockHomeNavigationEvent.NavigateToStockNews)
+        }
+    }
 }
 
 sealed class StockHomeNavigationEvent {
@@ -151,4 +158,6 @@ sealed class StockHomeNavigationEvent {
     data object NavigateToFundsPage : StockHomeNavigationEvent()
     data class NavigateToExtendedStockList(val stockType: Stock.PerformingType) : StockHomeNavigationEvent()
     data class NavigateToDetailsPage(val stock: Stock) : StockHomeNavigationEvent()
+
+    data object NavigateToStockNews : StockHomeNavigationEvent()
 }

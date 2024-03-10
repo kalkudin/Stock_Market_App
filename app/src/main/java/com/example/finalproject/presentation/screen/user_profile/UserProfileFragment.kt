@@ -8,15 +8,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentProfileLayoutBinding
-import com.example.finalproject.presentation.base.BaseFragment
-import com.example.finalproject.presentation.extension.hideView
-import com.example.finalproject.presentation.extension.showView
 import com.example.finalproject.presentation.adapters.profile.CreditCardViewPagerAdapter
 import com.example.finalproject.presentation.adapters.profile.ProfileFavoriteStocksRecyclerAdapter
 import com.example.finalproject.presentation.adapters.profile.TransactionRecyclerAdapter
+import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.profile.UserProfileEvent
-import com.example.finalproject.presentation.state.profile.ProfileState
+import com.example.finalproject.presentation.extension.hideView
+import com.example.finalproject.presentation.extension.showView
 import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.state.profile.ProfileState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -179,7 +179,7 @@ class UserProfileFragment : BaseFragment<FragmentProfileLayoutBinding>(FragmentP
     }
 
     private fun openFavorites() {
-        findNavController().navigate(R.id.action_userProfileFragment_to_favoriteStocksFragment)
+        findNavController().navigate(R.id.action_userProfileFragment_to_watchlistedStocksFragment)
     }
 
     private fun handleErrorMessage(errorMessage : String) {

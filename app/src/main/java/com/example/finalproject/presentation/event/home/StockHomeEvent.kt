@@ -8,4 +8,6 @@ sealed class StockHomeEvent {
     data object NavigateToAddFundsFragment : StockHomeEvent()
     data class NavigateToStockDetailsPage(val stock : Stock) : StockHomeEvent()
     data class NavigateToExtensiveListPage(val stockType : Stock.PerformingType) : StockHomeEvent()
+
+    data object NavigateToStockNews : StockHomeEvent()
 }

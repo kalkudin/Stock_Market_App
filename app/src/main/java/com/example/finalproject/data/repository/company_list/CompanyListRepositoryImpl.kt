@@ -10,7 +10,6 @@ import javax.inject.Inject
 class CompanyListRepositoryImpl @Inject constructor(
     private val remoteCompanyListDataSource: RemoteCompanyListDataSource,
 ) : CompanyListRepository {
-    //later functions will be added to store items locally and fetch data from local storage
     override suspend fun getCompanyListRemotely() : Flow<Resource<List<CompanyList>>> {
         return remoteCompanyListDataSource.getCompanyListRemotely()
     }
