@@ -2,6 +2,7 @@ package com.example.finalproject.presentation.adapters.watchlisted_stocks
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemWatchlistLayoutBinding
 import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
+import com.example.finalproject.presentation.util.setTextColor
 
 class WatchlistedStocksRecyclerAdapter(
     val onCompanyClick: (CompanyDetailsModel) -> Unit,
@@ -39,17 +41,25 @@ class WatchlistedStocksRecyclerAdapter(
         fun bind() {
             item = currentList[adapterPosition]
             binding.apply {
+
+                val greenColor = ContextCompat.getColor(itemView.context, R.color.deaf_green)
+                val redColor = ContextCompat.getColor(itemView.context, R.color.red)
+                val defColor = ContextCompat.getColor(itemView.context, R.color.sky_blue)
+
                 when {
                     item.changes!! > 0 -> {
-                        ivArrow.setImageResource(R.drawable.ic_arrow_up_list)
+                        ivArrow.setImageResource(R.drawable.ic_arrow_up)
                         ivArrow.isVisible = true
+                        setTextColor(greenColor, tvCompanyPriceChange)
                     }
                     item.changes!! < 0 -> {
-                        ivArrow.setImageResource(R.drawable.ic_arrow_down_list)
+                        ivArrow.setImageResource(R.drawable.ic_arrow_down)
                         ivArrow.isVisible = true
+                        setTextColor(redColor, tvCompanyPriceChange)
                     }
                     else -> {
                         ivArrow.isVisible = false
+                        setTextColor(defColor, tvCompanyPriceChange)
                     }
                 }
                 tvCompanyName.text = item.companyName

@@ -4,26 +4,26 @@
     <item
         android:id="@+id/companyListFragment"
         android:icon="@drawable/ic_list"
-        android:title="" />
+        android:title="@string/stocks" />
 
     <item
         android:id="@+id/stockNewsFragment"
         android:icon="@drawable/ic_news"
-        android:title="" />
+        android:title="@string/news" />
 
     <item
         android:id="@+id/stockHomeFragment"
         android:icon="@drawable/ic_home"
-        android:title=""/>
+        android:title="@string/home"/>
 
     <item
         android:id="@+id/watchlistedStocksFragment"
         android:icon="@drawable/ic_watchlist"
-        android:title=""/>
+        android:title="@string/watchlist"/>
 
     <item
         android:id="@+id/userProfileFragment"
         android:icon="@drawable/ic_profile"
-        android:title="" />
+        android:title="@string/profile" />
 
 </menu>

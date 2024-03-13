@@ -68,6 +68,11 @@
     <string name="sample_text">sample text</string>
     <string name="_1">1</string>
     <string name="search_with_company_symbol">Search With Company Symbol</string>
+    <string name="stocks">Stocks</string>
+    <string name="news">News</string>
+    <string name="home">Home</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="profile">Profile</string>
     <string-array name="sort_options">
         <item>Type</item>
         <item>Date - Latest</item>
