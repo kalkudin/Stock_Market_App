@@ -1,10 +1,12 @@
 package com.example.finalproject.presentation.screen.company_details
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.DataBaseUseCases
+import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.domain.usecase.company_details_chart_usecase.GetCompanyChartIntradayUseCase
 import com.example.finalproject.domain.usecase.company_details_usecase.GetCompanyDetailsUseCase
 import com.example.finalproject.presentation.event.company_details.CompanyDetailsEvents
@@ -26,7 +28,8 @@ import javax.inject.Inject
 class CompanyDetailsViewModel @Inject constructor(
     private val getCompanyDetailsUseCase: GetCompanyDetailsUseCase,
     private val getCompanyChartIntradayUseCase: GetCompanyChartIntradayUseCase,
-    private val dataBaseUseCases: DataBaseUseCases
+    private val dataBaseUseCases: DataBaseUseCases,
+    private val transactionsUseCases: TransactionsUseCases
 ) : ViewModel() {
 
     private val _companyDetailsState = MutableStateFlow(CompanyDetailsState())
@@ -41,7 +44,34 @@ class CompanyDetailsViewModel @Inject constructor(
             is CompanyDetailsEvents.InsertUser -> insertUser(event.user)
             is CompanyDetailsEvents.InsertStocksToWatchlist -> insertStocksToWatchlist(event.stock, event.user)
             is CompanyDetailsEvents.DeleteWatchlistedStocks -> deleteWatchlistedStocks(event.stock, event.user)
+            is CompanyDetailsEvents.BuyStock -> buyStock(event.userId, event.amount, event.description)
+            is CompanyDetailsEvents.SellStock -> sellStock(event.userId, event.amount, event.description)
+            is CompanyDetailsEvents.IsStockInWatchlist -> checkIfStockIsInWatchlist(event.userId, event.symbol)
         }
+    }
+
+    private fun checkIfStockIsInWatchlist(userId: String, symbol: String) {
+        viewModelScope.launch {
+            dataBaseUseCases.isStockInWatchListUseCase.invoke(userId, symbol).collect { isStockInWatchlist ->
+                _companyDetailsState.update { currentState ->
+                    currentState.copy(isStockInWatchlist = isStockInWatchlist)
+                }
+            }
+        }
+    }
+
+    private fun sellStock(userId: String, amount: Double, description: String) {
+        viewModelScope.launch {
+            transactionsUseCases.saveTransactionUseCase.invoke(userId, amount, "sell", description)
+            Log.d("CompanyDetailsViewModel", "sellStock: $userId, $amount, $description")
+        }
+    }
+
+    private fun buyStock(userId: String, amount: Double, description: String) {
+        viewModelScope.launch {
+            transactionsUseCases.saveTransactionUseCase.invoke(userId, amount, "buy", description)
+        }
+        Log.d("CompanyDetailsViewModel", "buyStock: $userId, $amount, $description")
     }
 
     private fun getCompanyDetails(symbol:String){

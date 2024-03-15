@@ -11,4 +11,6 @@ interface WatchlistedStocksRepository {
     suspend fun insertWatchlistStock(user: UserId, stock: CompanyDetails)
     suspend fun deleteWatchlistStock(user: UserId, stock: CompanyDetails)
     suspend fun getFavouriteStocksForUser(user: UserId): Flow<List<CompanyDetails>>
+
+    suspend fun isStockInWatchlist(userId: String, symbol: String): Flow<Boolean>
 }

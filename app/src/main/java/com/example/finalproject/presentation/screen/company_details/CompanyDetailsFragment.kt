@@ -3,10 +3,10 @@ package com.example.finalproject.presentation.screen.company_details
 import android.R.layout.simple_spinner_dropdown_item
 import android.R.layout.simple_spinner_item
 import android.app.DatePickerDialog
-import android.graphics.Color
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -43,6 +43,7 @@ class CompanyDetailsFragment :
 
     private val viewModel: CompanyDetailsViewModel by viewModels()
     private lateinit var lineChart: LineChart
+    private var amount = 0.0
 
     override fun bind() {
         super.bind()
@@ -50,12 +51,15 @@ class CompanyDetailsFragment :
         lineChart = binding.lineChart
         spinnerForIntradaySetup()
         configureChart()
+        checkIfStockIsInWatchlist()
     }
 
     override fun bindViewActionListeners() {
         handleBackButton()
         buttonSetup()
         favouriteButtonSetup()
+        buyStockButtonSetup()
+        sellStockButtonSetup()
     }
 
     override fun bindObservers() {
@@ -78,7 +82,6 @@ class CompanyDetailsFragment :
             binding.apply {
                 civLogo.loadImage(firstCompanyDetails.image)
                 tvPrice.text = firstCompanyDetails.price?.toString() ?: "N/A"
-                tvChange.text = firstCompanyDetails.changes?.toString()
                 tvSymbol.text = firstCompanyDetails.symbol
                 tvName.text = firstCompanyDetails.companyName
                 tvDesc.text = firstCompanyDetails.description
@@ -105,8 +108,6 @@ class CompanyDetailsFragment :
         viewModel.onEvent(CompanyDetailsEvents.GetCompanyDetails(symbol = symbol))
     }
 
-    //
-
     private fun extractCompanyDetails(interval: String, fromDate: String, toDate: String) {
         val symbol = arguments?.getString("symbol") ?: ""
         viewModel.onEvent(CompanyDetailsEvents.GetCompanyDetails(symbol = symbol))
@@ -121,7 +122,7 @@ class CompanyDetailsFragment :
     }
 
     private fun spinnerForIntradaySetup() {
-        val intervals = arrayOf("1min", "5min", "15min", "30min", "1hour", "4hour")
+        val intervals = resources.getStringArray(R.array.interval_options)
         val adapter = ArrayAdapter(requireContext(), simple_spinner_item, intervals)
         adapter.setDropDownViewResource(simple_spinner_dropdown_item)
         binding.spinner.adapter = adapter
@@ -150,46 +151,50 @@ class CompanyDetailsFragment :
         }
     }
 
-private fun showDatePickerDialog(button: Button, onDateSelected: (String) -> Unit) {
-    val calendar = Calendar.getInstance()
-    val year = calendar.get(Calendar.YEAR)
-    val month = calendar.get(Calendar.MONTH)
-    val day = calendar.get(Calendar.DAY_OF_MONTH)
+    private fun showDatePickerDialog(button: Button, onDateSelected: (String) -> Unit) {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-    DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-        val selectedDate =
-            String.format("%d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
-        button.text = selectedDate
-        onDateSelected(selectedDate)
-    }, year, month, day).show()
-}
+        DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+            val selectedDate =
+                String.format("%d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+            button.text = selectedDate
+            onDateSelected(selectedDate)
+        }, year, month, day).show()
+    }
 
     private fun configureChart() {
         lineChart.apply {
+
+            val backgroundColor = ContextCompat.getColor(context, R.color.dark_blue)
+            val secondaryColor = ContextCompat.getColor(context, R.color.sky_blue)
+
             description.isEnabled = false
             setTouchEnabled(true)
             setScaleEnabled(true)
             setPinchZoom(true)
-            setBackgroundColor(Color.LTGRAY)
+            setBackgroundColor(backgroundColor)
 
             // Customize the x-axis
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
-                textColor = Color.BLACK
-                textSize = 12f
+                textColor = secondaryColor
+                textSize = 13f
                 setDrawGridLines(false)
                 valueFormatter = DateValueFormatter()
             }
 
             // Customize the left y-axis
             axisLeft.apply {
-                textColor = Color.RED
+                textColor = secondaryColor
                 textSize = 12f
                 setDrawGridLines(false)
             }
 
             // Disable the right y-axis
-            axisRight.isEnabled = true
+            axisRight.isEnabled = false
 
             // Customize the legend
             legend.isEnabled = false
@@ -197,6 +202,8 @@ private fun showDatePickerDialog(button: Button, onDateSelected: (String) -> Uni
     }
 
     private fun updateChart(data: List<CompanyChartIntradayModel>) {
+        val lineColor = ContextCompat.getColor(requireContext(), R.color.sky_blue)
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val timestamps = data.map { dateFormat.parse(it.date)?.time?.toFloat() ?: 0f }
         val minTimestamp = timestamps.minOrNull() ?: 0f
@@ -215,7 +222,7 @@ private fun showDatePickerDialog(button: Button, onDateSelected: (String) -> Uni
         val dataSet = LineDataSet(entries, "Intraday Chart").apply {
             setDrawCircles(false)
             setDrawValues(false)
-            color = Color.BLUE
+            color = lineColor
             lineWidth = 2f
         }
 
@@ -226,44 +233,85 @@ private fun showDatePickerDialog(button: Button, onDateSelected: (String) -> Uni
     private fun favouriteButtonSetup() {
         binding.btnAddToFav.setOnClickListener {
             val symbol = arguments?.getString("symbol") ?: ""
-            Log.d("CompanyDetailsFragment", "Favourite button clicked. Symbol: $symbol")
             viewModel.onEvent(CompanyDetailsEvents.GetCompanyDetails(symbol = symbol))
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.companyDetailsState.collect { state ->
                     state.companyDetails?.firstOrNull()?.let { stock ->
-                        Log.d("CompanyDetailsFragment", "Handling wishlist selection for stock: ${stock.symbol}")
                         handleUserStocksWishlistSelection(stock)
                     }
                 }
             }
         }
     }
-
-    private fun handleUserStocksWishlistSelection(stocks: CompanyDetailsModel)  {
-        Log.d("CompanyDetailsFragment", "Initial favourite status for ${stocks.symbol}: ${stocks.isFavorite}")
-        stocks.isFavorite = !stocks.isFavorite
-        Log.d("CompanyDetailsFragment", "Updated favourite status for ${stocks.symbol}: ${stocks.isFavorite}")
-
-        val drawableRes = if (stocks.isFavorite) {
-            R.drawable.ic_watchlist_selected
-        } else {
-            R.drawable.ic_watchlist
-        }
-        binding.btnAddToFav.setImageResource(drawableRes)
-
+    private fun checkIfStockIsInWatchlist() {
+        val symbol = arguments?.getString("symbol") ?: ""
         val firebaseUser = Firebase.auth.currentUser
         val userId = firebaseUser?.uid
         val user = UserIdModel(userId!!)
-        Log.d("CompanyDetailsFragment", "User ID: $userId")
-        viewModel.onEvent(CompanyDetailsEvents.InsertUser(user))
-        viewModel.onEvent(CompanyDetailsEvents.InsertStocks(stocks))
+        viewModel.onEvent(CompanyDetailsEvents.IsStockInWatchlist(userId, symbol))
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.companyDetailsState.collect { state ->
+                val drawableRes = if (state.isStockInWatchlist) {
+                    R.drawable.ic_watchlist_selected
+                } else {
+                    R.drawable.ic_watchlist
+                }
+                binding.btnAddToFav.setImageResource(drawableRes)
+            }
+        }
+    }
 
-        if (stocks.isFavorite) {
-            // If it is, remove it from the watchlist
+    private fun handleUserStocksWishlistSelection(stocks: CompanyDetailsModel) {
+        val firebaseUser = Firebase.auth.currentUser
+        val userId = firebaseUser?.uid
+        val user = UserIdModel(userId!!)
+        var isStockInWatchlist = false
+
+        viewModel.onEvent(CompanyDetailsEvents.IsStockInWatchlist(userId, stocks.symbol))
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.companyDetailsState.collect { state ->
+                isStockInWatchlist = state.isStockInWatchlist
+            }
+        }
+
+        if (isStockInWatchlist) {
             viewModel.onEvent(CompanyDetailsEvents.DeleteWatchlistedStocks(stocks, user))
         } else {
-            // If it's not, add it to the watchlist
             viewModel.onEvent(CompanyDetailsEvents.InsertStocksToWatchlist(stocks, user))
         }
+    }
+
+    private fun setupQuantityButtons() {
+        binding.btnIncrease.setOnClickListener {
+            amount += 1.0
+            binding.tvStockQuantity.text = amount.toString()
+        }
+        binding.btnDecrease.setOnClickListener {
+            amount -= 1.0
+            binding.tvStockQuantity.text = amount.toString()
+        }
+    }
+
+    private fun buyStockButtonSetup() {
+        val firebaseUser = Firebase.auth.currentUser
+        val userId = firebaseUser!!.uid
+        val symbol = arguments?.getString("symbol") ?: ""
+
+        binding.btnBuy.setOnClickListener {
+            viewModel.onEvent(CompanyDetailsEvents.BuyStock(userId, amount, symbol))
+        }
+        setupQuantityButtons()
+    }
+
+    private fun sellStockButtonSetup() {
+        val firebaseUser = Firebase.auth.currentUser
+        val userId = firebaseUser!!.uid
+        val symbol = arguments?.getString("symbol") ?: ""
+
+        binding.btnSell.setOnClickListener {
+            Log.d("CompanyDetailsFragment", "Sell button clicked. Amount: $amount, Symbol: $symbol")
+            viewModel.onEvent(CompanyDetailsEvents.SellStock(userId, amount, symbol))
+        }
+        setupQuantityButtons()
     }
 }

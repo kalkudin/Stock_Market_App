@@ -1,5 +1,6 @@
 package com.example.finalproject.domain.usecase.transactions_usecase
 
+import android.util.Log
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.model.GetTransaction
 import com.example.finalproject.domain.repository.TransactionsRepository
@@ -14,6 +15,7 @@ class SaveTransactionUseCase @Inject constructor(
     private val dateUtil: DateUtil
 ) {
     suspend operator fun invoke(uid: String, amount: Double, type: String, description : String): Flow<Resource<Boolean>> {
+        Log.d("SaveTransactionUseCase", "Saving transaction. User ID: $uid, Amount: $amount, Type: $type, Description: $description")
         return transactionsRepository.saveTransaction(
             uid = uid, transaction =
             GetTransaction(
@@ -24,5 +26,6 @@ class SaveTransactionUseCase @Inject constructor(
                 description = description
             )
         )
+        Log.d("SaveTransactionUseCase", "Transaction saved successfully.")
     }
 }

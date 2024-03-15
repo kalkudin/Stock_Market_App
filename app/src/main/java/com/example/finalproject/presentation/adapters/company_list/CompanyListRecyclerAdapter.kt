@@ -51,15 +51,18 @@ class CompanyListRecyclerAdapter(
                         ivArrow.setImageResource(R.drawable.ic_arrow_up)
                         ivArrow.isVisible = true
                         setTextColor(greenColor, tvCompanyPriceChangePercentage)
+                        setTextColor(greenColor, tvCompanyPriceChange)
                     }
                     item.percentageChange < 0 -> {
                         ivArrow.setImageResource(R.drawable.ic_arrow_down)
                         ivArrow.isVisible = true
                         setTextColor(redColor, tvCompanyPriceChangePercentage)
+                        setTextColor(redColor, tvCompanyPriceChange)
                     }
                     else -> {
                         ivArrow.visibility = View.INVISIBLE
                         setTextColor(defColor, tvCompanyPriceChangePercentage)
+                        setTextColor(defColor, tvCompanyPriceChange)
                     }
                 }
                 tvCompanyName.text = item.name

@@ -45,4 +45,7 @@ class WatchlistedStocksRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun isStockInWatchlist(userId: String, symbol: String): Flow<Boolean> {
+        return userDao.isStockInWatchlist(userId, symbol)
+    }
 }

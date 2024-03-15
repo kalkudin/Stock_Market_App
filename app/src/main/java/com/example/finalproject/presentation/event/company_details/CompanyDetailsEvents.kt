@@ -18,4 +18,7 @@ sealed class CompanyDetailsEvents {
 
     data class InsertStocksToWatchlist(val stock: CompanyDetailsModel, val user: UserIdModel) : CompanyDetailsEvents()
     data class DeleteWatchlistedStocks(val stock: CompanyDetailsModel, val user: UserIdModel) : CompanyDetailsEvents()
+    data class BuyStock(val userId: String, val amount: Double, val description: String) : CompanyDetailsEvents()
+    data class SellStock(val userId: String, val amount: Double, val description: String) : CompanyDetailsEvents()
+    data class IsStockInWatchlist(val userId: String, val symbol: String) : CompanyDetailsEvents()
 }

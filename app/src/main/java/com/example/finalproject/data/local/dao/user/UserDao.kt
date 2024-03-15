@@ -24,4 +24,7 @@ interface UserDao {
 
     @Query("SELECT * FROM stocksentity INNER JOIN userstockscrossrefentity ON stocksentity.symbol = userstockscrossrefentity.stocksSymbol WHERE userstockscrossrefentity.userId = :userId")
     fun getWatchlistedStocksForUser(userId: String): Flow<List<StocksEntity>>
+
+    @Query("SELECT COUNT(*) > 0 FROM userstockscrossrefentity WHERE userId = :userId AND stocksSymbol = :symbol")
+    fun isStockInWatchlist(userId: String, symbol: String): Flow<Boolean>
 }
