@@ -12,7 +12,6 @@ import com.example.finalproject.presentation.adapters.funds.CreditCardRecyclerAd
 import com.example.finalproject.presentation.base.BaseBottomSheet
 import com.example.finalproject.presentation.bottom_sheets.event.GetUserCardsEvent
 import com.example.finalproject.presentation.bottom_sheets.state.UserCardsState
-import com.example.finalproject.presentation.extension.addOnHorizontalScrollListener
 import com.example.finalproject.presentation.model.funds.CreditCard
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

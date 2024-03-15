@@ -8,13 +8,13 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_grid_background"
-        android:scaleType="centerCrop"
         android:alpha="0.1"
-        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_grid_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_gradient"
@@ -93,6 +93,7 @@
         android:drawableEnd="@drawable/ic_email"
         android:fontFamily="@font/open_sauce_sans_regular"
         android:hint="@string/sample_email"
+        android:maxLines="1"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:textColor="@color/white"
@@ -127,6 +128,7 @@
         android:drawableEnd="@drawable/ic_lock_locked"
         android:hint="@string/password"
         android:inputType="textPassword"
+        android:maxLines="1"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:textColor="@color/white"

@@ -15,6 +15,7 @@ import com.example.finalproject.presentation.bottom_sheets.event.AddNewCardEvent
 import com.example.finalproject.presentation.bottom_sheets.state.NewCardState
 import com.example.finalproject.presentation.model.bottom_sheets.NewCardType
 import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.util.CreditCardNumberFormattingTextWatcher
 import com.example.finalproject.presentation.util.formatExpirationDate
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +33,7 @@ class AddNewCardBottomSheetFragment : BaseBottomSheet<BottomSheetAddNewCardLayou
 
     override fun bind() {
         bindCardTypeAdapter()
+        bindCardNumber()
     }
 
     override fun bindViewActionListeners() {
@@ -41,6 +43,11 @@ class AddNewCardBottomSheetFragment : BaseBottomSheet<BottomSheetAddNewCardLayou
     override fun bindObserves() {
         bindSuccessFlow()
         bindNavigationFlow()
+    }
+
+    private fun bindCardNumber() {
+        val etCardNumber = binding.etCardNumber
+        etCardNumber.addTextChangedListener(CreditCardNumberFormattingTextWatcher())
     }
 
     private fun bindCardTypeAdapter() {

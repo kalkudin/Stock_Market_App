@@ -4,11 +4,15 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
+import com.example.finalproject.domain.usecase.AuthUseCases
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.domain.usecase.UserFundsUseCases
 import com.example.finalproject.presentation.event.funds.UserFundsEvent
+import com.example.finalproject.presentation.mapper.home.formatFirstName
+import com.example.finalproject.presentation.mapper.profile.toPresentation
 import com.example.finalproject.presentation.state.funds.FundsState
+import com.example.finalproject.presentation.util.formatName
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -28,6 +32,7 @@ class UserFundsViewModel @Inject constructor(
     private val dataStoreUseCases: DataStoreUseCases,
     private val fundsUseCases: UserFundsUseCases,
     private val transactionsUseCases: TransactionsUseCases,
+    private val authUseCases: AuthUseCases
 ) : ViewModel() {
 
     private val _navigationFlow = MutableSharedFlow<FundsNavigationEvent>()
@@ -44,6 +49,7 @@ class UserFundsViewModel @Inject constructor(
                 is UserFundsEvent.ResetFlow -> resetFlow()
                 is UserFundsEvent.OpenCardsBottomSheet -> openCardsBottomSheet()
                 is UserFundsEvent.OpenNewCardBottomSheet -> openNewCardBottomSheet()
+                is UserFundsEvent.GetUserName -> getUserName()
             }
         }
     }
@@ -82,6 +88,19 @@ class UserFundsViewModel @Inject constructor(
                         type = "outgoing"
                     ).collect()
                 }
+            }
+        }
+    }
+
+    private suspend fun getUserName() {
+        val uid = dataStoreUseCases.readUserUidUseCase().first()
+
+        authUseCases.getUserInitialsUseCase(uid = uid).collect { resource ->
+            when(resource) {
+                is Resource.Success -> {
+                    _successFlow.update { state -> state.copy(userInitials = resource.data.formatName())}
+                }
+                else -> {}
             }
         }
     }

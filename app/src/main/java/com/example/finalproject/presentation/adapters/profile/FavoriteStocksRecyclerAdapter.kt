@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.databinding.ItemFavoriteStockLayoutBinding
 import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
-import com.example.finalproject.presentation.util.setCustomGradientBackground
 
 class FavoriteStocksRecyclerAdapter(
     private val onViewMoreClick: (CompanyDetailsModel) -> Unit,
@@ -40,8 +39,6 @@ class FavoriteStocksRecyclerAdapter(
                 btnViewMore.setOnClickListener {
                     onViewMoreClick(companyDetails)
                 }
-
-                root.setCustomGradientBackground()
             }
         }
     }
