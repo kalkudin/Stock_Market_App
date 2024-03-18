@@ -43,7 +43,7 @@ class CompanyDetailsFragment :
 
     private val viewModel: CompanyDetailsViewModel by viewModels()
     private lateinit var lineChart: LineChart
-    private var amount = 0.0
+    private var number = 0.0
 
     override fun bind() {
         super.bind()
@@ -90,6 +90,9 @@ class CompanyDetailsFragment :
         }
         state.companyChartIntraday?.let { chartData ->
             updateChart(chartData)
+        }
+        state.successMessage?.let {
+            binding.root.showSnackBar(it)
         }
         state.errorMessage?.let {
             binding.root.showSnackBar(it)
@@ -283,12 +286,12 @@ class CompanyDetailsFragment :
 
     private fun setupQuantityButtons() {
         binding.btnIncrease.setOnClickListener {
-            amount += 1.0
-            binding.tvStockQuantity.text = amount.toString()
+            number += 1.0
+            binding.tvStockQuantity.text = number.toString()
         }
         binding.btnDecrease.setOnClickListener {
-            amount -= 1.0
-            binding.tvStockQuantity.text = amount.toString()
+            number -= 1.0
+            binding.tvStockQuantity.text = number.toString()
         }
     }
 
@@ -298,7 +301,14 @@ class CompanyDetailsFragment :
         val symbol = arguments?.getString("symbol") ?: ""
 
         binding.btnBuy.setOnClickListener {
-            viewModel.onEvent(CompanyDetailsEvents.BuyStock(userId, amount, symbol))
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.companyDetailsState.collect { state ->
+                    state.companyDetails?.firstOrNull()?.let { stock ->
+                        val amount = stock.price!! * number
+                        viewModel.onEvent(CompanyDetailsEvents.BuyStock(userId, amount, symbol))
+                    }
+                }
+            }
         }
         setupQuantityButtons()
     }
@@ -309,8 +319,14 @@ class CompanyDetailsFragment :
         val symbol = arguments?.getString("symbol") ?: ""
 
         binding.btnSell.setOnClickListener {
-            Log.d("CompanyDetailsFragment", "Sell button clicked. Amount: $amount, Symbol: $symbol")
-            viewModel.onEvent(CompanyDetailsEvents.SellStock(userId, amount, symbol))
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.companyDetailsState.collect { state ->
+                    state.companyDetails?.firstOrNull()?.let { stock ->
+                        val amount = stock.price!! * number
+                        viewModel.onEvent(CompanyDetailsEvents.SellStock(userId, amount, symbol))
+                    }
+                }
+            }
         }
         setupQuantityButtons()
     }

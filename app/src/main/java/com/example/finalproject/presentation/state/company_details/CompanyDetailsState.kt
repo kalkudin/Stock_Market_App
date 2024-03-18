@@ -7,6 +7,7 @@ data class CompanyDetailsState(
     val companyDetails: List<CompanyDetailsModel>? = null,
     val companyChartIntraday: List<CompanyChartIntradayModel>? = null,
     val errorMessage: String? = null,
+    val successMessage: String? = null,
     val isLoading: Boolean = false,
     val isStockInWatchlist: Boolean = false
 )
