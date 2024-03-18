@@ -16,7 +16,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
     private lateinit var navHostFragment: NavHostFragment
+
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {

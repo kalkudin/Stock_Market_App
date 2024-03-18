@@ -1,6 +1,7 @@
 package com.example.finalproject.presentation.bottom_sheets.new_card
 
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,8 +14,10 @@ import com.example.finalproject.presentation.adapters.bottom_sheet.CardTypeRecyc
 import com.example.finalproject.presentation.base.BaseBottomSheet
 import com.example.finalproject.presentation.bottom_sheets.event.AddNewCardEvent
 import com.example.finalproject.presentation.bottom_sheets.state.NewCardState
+import com.example.finalproject.presentation.extension.setupCreditCardInput
 import com.example.finalproject.presentation.model.bottom_sheets.NewCardType
 import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.util.CreditCardNumberFormattingTextWatcher
 import com.example.finalproject.presentation.util.formatExpirationDate
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +35,8 @@ class AddNewCardBottomSheetFragment : BaseBottomSheet<BottomSheetAddNewCardLayou
 
     override fun bind() {
         bindCardTypeAdapter()
+        bindCardNumber()
+        bindFieldJumps()
     }
 
     override fun bindViewActionListeners() {
@@ -43,6 +48,11 @@ class AddNewCardBottomSheetFragment : BaseBottomSheet<BottomSheetAddNewCardLayou
         bindNavigationFlow()
     }
 
+    private fun bindCardNumber() {
+        val etCardNumber = binding.etCardNumber
+        etCardNumber.addTextChangedListener(CreditCardNumberFormattingTextWatcher())
+    }
+
     private fun bindCardTypeAdapter() {
         with(binding) {
             cardTypeRecyclerViewAdapter = CardTypeRecyclerViewAdapter { type ->
@@ -52,6 +62,14 @@ class AddNewCardBottomSheetFragment : BaseBottomSheet<BottomSheetAddNewCardLayou
                 adapter = cardTypeRecyclerViewAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             }
+        }
+    }
+
+    private fun bindFieldJumps() {
+        with(binding) {
+            etCardNumber.setupCreditCardInput(etExpiryMonth, 19)
+            etExpiryMonth.setupCreditCardInput(etExpiryYear, 2)
+            etExpiryYear.setupCreditCardInput(etCcv, 2)
         }
     }
 

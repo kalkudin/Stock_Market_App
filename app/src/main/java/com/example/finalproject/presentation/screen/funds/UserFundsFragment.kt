@@ -1,7 +1,9 @@
 package com.example.finalproject.presentation.screen.funds
 
+import android.os.Build
 import android.util.Log
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,8 +27,10 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
 
     private var userCardNumber : String = ""
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun bind() {
         bindArgs()
+        bindUserName()
     }
 
     override fun bindViewActionListeners() {
@@ -40,6 +44,11 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
         bindNavigationFlow()
         bindSuccessFlow()
     }
+
+    private fun bindUserName() {
+        fundsViewModel.onEvent(UserFundsEvent.GetUserName)
+    }
+
 
     private fun bindBackBtn() {
         with(binding) {
@@ -115,10 +124,15 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
                 resetFlow()
             }
 
+            state.userInitials?.let { initials ->
+                bindUserInitials(text = initials)
+            }
+
             if(state.success) {
                 progressBar.visibility = View.GONE
                 handleFundsAdded(etAddFunds.text.toString())
             }
+
         }
     }
 
@@ -134,11 +148,13 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
         fundsViewModel.onEvent(UserFundsEvent.ResetFlow)
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun bindArgs() {
         val creditCard = arguments?.getParcelable("creditCard", CreditCard::class.java)
         Log.d("FundsFragment", creditCard.toString())
 
         creditCard?.let {
+
             userCardNumber = creditCard.cardNumber
 
             bindCreditCardDisplayInformation(
@@ -176,7 +192,13 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
         }
     }
 
+    private fun bindUserInitials(text : String) {
+        with(binding) {
+            tvUserInitials.text = text
+        }
+    }
+
     private fun handleFundsAdded(amount : String) {
-        Snackbar.make(binding.root, "$amount has successfully been added to you account", Snackbar.LENGTH_LONG).show()
+        Snackbar.make(binding.root, "$amount$ has successfully been added to you account", Snackbar.LENGTH_LONG).show()
     }
 }

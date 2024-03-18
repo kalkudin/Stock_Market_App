@@ -44,8 +44,8 @@
     <string name="view_more">View More</string>
 
     <string name="spinner_prompt">Select Sorting Option</string>
-    <string name="your_transaction_history">Your Transaction History</string>
-    <string name="view_more_transactions">View Transaction History…</string>
+    <string name="your_transaction_history">Your Recent Transactions</string>
+    <string name="view_more_transactions">View Transaction History</string>
     <string name="your_credit_cards">Your Credit Cards</string>
     <string name="manage_cards">Manage Cards...</string>
     <string name="your_favorite_stocks">Your Favorite Stocks</string>

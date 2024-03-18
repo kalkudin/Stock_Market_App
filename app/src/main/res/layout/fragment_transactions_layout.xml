@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/style_background_wave">
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -42,9 +43,12 @@
         android:id="@+id/spinner_sorting_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="232dp"
+        android:layout_marginStart="176dp"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"
         android:prompt="@string/spinner_prompt"
+        app:layout_constraintBottom_toTopOf="@+id/rv_transactions"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_back"
         app:layout_constraintTop_toTopOf="parent" />
 

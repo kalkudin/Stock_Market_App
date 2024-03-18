@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,11 +42,7 @@ class HomeViewModel @Inject constructor(
 
     private fun checkCurrentSession() {
         viewModelScope.launch {
-            dataStoreUseCases.readUserSessionUseCase().collect {
-                if(it){
-                    _navigationFlow.emit(HomeNavigationEvent.NavigateToStockHome)
-                }
-            }
+            if(dataStoreUseCases.readUserSessionUseCase().first()) {_navigationFlow.emit(HomeNavigationEvent.NavigateToStockHome)}
         }
     }
 }

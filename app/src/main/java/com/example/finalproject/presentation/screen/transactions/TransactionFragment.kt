@@ -55,8 +55,8 @@ class TransactionFragment : BaseFragment<FragmentTransactionsLayoutBinding>(Frag
     private fun bindSpinner() {
         with(binding) {
             val sortOptions = resources.getStringArray(R.array.sort_options)
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sortOptions).apply {
-                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            val adapter = ArrayAdapter(requireContext(), R.layout.item_spinner_layout, sortOptions).apply {
+                setDropDownViewResource(R.layout.item_spinner_dropdown_layout)
             }
             spinnerSortingOptions.adapter = adapter
             spinnerSortingOptions.setOnItemSelected { selectedItem ->

@@ -2,75 +2,73 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:fillViewport="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/style_background_wave">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Rounded" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/btn_choose_profile_picture"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginEnd="4dp"
+            android:background="@color/grey_blue"
+            android:scaleType="center"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintEnd_toEndOf="@+id/iv_avatar"
+            app:layout_constraintTop_toTopOf="@+id/iv_avatar"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Rounded" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/user_info_container"
+            android:id="@+id/breakline_1"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/style_rounded_corners"
-            android:backgroundTint="@color/black"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_funds"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Current Funds:"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="@id/user_info_container"
-            app:layout_constraintTop_toTopOf="@id/user_info_container" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10sp"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:layout_constraintStart_toEndOf="@id/tv_funds"
-            app:layout_constraintTop_toTopOf="@id/tv_funds" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btn_add_more_funds"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="Add More Funds"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/user_info_container"
-            app:layout_constraintEnd_toEndOf="@+id/user_info_container" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_choose_profile_picture" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/transaction_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_info_container"
-            app:layout_constraintVertical_bias="0.03">
+            app:layout_constraintTop_toBottomOf="@+id/breakline_1"
+            app:layout_constraintVertical_bias="0.0">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_brief_transactions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:fontFamily="@font/open_sauce_sans_bold"
                 android:text="@string/your_transaction_history"
+                android:textColor="@color/deaf_green"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,7 +76,6 @@
                 android:id="@+id/rv_transactions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -91,20 +88,34 @@
                 android:id="@+id/btn_view_more_transactions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/view_more_transactions" />
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/open_sauce_sans_bold"
+                android:text="@string/view_more_transactions"
+                android:textColor="@color/deaf_green" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/card_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transaction_container" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/card_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="48dp"
             android:layout_marginEnd="10dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/transaction_container">
 
@@ -112,14 +123,27 @@
                 android:id="@+id/tv_credit_cards"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/your_credit_cards" />
+                android:fontFamily="@font/open_sauce_sans_bold"
+                android:text="@string/your_credit_cards"
+                android:textColor="@color/light_blue" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp_user_cards"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_height="wrap_content" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/breakline_2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_container" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/category_favorite_stock_container"
@@ -128,16 +152,22 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_container">
+            app:layout_constraintTop_toBottomOf="@id/breakline_2"
+            app:layout_constraintVertical_bias="0.0">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_view_favorite_stocks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/your_favorite_stocks" />
+                android:fontFamily="@font/open_sauce_sans_bold"
+                android:text="@string/your_favorite_stocks"
+                android:textColor="@color/white" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_favorite_stocks"
@@ -150,7 +180,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/view_favorite_stock" />
+                android:fontFamily="@font/open_sauce_sans_bold"
+                android:text="@string/view_favorite_stock"
+                android:textColor="@color/white" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ProgressBar
@@ -161,7 +193,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
 

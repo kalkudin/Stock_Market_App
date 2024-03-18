@@ -21,9 +21,9 @@ fun CreditCardDomainModel.toPresentation() : CreditCard {
 fun maskAndFormatCardNumber(cardNumber: String): String {
     val maskedNumber = StringBuilder()
     cardNumber.forEachIndexed { index, c ->
-        if (c == ' ' && index < 12) {
+        if (c == ' ' && index < 14) {
             maskedNumber.append(' ')
-        } else if (index < 12) {
+        } else if (index < 14) {
             maskedNumber.append('*')
         } else {
             maskedNumber.append(c)

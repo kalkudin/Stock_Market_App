@@ -1,5 +1,11 @@
 package com.example.finalproject.presentation.screen.user_profile
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import android.provider.MediaStore
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +38,20 @@ class UserProfileFragment : BaseFragment<FragmentProfileLayoutBinding>(FragmentP
 
     private lateinit var favoriteStocksRecyclerAdapter : ProfileFavoriteStocksRecyclerAdapter
 
+    private var selectedImageUri: Uri? = null
+
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            selectedImageUri = data?.data
+            Log.d("UserProfileFragment", "Selected Image URI: $selectedImageUri")
+
+            selectedImageUri?.let { uri ->
+                userProfileViewModel.onEvent(UserProfileEvent.UploadImageToFireBase(uri = uri))
+            }
+        }
+    }
+
     override fun bind() {
         bindProfileData()
         bindCardsAdapter()
@@ -42,6 +62,7 @@ class UserProfileFragment : BaseFragment<FragmentProfileLayoutBinding>(FragmentP
     override fun bindViewActionListeners() {
         bindTransactionDetailsBtn()
         bindFavoriteStocksBtn()
+        bindProfileBtn()
     }
 
     override fun bindObservers() {
@@ -53,6 +74,15 @@ class UserProfileFragment : BaseFragment<FragmentProfileLayoutBinding>(FragmentP
         with(binding) {
             btnViewMoreTransactions.setOnClickListener {
                 userProfileViewModel.onEvent(UserProfileEvent.ViewTradingHistory)
+            }
+        }
+    }
+
+    private fun bindProfileBtn() {
+        with(binding) {
+            btnChooseProfilePicture.setOnClickListener {
+                val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                galleryLauncher.launch(galleryIntent)
             }
         }
     }
@@ -92,7 +122,7 @@ class UserProfileFragment : BaseFragment<FragmentProfileLayoutBinding>(FragmentP
         with(binding) {
             favoriteStocksRecyclerAdapter = ProfileFavoriteStocksRecyclerAdapter()
             rvFavoriteStocks.adapter =favoriteStocksRecyclerAdapter
-            rvFavoriteStocks.layoutManager = LinearLayoutManager(rvFavoriteStocks.context, LinearLayoutManager.HORIZONTAL, false)
+            rvFavoriteStocks.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }
 

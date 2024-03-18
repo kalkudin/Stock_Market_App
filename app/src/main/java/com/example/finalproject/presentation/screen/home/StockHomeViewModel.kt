@@ -57,6 +57,8 @@ class StockHomeViewModel @Inject constructor(
 
             val userId = dataStoreUseCases.readUserUidUseCase().first()
 
+            _stockState.update { state -> state.copy(isLoading = true) }
+
             val userInfoJob = async {
                 authUseCases.getUserInitialsUseCase(uid = userId).collect { resource ->
                     handleStateUpdate(
