@@ -1,11 +1,10 @@
 package com.example.finalproject.domain.usecase.user_funds_usecase
 
-import android.util.Log
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.domain.model.UserFunds
-import com.example.finalproject.domain.repository.CreditCardRepository
-import com.example.finalproject.domain.repository.UserFundsRepository
+import com.example.finalproject.domain.model.user_funds.GetUserFunds
+import com.example.finalproject.domain.repository.firestore.credit_card.CreditCardRepository
+import com.example.finalproject.domain.repository.firestore.user_funds.UserFundsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -27,6 +26,6 @@ class AddUserFundsUseCase @Inject constructor(
             return flowOf(Resource.Error(ErrorType.NoSuchCreditCard))
         }
 
-        return userFundsRepository.addUserFunds(userFunds = UserFunds(uid = uid, amount = amount.toDouble()))
+        return userFundsRepository.addUserFunds(userFunds = GetUserFunds(uid = uid, amount = amount.toDouble()))
     }
 }

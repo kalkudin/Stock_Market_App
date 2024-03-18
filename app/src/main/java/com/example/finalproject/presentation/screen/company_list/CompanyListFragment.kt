@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.example.finalproject.databinding.FragmentCompanyListBinding
 import com.example.finalproject.presentation.adapters.company_list.CompanyListRecyclerAdapter
 import com.example.finalproject.presentation.base.BaseFragment
-import com.example.finalproject.presentation.event.company_list.CompanyListEvents
+import com.example.finalproject.presentation.event.company_list.CompanyListEvent
 import com.example.finalproject.presentation.extension.showSnackBar
-import com.example.finalproject.presentation.model.company_list.CompanyListModel
+import com.example.finalproject.presentation.model.company_list.CompanyList
 import com.example.finalproject.presentation.state.company_list.CompanyListState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -51,7 +51,7 @@ class CompanyListFragment :
             adapter = companyListAdapter
             layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
         }
-        viewModel.onEvent(CompanyListEvents.GetCompanyList)
+        viewModel.onEvent(CompanyListEvent.GetCompanyList)
     }
 
     private fun observeCompanyListState() {
@@ -97,11 +97,11 @@ class CompanyListFragment :
     }
 
     private fun handleSearch(query: String) {
-        viewModel.onEvent(CompanyListEvents.ListSearch(query = query))
+        viewModel.onEvent(CompanyListEvent.ListSearch(query = query))
     }
 
 
-    private fun handleCompanyClick(company: CompanyListModel) {
-        viewModel.onEvent(CompanyListEvents.CompanyItemClick(company = company))
+    private fun handleCompanyClick(company: CompanyList) {
+        viewModel.onEvent(CompanyListEvent.CompanyItemClick(company = company))
     }
 }

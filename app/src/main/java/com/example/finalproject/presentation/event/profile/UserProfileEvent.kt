@@ -1,7 +1,7 @@
 package com.example.finalproject.presentation.event.profile
 
 import android.net.Uri
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 
 sealed class UserProfileEvent {
     data object NavigateToFavorites : UserProfileEvent()

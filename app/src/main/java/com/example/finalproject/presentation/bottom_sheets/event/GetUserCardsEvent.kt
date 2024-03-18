@@ -1,6 +1,6 @@
 package com.example.finalproject.presentation.bottom_sheets.event
 
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 
 sealed class GetUserCardsEvent {
     data object GetUserCreditCards : GetUserCardsEvent()

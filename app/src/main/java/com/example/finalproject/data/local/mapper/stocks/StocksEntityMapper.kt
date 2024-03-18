@@ -1,10 +1,10 @@
 package com.example.finalproject.data.local.mapper.stocks
 
 import com.example.finalproject.data.local.model.stocks.StocksEntity
-import com.example.finalproject.domain.model.company_details.CompanyDetails
+import com.example.finalproject.domain.model.company_details.GetCompanyDetails
 
-fun StocksEntity.toDomain(): CompanyDetails {
-    return CompanyDetails(
+fun StocksEntity.toDomain(): GetCompanyDetails {
+    return GetCompanyDetails(
         symbol = symbol,
         price = price,
         changes = changes,
@@ -15,7 +15,7 @@ fun StocksEntity.toDomain(): CompanyDetails {
     )
 }
 
-fun CompanyDetails.toData(): StocksEntity {
+fun GetCompanyDetails.toData(): StocksEntity {
     return StocksEntity(
         symbol = symbol,
         price = price,

@@ -10,33 +10,33 @@ import com.example.finalproject.data.local.dao.stocks.StocksDao
 import com.example.finalproject.data.local.dao.user.UserDao
 import com.example.finalproject.data.remote.service.stock_news.StockNewsApiService
 import com.example.finalproject.data.remote.service.stocks_to_watch.StocksToWatchApiService
-import com.example.finalproject.data.repository.CreditCardRepositoryImpl
-import com.example.finalproject.data.repository.DataStoreRepositoryImpl
-import com.example.finalproject.data.repository.LoginRepositoryImpl
-import com.example.finalproject.data.repository.RegisterRepositoryImpl
-import com.example.finalproject.data.repository.ResetPasswordRepositoryImpl
-import com.example.finalproject.data.repository.TransactionsRepositoryImpl
-import com.example.finalproject.data.repository.UploadUriRepositoryImpl
-import com.example.finalproject.data.repository.UserFundsRepositoryImpl
-import com.example.finalproject.data.repository.UserInitialsRepositoryImpl
-import com.example.finalproject.data.repository.company_details.CompanyDetailsRepositoryImpl
-import com.example.finalproject.data.repository.company_details_chart.CompanyChartIntradayRepositoryImpl
+import com.example.finalproject.data.repository.auth.login.LoginRepositoryImpl
+import com.example.finalproject.data.repository.auth.register.RegisterRepositoryImpl
+import com.example.finalproject.data.repository.auth.reset_password.ResetPasswordRepositoryImpl
+import com.example.finalproject.data.repository.company_details.chart.CompanyChartIntradayRepositoryImpl
+import com.example.finalproject.data.repository.company_details.details.CompanyDetailsRepositoryImpl
 import com.example.finalproject.data.repository.company_list.CompanyListRepositoryImpl
+import com.example.finalproject.data.repository.datastore.DataStoreRepositoryImpl
+import com.example.finalproject.data.repository.firestore.credit_card.CreditCardRepositoryImpl
+import com.example.finalproject.data.repository.firestore.image_upload.UploadUriRepositoryImpl
+import com.example.finalproject.data.repository.firestore.transactions.TransactionsRepositoryImpl
+import com.example.finalproject.data.repository.firestore.user_funds.UserFundsRepositoryImpl
+import com.example.finalproject.data.repository.firestore.user_initials.UserInitialsRepositoryImpl
 import com.example.finalproject.data.repository.stock_news.StockNewsRepositoryImpl
 import com.example.finalproject.data.repository.stocks_to_watch.StocksToWatchRepositoryImpl
 import com.example.finalproject.data.repository.watchlisted_stocks.WatchlistedStocksRepositoryImpl
 import com.example.finalproject.domain.datasource.company_details.RemoteCompanyDetailsDataSource
 import com.example.finalproject.domain.datasource.company_details_chart.RemoteCompanyChartIntradayDataSource
 import com.example.finalproject.domain.datasource.company_list.RemoteCompanyListDataSource
-import com.example.finalproject.domain.repository.CreditCardRepository
-import com.example.finalproject.domain.repository.DataStoreRepository
-import com.example.finalproject.domain.repository.LoginRepository
-import com.example.finalproject.domain.repository.RegisterRepository
-import com.example.finalproject.domain.repository.ResetPasswordRepository
-import com.example.finalproject.domain.repository.TransactionsRepository
-import com.example.finalproject.domain.repository.UploadUriRepository
-import com.example.finalproject.domain.repository.UserFundsRepository
-import com.example.finalproject.domain.repository.UserInitialsRepository
+import com.example.finalproject.domain.repository.firestore.credit_card.CreditCardRepository
+import com.example.finalproject.domain.repository.datastore.DataStoreRepository
+import com.example.finalproject.domain.repository.auth.login.LoginRepository
+import com.example.finalproject.domain.repository.auth.register.RegisterRepository
+import com.example.finalproject.domain.repository.auth.reset_password.ResetPasswordRepository
+import com.example.finalproject.domain.repository.firestore.transactions.TransactionsRepository
+import com.example.finalproject.domain.repository.firestore.image_upload.UploadUriRepository
+import com.example.finalproject.domain.repository.firestore.user_funds.UserFundsRepository
+import com.example.finalproject.domain.repository.firestore.user_initials.UserInitialsRepository
 import com.example.finalproject.domain.repository.company_details.CompanyDetailsRepository
 import com.example.finalproject.domain.repository.company_details_chart.CompanyChartIntradayRepository
 import com.example.finalproject.domain.repository.company_list.CompanyListRepository
@@ -165,7 +165,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideImageRepository(storageReference: StorageReference, @ApplicationContext context: Context) : UploadUriRepository{
+    fun provideImageRepository(storageReference: StorageReference, @ApplicationContext context: Context) : UploadUriRepository {
         return UploadUriRepositoryImpl(storageReference = storageReference, context = context   )
     }
 }

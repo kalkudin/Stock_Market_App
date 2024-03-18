@@ -21,7 +21,7 @@ import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.profile.UserProfileEvent
 import com.example.finalproject.presentation.extension.hideView
 import com.example.finalproject.presentation.extension.showView
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 import com.example.finalproject.presentation.state.profile.ProfileState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

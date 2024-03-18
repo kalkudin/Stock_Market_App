@@ -12,8 +12,8 @@ import com.example.finalproject.databinding.FragmentWatchlistedStocksBinding
 import com.example.finalproject.presentation.adapters.watchlisted_stocks.WatchlistedStocksRecyclerAdapter
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.watchlisted_stocks.WatchlistedStocksEvent
-import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
-import com.example.finalproject.presentation.model.company_details.UserIdModel
+import com.example.finalproject.presentation.model.company_details.CompanyDetails
+import com.example.finalproject.presentation.model.company_details.UserId
 import com.example.finalproject.presentation.state.watchlisted_stocks.WatchlistedStocksState
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -58,7 +58,7 @@ class WatchlistedStocksFragment :
         val firebaseUser = Firebase.auth.currentUser
         val userId = firebaseUser?.uid
         if (userId != null) {
-            viewModel.onEvent(WatchlistedStocksEvent.GetWatchlistedStocks(UserIdModel(userId)))
+            viewModel.onEvent(WatchlistedStocksEvent.GetWatchlistedStocks(UserId(userId)))
         } else {
             Log.d("FavouritesFragment", "Failed to get favourite plants: User not logged in")
         }
@@ -110,11 +110,11 @@ class WatchlistedStocksFragment :
         }
     }
 
-    private fun handleCompanyClick(stock: CompanyDetailsModel) {
+    private fun handleCompanyClick(stock: CompanyDetails) {
         viewModel.onEvent(WatchlistedStocksEvent.StocksItemClick(stock = stock))
     }
 
-    private fun handleDeleteButtonClick(stock: CompanyDetailsModel) {
-        viewModel.onEvent(WatchlistedStocksEvent.DeleteWatchlistedStocks(stock, UserIdModel(Firebase.auth.currentUser?.uid!!)))
+    private fun handleDeleteButtonClick(stock: CompanyDetails) {
+        viewModel.onEvent(WatchlistedStocksEvent.DeleteWatchlistedStocks(stock, UserId(Firebase.auth.currentUser?.uid!!)))
     }
 }

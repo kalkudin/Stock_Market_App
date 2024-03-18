@@ -1,7 +1,7 @@
 package com.example.finalproject.domain.usecase.credit_card_usecase
 
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.domain.repository.CreditCardRepository
+import com.example.finalproject.domain.repository.firestore.credit_card.CreditCardRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

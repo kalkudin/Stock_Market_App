@@ -1,9 +1,9 @@
 package com.example.finalproject.domain.repository.company_details
 
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.domain.model.company_details.CompanyDetails
+import com.example.finalproject.domain.model.company_details.GetCompanyDetails
 import kotlinx.coroutines.flow.Flow
 
 interface CompanyDetailsRepository {
-    suspend fun getCompanyDetailsRemotely(symbol:String): Flow<Resource<List<CompanyDetails>>>
+    suspend fun getCompanyDetailsRemotely(symbol:String): Flow<Resource<List<GetCompanyDetails>>>
 }

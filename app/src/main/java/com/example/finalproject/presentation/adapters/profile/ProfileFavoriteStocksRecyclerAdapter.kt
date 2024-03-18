@@ -10,27 +10,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemProfileFavoriteStockLayoutBinding
 import com.example.finalproject.presentation.extension.loadImage
-import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
+import com.example.finalproject.presentation.model.company_details.CompanyDetails
 import com.example.finalproject.presentation.model.home.Stock
 import com.example.finalproject.presentation.util.setBackground
 import com.example.finalproject.presentation.util.setTextColor
-import okhttp3.internal.immutableListOf
 
 class ProfileFavoriteStocksRecyclerAdapter() :
-    ListAdapter<CompanyDetailsModel, ProfileFavoriteStocksRecyclerAdapter.ProfileFavoriteStocksViewHolder>(
+    ListAdapter<CompanyDetails, ProfileFavoriteStocksRecyclerAdapter.ProfileFavoriteStocksViewHolder>(
         DiffCallback
     ) {
-    companion object DiffCallback : DiffUtil.ItemCallback<CompanyDetailsModel>() {
+    companion object DiffCallback : DiffUtil.ItemCallback<CompanyDetails>() {
         override fun areItemsTheSame(
-            oldItem: CompanyDetailsModel,
-            newItem: CompanyDetailsModel
+            oldItem: CompanyDetails,
+            newItem: CompanyDetails
         ): Boolean {
             return oldItem.companyName == newItem.companyName
         }
 
         override fun areContentsTheSame(
-            oldItem: CompanyDetailsModel,
-            newItem: CompanyDetailsModel
+            oldItem: CompanyDetails,
+            newItem: CompanyDetails
         ): Boolean {
             return oldItem == newItem
         }
@@ -39,7 +38,7 @@ class ProfileFavoriteStocksRecyclerAdapter() :
     inner class ProfileFavoriteStocksViewHolder(private val binding: ItemProfileFavoriteStockLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(stock: CompanyDetailsModel) {
+        fun bind(stock: CompanyDetails) {
             with(binding) {
 
                 val greenColor = ContextCompat.getColor(itemView.context, R.color.deaf_green)

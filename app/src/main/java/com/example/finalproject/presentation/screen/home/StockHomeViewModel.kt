@@ -8,7 +8,7 @@ import com.example.finalproject.domain.usecase.StocksToWatchUseCases
 import com.example.finalproject.domain.usecase.UserFundsUseCases
 import com.example.finalproject.presentation.event.home.StockHomeEvent
 import com.example.finalproject.presentation.mapper.home.formatFirstName
-import com.example.finalproject.presentation.mapper.home.handleStateUpdate
+import com.example.finalproject.presentation.mapper.base.handleStateUpdate
 import com.example.finalproject.presentation.mapper.home.toPresentation
 import com.example.finalproject.presentation.model.home.Stock
 import com.example.finalproject.presentation.state.home.StockListState

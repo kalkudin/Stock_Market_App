@@ -6,7 +6,7 @@ import androidx.paging.map
 import com.example.finalproject.domain.usecase.stock_news.GetStockNewsUseCase
 import com.example.finalproject.presentation.event.stock_news.StockNewsEvent
 import com.example.finalproject.presentation.mapper.stock_news.toPresentation
-import com.example.finalproject.presentation.model.stock_news.NewsModel
+import com.example.finalproject.presentation.model.stock_news.News
 import com.example.finalproject.presentation.state.stock_news.StockNewsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,7 +34,7 @@ class StockNewsViewModel @Inject constructor(
         }
     }
 
-    private fun onNewsItemClick(item: NewsModel) {
+    private fun onNewsItemClick(item: News) {
         viewModelScope.launch {
             _navigateToUrl.emit(item.link)
         }

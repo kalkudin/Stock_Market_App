@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemCompanyListBinding
-import com.example.finalproject.presentation.model.company_list.CompanyListModel
+import com.example.finalproject.presentation.model.company_list.CompanyList
 import com.example.finalproject.presentation.util.setTextColor
 
 class CompanyListRecyclerAdapter(
-    val onCompanyClick: (CompanyListModel) -> Unit
-) : ListAdapter<CompanyListModel, CompanyListRecyclerAdapter.CompanyListViewHolder>(
+    val onCompanyClick: (CompanyList) -> Unit
+) : ListAdapter<CompanyList, CompanyListRecyclerAdapter.CompanyListViewHolder>(
     CompanyListDiffUtil()
 ) {
     override fun onCreateViewHolder(
@@ -37,7 +37,7 @@ class CompanyListRecyclerAdapter(
     inner class CompanyListViewHolder(
         private val binding: ItemCompanyListBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        private lateinit var item: CompanyListModel
+        private lateinit var item: CompanyList
         fun bind() {
             item = currentList[adapterPosition]
             binding.apply {
@@ -77,17 +77,17 @@ class CompanyListRecyclerAdapter(
         }
     }
 
-    private class CompanyListDiffUtil : DiffUtil.ItemCallback<CompanyListModel>() {
+    private class CompanyListDiffUtil : DiffUtil.ItemCallback<CompanyList>() {
         override fun areItemsTheSame(
-            oldItem: CompanyListModel,
-            newItem: CompanyListModel
+            oldItem: CompanyList,
+            newItem: CompanyList
         ): Boolean {
             return oldItem.symbol == newItem.symbol
         }
 
         override fun areContentsTheSame(
-            oldItem: CompanyListModel,
-            newItem: CompanyListModel
+            oldItem: CompanyList,
+            newItem: CompanyList
         ): Boolean {
             return oldItem == newItem
         }

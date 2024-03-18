@@ -1,6 +1,6 @@
 package com.example.finalproject.presentation.bottom_sheets.event
 
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 
 sealed class AddNewCardEvent {
     data class AddCreditCard(val cardNumber: List<String>, val expirationDate: String, val ccv: String, val cardType: String) : AddNewCardEvent()

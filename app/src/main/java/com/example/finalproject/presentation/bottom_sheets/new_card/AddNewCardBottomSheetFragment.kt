@@ -1,7 +1,6 @@
 package com.example.finalproject.presentation.bottom_sheets.new_card
 
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,13 +15,12 @@ import com.example.finalproject.presentation.bottom_sheets.event.AddNewCardEvent
 import com.example.finalproject.presentation.bottom_sheets.state.NewCardState
 import com.example.finalproject.presentation.extension.setupCreditCardInput
 import com.example.finalproject.presentation.model.bottom_sheets.NewCardType
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 import com.example.finalproject.presentation.util.CreditCardNumberFormattingTextWatcher
 import com.example.finalproject.presentation.util.formatExpirationDate
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @AndroidEntryPoint
 class AddNewCardBottomSheetFragment : BaseBottomSheet<BottomSheetAddNewCardLayoutBinding>(BottomSheetAddNewCardLayoutBinding::inflate){

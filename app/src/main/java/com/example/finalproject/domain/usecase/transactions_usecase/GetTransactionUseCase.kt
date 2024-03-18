@@ -1,8 +1,8 @@
 package com.example.finalproject.domain.usecase.transactions_usecase
 
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.domain.model.GetTransaction
-import com.example.finalproject.domain.repository.TransactionsRepository
+import com.example.finalproject.domain.model.transactions.GetTransaction
+import com.example.finalproject.domain.repository.firestore.transactions.TransactionsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

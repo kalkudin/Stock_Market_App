@@ -1,6 +1,6 @@
 package com.example.finalproject.data.common
 
-import com.example.finalproject.data.remote.model.UserDto
+import com.example.finalproject.data.remote.model.user.UserDto
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.AuthResult

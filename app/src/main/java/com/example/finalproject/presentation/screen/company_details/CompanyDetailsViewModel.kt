@@ -9,11 +9,11 @@ import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.domain.usecase.UserFundsUseCases
 import com.example.finalproject.domain.usecase.company_details_chart_usecase.GetCompanyChartIntradayUseCase
 import com.example.finalproject.domain.usecase.company_details_usecase.GetCompanyDetailsUseCase
-import com.example.finalproject.presentation.event.company_details.CompanyDetailsEvents
+import com.example.finalproject.presentation.event.company_details.CompanyDetailsEvent
 import com.example.finalproject.presentation.mapper.company_details.toDomain
 import com.example.finalproject.presentation.mapper.company_details.toPresentation
-import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
-import com.example.finalproject.presentation.model.company_details.UserIdModel
+import com.example.finalproject.presentation.model.company_details.CompanyDetails
+import com.example.finalproject.presentation.model.company_details.UserId
 import com.example.finalproject.presentation.state.company_details.CompanyDetailsState
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,41 +39,41 @@ class CompanyDetailsViewModel @Inject constructor(
     val companyDetailsState: SharedFlow<CompanyDetailsState> get() = _companyDetailsState
 
 
-    fun onEvent(event: CompanyDetailsEvents) {
+    fun onEvent(event: CompanyDetailsEvent) {
         when (event) {
-            is CompanyDetailsEvents.GetCompanyDetails -> getCompanyDetails(event.symbol)
-            is CompanyDetailsEvents.GetCompanyChartIntraday -> getCompanyChartIntraday(
+            is CompanyDetailsEvent.GetCompanyDetails -> getCompanyDetails(event.symbol)
+            is CompanyDetailsEvent.GetCompanyChartIntraday -> getCompanyChartIntraday(
                 event.interval,
                 event.symbol,
                 event.from,
                 event.to
             )
 
-            is CompanyDetailsEvents.InsertStocks -> insertStocks(event.stock)
-            is CompanyDetailsEvents.InsertUser -> insertUser(event.user)
-            is CompanyDetailsEvents.InsertStocksToWatchlist -> insertStocksToWatchlist(
+            is CompanyDetailsEvent.InsertStocks -> insertStocks(event.stock)
+            is CompanyDetailsEvent.InsertUser -> insertUser(event.user)
+            is CompanyDetailsEvent.InsertStocksToWatchlist -> insertStocksToWatchlist(
                 event.stock,
                 event.user
             )
 
-            is CompanyDetailsEvents.DeleteWatchlistedStocks -> deleteWatchlistedStocks(
+            is CompanyDetailsEvent.DeleteWatchlistedStocks -> deleteWatchlistedStocks(
                 event.stock,
                 event.user
             )
 
-            is CompanyDetailsEvents.BuyStock -> buyStock(
+            is CompanyDetailsEvent.BuyStock -> buyStock(
                 event.userId,
                 event.amount,
                 event.description
             )
 
-            is CompanyDetailsEvents.SellStock -> sellStock(
+            is CompanyDetailsEvent.SellStock -> sellStock(
                 event.userId,
                 event.amount,
                 event.description
             )
 
-            is CompanyDetailsEvents.IsStockInWatchlist -> checkIfStockIsInWatchlist(
+            is CompanyDetailsEvent.IsStockInWatchlist -> checkIfStockIsInWatchlist(
                 event.userId,
                 event.symbol
             )
@@ -191,9 +191,11 @@ class CompanyDetailsViewModel @Inject constructor(
         description: String,
         transactionType: String
     ) {
-        when (val resource = userFundsUseCases.retrieveUserFundsUseCase(uid = userId).first()) {
+        val resource = userFundsUseCases.retrieveUserFundsUseCase(uid = userId).first()
+        when (resource) {
             is Resource.Success -> {
-                if (resource.data.amount >= amount) {
+                val userFunds = resource.data.amount
+                if (userFunds >= amount) {
                     transactionsUseCases.saveTransactionUseCase(
                         userId,
                         amount,
@@ -206,7 +208,6 @@ class CompanyDetailsViewModel @Inject constructor(
                     updateErrorMessage("Insufficient funds to $transactionType stock")
                 }
             }
-
             is Resource.Error -> updateErrorMessages(resource.errorType)
             else -> updateErrorMessage("Unknown error occurred")
         }
@@ -264,19 +265,19 @@ class CompanyDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun insertStocks(stock: CompanyDetailsModel) {
+    private fun insertStocks(stock: CompanyDetails) {
         viewModelScope.launch {
             dataBaseUseCases.insertStocksUseCase.invoke(stock.toDomain())
         }
     }
 
-    private fun insertUser(user: UserIdModel) {
+    private fun insertUser(user: UserId) {
         viewModelScope.launch {
             dataBaseUseCases.insertUserUseCase.invoke(user.toDomain())
         }
     }
 
-    private fun insertStocksToWatchlist(stock: CompanyDetailsModel, user: UserIdModel) {
+    private fun insertStocksToWatchlist(stock: CompanyDetails, user: UserId) {
         viewModelScope.launch {
             dataBaseUseCases.insertWatchlistedStocksUseCase.invoke(
                 user.toDomain(),
@@ -285,7 +286,7 @@ class CompanyDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun deleteWatchlistedStocks(stock: CompanyDetailsModel, user: UserIdModel) {
+    private fun deleteWatchlistedStocks(stock: CompanyDetails, user: UserId) {
         viewModelScope.launch {
             dataBaseUseCases.deleteWatchlistedStocksUseCase.invoke(
                 user.toDomain(),

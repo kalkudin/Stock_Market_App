@@ -1,17 +1,14 @@
 package com.example.finalproject.presentation.bottom_sheets.existing_cards
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.CreditCardUseCases
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.presentation.bottom_sheets.event.GetUserCardsEvent
 import com.example.finalproject.presentation.bottom_sheets.state.UserCardsState
-import com.example.finalproject.presentation.mapper.funds.toPresentation
-import com.example.finalproject.presentation.mapper.home.handleStateUpdate
-import com.example.finalproject.presentation.model.funds.CreditCard
-import com.example.finalproject.presentation.util.getErrorMessage
+import com.example.finalproject.presentation.mapper.credit_card.toPresentation
+import com.example.finalproject.presentation.mapper.base.handleStateUpdate
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +20,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.sign
 
 @HiltViewModel
 class UserCreditCardsViewModel @Inject constructor(

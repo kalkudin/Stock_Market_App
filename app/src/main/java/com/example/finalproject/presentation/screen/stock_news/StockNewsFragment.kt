@@ -15,7 +15,7 @@ import com.example.finalproject.presentation.adapters.stock_news.StockNewsRecycl
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.stock_news.StockNewsEvent
 import com.example.finalproject.presentation.extension.showSnackBar
-import com.example.finalproject.presentation.model.stock_news.NewsModel
+import com.example.finalproject.presentation.model.stock_news.News
 import com.example.finalproject.presentation.state.stock_news.StockNewsState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -91,7 +91,7 @@ class StockNewsFragment :
     }
 
 
-    private fun handleNewsItemClick(item: NewsModel) {
+    private fun handleNewsItemClick(item: News) {
         viewModel.onEvent(StockNewsEvent.NewsItemClick(item = item))
     }
 

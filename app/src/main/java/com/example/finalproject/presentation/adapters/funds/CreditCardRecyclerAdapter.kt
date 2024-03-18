@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemCreditCardLayoutBinding
-import com.example.finalproject.presentation.mapper.funds.maskAndFormatCardNumber
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.mapper.credit_card.maskAndFormatCardNumber
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 
 class CreditCardRecyclerAdapter (private val onItemClick: (CreditCard) -> Unit): ListAdapter<CreditCard, CreditCardRecyclerAdapter.CreditCardViewHolder>(DiffCallback) {
     companion object DiffCallback : DiffUtil.ItemCallback<CreditCard>() {

@@ -12,7 +12,7 @@ import com.example.finalproject.presentation.adapters.funds.CreditCardRecyclerAd
 import com.example.finalproject.presentation.base.BaseBottomSheet
 import com.example.finalproject.presentation.bottom_sheets.event.GetUserCardsEvent
 import com.example.finalproject.presentation.bottom_sheets.state.UserCardsState
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

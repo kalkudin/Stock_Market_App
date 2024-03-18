@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemWatchlistLayoutBinding
-import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
+import com.example.finalproject.presentation.model.company_details.CompanyDetails
 import com.example.finalproject.presentation.util.setTextColor
 
 class WatchlistedStocksRecyclerAdapter(
-    val onCompanyClick: (CompanyDetailsModel) -> Unit,
-    val onDeleteButtonClick:(CompanyDetailsModel) -> Unit
-) : ListAdapter<CompanyDetailsModel, WatchlistedStocksRecyclerAdapter.WatchlistedStocksViewHolder>(
+    val onCompanyClick: (CompanyDetails) -> Unit,
+    val onDeleteButtonClick:(CompanyDetails) -> Unit
+) : ListAdapter<CompanyDetails, WatchlistedStocksRecyclerAdapter.WatchlistedStocksViewHolder>(
     WatchlistedStocksDiffUtil()
 ) {
     override fun onCreateViewHolder(
@@ -37,7 +37,7 @@ class WatchlistedStocksRecyclerAdapter(
     inner class WatchlistedStocksViewHolder(
         private val binding: ItemWatchlistLayoutBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        private lateinit var item: CompanyDetailsModel
+        private lateinit var item: CompanyDetails
         fun bind() {
             item = currentList[adapterPosition]
             binding.apply {
@@ -76,17 +76,17 @@ class WatchlistedStocksRecyclerAdapter(
         }
     }
 
-    private class WatchlistedStocksDiffUtil : DiffUtil.ItemCallback<CompanyDetailsModel>() {
+    private class WatchlistedStocksDiffUtil : DiffUtil.ItemCallback<CompanyDetails>() {
         override fun areItemsTheSame(
-            oldItem: CompanyDetailsModel,
-            newItem: CompanyDetailsModel
+            oldItem: CompanyDetails,
+            newItem: CompanyDetails
         ): Boolean {
             return oldItem.symbol == newItem.symbol
         }
 
         override fun areContentsTheSame(
-            oldItem: CompanyDetailsModel,
-            newItem: CompanyDetailsModel
+            oldItem: CompanyDetails,
+            newItem: CompanyDetails
         ): Boolean {
             return oldItem == newItem
         }

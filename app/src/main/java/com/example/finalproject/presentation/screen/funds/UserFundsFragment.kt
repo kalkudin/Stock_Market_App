@@ -13,8 +13,8 @@ import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentFundsLayoutBinding
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.funds.UserFundsEvent
-import com.example.finalproject.presentation.mapper.funds.maskAndFormatCardNumber
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.mapper.credit_card.maskAndFormatCardNumber
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 import com.example.finalproject.presentation.state.funds.FundsState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

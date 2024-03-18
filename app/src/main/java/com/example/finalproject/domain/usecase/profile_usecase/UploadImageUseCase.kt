@@ -2,7 +2,7 @@ package com.example.finalproject.domain.usecase.profile_usecase
 
 import android.net.Uri
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.domain.repository.UploadUriRepository
+import com.example.finalproject.domain.repository.firestore.image_upload.UploadUriRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

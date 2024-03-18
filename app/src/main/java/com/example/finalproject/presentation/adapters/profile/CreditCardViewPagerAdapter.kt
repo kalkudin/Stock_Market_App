@@ -2,14 +2,13 @@ package com.example.finalproject.presentation.adapters.profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemProfileCreditCardLayoutBinding
-import com.example.finalproject.presentation.mapper.funds.maskAndFormatCardNumber
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.mapper.credit_card.maskAndFormatCardNumber
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 
 class CreditCardViewPagerAdapter(private val onDeleteCardClick: (CreditCard) -> Unit) : ListAdapter<CreditCard, CreditCardViewPagerAdapter.ProfileCardViewHolder>(DiffCallBack){
 

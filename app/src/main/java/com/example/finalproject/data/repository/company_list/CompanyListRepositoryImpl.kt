@@ -2,7 +2,7 @@ package com.example.finalproject.data.repository.company_list
 
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.datasource.company_list.RemoteCompanyListDataSource
-import com.example.finalproject.domain.model.company_list.CompanyList
+import com.example.finalproject.domain.model.company_list.GetCompanyList
 import com.example.finalproject.domain.repository.company_list.CompanyListRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -10,7 +10,7 @@ import javax.inject.Inject
 class CompanyListRepositoryImpl @Inject constructor(
     private val remoteCompanyListDataSource: RemoteCompanyListDataSource,
 ) : CompanyListRepository {
-    override suspend fun getCompanyListRemotely() : Flow<Resource<List<CompanyList>>> {
+    override suspend fun getCompanyListRemotely() : Flow<Resource<List<GetCompanyList>>> {
         return remoteCompanyListDataSource.getCompanyListRemotely()
     }
 }

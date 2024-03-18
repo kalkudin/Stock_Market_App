@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.finalproject.presentation.screen.welcome.HomeFragment"
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.finalproject.presentation.screen.welcome.WelcomeFragment"
         android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_loginFragment"
@@ -22,7 +22,7 @@
         <action
             android:id="@+id/action_homeFragment_to_stockHomeFragment"
             app:destination="@id/stockHomeFragment"
-            app:popUpTo="@id/homeFragment"
+            app:popUpTo="@id/welcomeFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -42,7 +42,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            app:destination="@id/welcomeFragment"
             app:popUpTo="@id/navigation"
             app:popUpToInclusive="true" />
         <action
@@ -61,7 +61,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_registerFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            app:destination="@id/welcomeFragment"
             app:popUpTo="@id/navigation"
             app:popUpToInclusive="true" />
     </fragment>
@@ -77,7 +77,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_forgotPasswordFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            app:destination="@id/welcomeFragment"
             app:popUpTo="@id/navigation"
             app:popUpToInclusive="true" />
     </fragment>
@@ -89,7 +89,7 @@
 
         <action
             android:id="@+id/action_stockHomeFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/welcomeFragment" />
         <action
             android:id="@+id/action_stockHomeFragment_to_companyDetailsFragment"
             app:destination="@id/companyDetailsFragment">
@@ -163,7 +163,7 @@
             app:destination="@id/stockHomeFragment" />
         <argument
             android:name="creditCard"
-            app:argType="com.example.finalproject.presentation.model.funds.CreditCard" />
+            app:argType="com.example.finalproject.presentation.model.credit_card.CreditCard" />
         <action
             android:id="@+id/action_userFundsFragment_to_addNewCardBottomSheetFragment"
             app:destination="@id/addNewCardBottomSheetFragment" />

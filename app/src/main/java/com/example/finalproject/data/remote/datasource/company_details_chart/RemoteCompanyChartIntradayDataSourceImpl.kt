@@ -6,7 +6,7 @@ import com.example.finalproject.data.remote.mapper.base.mapToDomain
 import com.example.finalproject.data.remote.mapper.company_details_chart.toDomain
 import com.example.finalproject.data.remote.service.company_details_chart.CompanyChartIntradayApiService
 import com.example.finalproject.domain.datasource.company_details_chart.RemoteCompanyChartIntradayDataSource
-import com.example.finalproject.domain.model.company_details_chart.CompanyChartIntraday
+import com.example.finalproject.domain.model.company_details_chart.GetCompanyChartIntraday
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ class RemoteCompanyChartIntradayDataSourceImpl @Inject constructor(
         symbol: String,
         from: String,
         to: String
-    ): Flow<Resource<List<CompanyChartIntraday>>> {
+    ): Flow<Resource<List<GetCompanyChartIntraday>>> {
         return responseHandler.safeApiCall {
             apiService.getCompanyChartIntraday(
                 interval = interval,

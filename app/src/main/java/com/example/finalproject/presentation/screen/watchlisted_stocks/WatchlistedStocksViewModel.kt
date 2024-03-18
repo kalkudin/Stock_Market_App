@@ -8,8 +8,8 @@ import com.example.finalproject.domain.usecase.database_usecase.GetWatchlistedSt
 import com.example.finalproject.presentation.event.watchlisted_stocks.WatchlistedStocksEvent
 import com.example.finalproject.presentation.mapper.company_details.toDomain
 import com.example.finalproject.presentation.mapper.company_details.toPresentation
-import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
-import com.example.finalproject.presentation.model.company_details.UserIdModel
+import com.example.finalproject.presentation.model.company_details.CompanyDetails
+import com.example.finalproject.presentation.model.company_details.UserId
 import com.example.finalproject.presentation.state.watchlisted_stocks.WatchlistedStocksState
 import com.example.finalproject.presentation.util.getErrorMessage
 import com.google.firebase.auth.ktx.auth
@@ -48,7 +48,7 @@ class WatchlistedStocksViewModel @Inject constructor(
             val firebaseUser = Firebase.auth.currentUser
             val userId = firebaseUser?.uid
             if (userId != null) {
-                getWatchlistedStocksUseCase.invoke(UserIdModel(userId).toDomain())
+                getWatchlistedStocksUseCase.invoke(UserId(userId).toDomain())
                     .collect { stocks ->
                         _watchlistedStocksState.value =
                             WatchlistedStocksState(watchlistedStocks = stocks.map { it.toPresentation() })
@@ -87,13 +87,13 @@ class WatchlistedStocksViewModel @Inject constructor(
         }
     }
 
-    private fun deleteWatchlistedStocks(stock: CompanyDetailsModel, user: UserIdModel) {
+    private fun deleteWatchlistedStocks(stock: CompanyDetails, user: UserId) {
         viewModelScope.launch {
             dataBaseUseCases.deleteWatchlistedStocksUseCase.invoke(user.toDomain(), stock.toDomain())
         }
     }
 
-    private fun navigateToDetailsPage(company: CompanyDetailsModel) {
+    private fun navigateToDetailsPage(company: CompanyDetails) {
         viewModelScope.launch {
             _watchlistedNavigationEvent.emit(
                 WatchlistedStocksNavigationEvents.NavigateToCompanyDetails(

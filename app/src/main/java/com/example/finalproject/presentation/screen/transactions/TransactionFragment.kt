@@ -12,7 +12,7 @@ import com.example.finalproject.databinding.FragmentTransactionsLayoutBinding
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.extension.setOnItemSelected
 import com.example.finalproject.presentation.adapters.profile.TransactionRecyclerAdapter
-import com.example.finalproject.presentation.event.profile.TransactionEvent
+import com.example.finalproject.presentation.event.transactions.TransactionEvent
 import com.example.finalproject.presentation.state.profile.TransactionState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

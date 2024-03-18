@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.company_list_usecase.GetCompanyListUseCase
-import com.example.finalproject.presentation.event.company_list.CompanyListEvents
+import com.example.finalproject.presentation.event.company_list.CompanyListEvent
 import com.example.finalproject.presentation.mapper.company_list.toPresentation
-import com.example.finalproject.presentation.model.company_list.CompanyListModel
+import com.example.finalproject.presentation.model.company_list.CompanyList
 import com.example.finalproject.presentation.state.company_list.CompanyListState
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,11 +30,11 @@ class CompanyListViewModel @Inject constructor(
     private val _companyListNavigationEvent = MutableSharedFlow<CompanyListNavigationEvents>()
     val companyListNavigationEvent: SharedFlow<CompanyListNavigationEvents> get() = _companyListNavigationEvent
 
-    fun onEvent(event: CompanyListEvents) {
+    fun onEvent(event: CompanyListEvent) {
         when (event) {
-            is CompanyListEvents.GetCompanyList -> getCompanyList()
-            is CompanyListEvents.ListSearch -> onListSearch(event.query)
-            is CompanyListEvents.CompanyItemClick -> onCompanyListItemClick(event.company)
+            is CompanyListEvent.GetCompanyList -> getCompanyList()
+            is CompanyListEvent.ListSearch -> onListSearch(event.query)
+            is CompanyListEvent.CompanyItemClick -> onCompanyListItemClick(event.company)
         }
     }
 
@@ -55,7 +55,7 @@ class CompanyListViewModel @Inject constructor(
         }
     }
 
-    private fun onCompanyListItemClick(company: CompanyListModel) {
+    private fun onCompanyListItemClick(company: CompanyList) {
         viewModelScope.launch {
             _companyListNavigationEvent.emit(
                 CompanyListNavigationEvents.NavigateToCompanyDetails(

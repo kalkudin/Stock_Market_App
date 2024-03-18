@@ -1,10 +1,9 @@
 package com.example.finalproject.domain.usecase.credit_card_usecase
 
-import android.util.Log
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.domain.model.CreditCardDomainModel
-import com.example.finalproject.domain.repository.CreditCardRepository
+import com.example.finalproject.domain.model.credit_card.GetCreditCard
+import com.example.finalproject.domain.repository.firestore.credit_card.CreditCardRepository
 import com.example.finalproject.domain.util.CreditCardValidationUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -44,7 +43,7 @@ class AddCreditCardUseCase @Inject constructor(
 
         return creditCardRepository.addCreditCard(
             uid = uid,
-            creditCard = CreditCardDomainModel(
+            creditCard = GetCreditCard(
                 id = validationUtil.generateUniqueId(),
                 cardNumber = cardNumber.joinToString(separator = ""),
                 expirationDate = expirationDate,

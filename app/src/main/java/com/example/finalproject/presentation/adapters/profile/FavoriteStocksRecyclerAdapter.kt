@@ -6,27 +6,27 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.databinding.ItemFavoriteStockLayoutBinding
-import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
+import com.example.finalproject.presentation.model.company_details.CompanyDetails
 
 class FavoriteStocksRecyclerAdapter(
-    private val onViewMoreClick: (CompanyDetailsModel) -> Unit,
-    private val onStockLongClick: (CompanyDetailsModel) -> Unit
-): ListAdapter<CompanyDetailsModel, FavoriteStocksRecyclerAdapter.FavoriteStockViewHolder>(
+    private val onViewMoreClick: (CompanyDetails) -> Unit,
+    private val onStockLongClick: (CompanyDetails) -> Unit
+): ListAdapter<CompanyDetails, FavoriteStocksRecyclerAdapter.FavoriteStockViewHolder>(
     DiffCallback
 ) {
 
-    companion object DiffCallback : DiffUtil.ItemCallback<CompanyDetailsModel>() {
-        override fun areItemsTheSame(oldItem: CompanyDetailsModel, newItem: CompanyDetailsModel): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<CompanyDetails>() {
+        override fun areItemsTheSame(oldItem: CompanyDetails, newItem: CompanyDetails): Boolean {
             return oldItem.symbol == newItem.symbol
         }
 
-        override fun areContentsTheSame(oldItem: CompanyDetailsModel, newItem: CompanyDetailsModel): Boolean {
+        override fun areContentsTheSame(oldItem: CompanyDetails, newItem: CompanyDetails): Boolean {
             return oldItem == newItem
         }
     }
 
     inner class FavoriteStockViewHolder(private val binding: ItemFavoriteStockLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(companyDetails: CompanyDetailsModel) {
+        fun bind(companyDetails: CompanyDetails) {
             with(binding) {
                 tvSymbol.text = companyDetails.symbol
                 tvName.text = companyDetails.companyName

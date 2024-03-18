@@ -11,15 +11,14 @@ import com.example.finalproject.domain.usecase.DataBaseUseCases
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.ImageUseCases
 import com.example.finalproject.domain.usecase.TransactionsUseCases
-import com.example.finalproject.domain.usecase.profile_usecase.UploadImageUseCase
 import com.example.finalproject.presentation.event.profile.UserProfileEvent
 import com.example.finalproject.presentation.mapper.company_details.toDomain
 import com.example.finalproject.presentation.mapper.company_details.toPresentation
-import com.example.finalproject.presentation.mapper.funds.toPresentation
-import com.example.finalproject.presentation.mapper.home.handleStateUpdate
+import com.example.finalproject.presentation.mapper.credit_card.toPresentation
+import com.example.finalproject.presentation.mapper.base.handleStateUpdate
 import com.example.finalproject.presentation.mapper.profile.toPresentation
-import com.example.finalproject.presentation.model.company_details.UserIdModel
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.model.company_details.UserId
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 import com.example.finalproject.presentation.state.profile.ProfileState
 import com.example.finalproject.presentation.util.getErrorMessage
 import com.google.firebase.auth.ktx.auth
@@ -33,7 +32,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -130,7 +128,7 @@ class UserProfileViewModel @Inject constructor(
                     val firebaseUser = Firebase.auth.currentUser
                     val userId = firebaseUser?.uid
                     if (userId != null) {
-                        dataBaseUseCases.getWatchlistedStocksForUserUseCase.invoke(UserIdModel(userId).toDomain())
+                        dataBaseUseCases.getWatchlistedStocksForUserUseCase.invoke(UserId(userId).toDomain())
                             .collect { stocks ->
                                 _profileState.value =
                                     ProfileState(favoriteStockList = stocks.take(5).map { it.toPresentation() })

@@ -16,12 +16,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentCompanyDetailsBinding
 import com.example.finalproject.presentation.base.BaseFragment
-import com.example.finalproject.presentation.event.company_details.CompanyDetailsEvents
+import com.example.finalproject.presentation.event.company_details.CompanyDetailsEvent
 import com.example.finalproject.presentation.extension.loadImage
 import com.example.finalproject.presentation.extension.showSnackBar
-import com.example.finalproject.presentation.model.company_details.CompanyChartIntradayModel
-import com.example.finalproject.presentation.model.company_details.CompanyDetailsModel
-import com.example.finalproject.presentation.model.company_details.UserIdModel
+import com.example.finalproject.presentation.model.company_details.CompanyChartIntraday
+import com.example.finalproject.presentation.model.company_details.CompanyDetails
+import com.example.finalproject.presentation.model.company_details.UserId
 import com.example.finalproject.presentation.state.company_details.CompanyDetailsState
 import com.example.finalproject.presentation.util.DateValueFormatter
 import com.github.mikephil.charting.charts.LineChart
@@ -108,14 +108,14 @@ class CompanyDetailsFragment :
 
     private fun extractCompanySymbol() {
         val symbol = arguments?.getString("symbol") ?: ""
-        viewModel.onEvent(CompanyDetailsEvents.GetCompanyDetails(symbol = symbol))
+        viewModel.onEvent(CompanyDetailsEvent.GetCompanyDetails(symbol = symbol))
     }
 
     private fun extractCompanyDetails(interval: String, fromDate: String, toDate: String) {
         val symbol = arguments?.getString("symbol") ?: ""
-        viewModel.onEvent(CompanyDetailsEvents.GetCompanyDetails(symbol = symbol))
+        viewModel.onEvent(CompanyDetailsEvent.GetCompanyDetails(symbol = symbol))
         viewModel.onEvent(
-            CompanyDetailsEvents.GetCompanyChartIntraday(
+            CompanyDetailsEvent.GetCompanyChartIntraday(
                 interval,
                 symbol,
                 fromDate,
@@ -204,7 +204,7 @@ class CompanyDetailsFragment :
         }
     }
 
-    private fun updateChart(data: List<CompanyChartIntradayModel>) {
+    private fun updateChart(data: List<CompanyChartIntraday>) {
         val lineColor = ContextCompat.getColor(requireContext(), R.color.sky_blue)
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
@@ -236,7 +236,7 @@ class CompanyDetailsFragment :
     private fun favouriteButtonSetup() {
         binding.btnAddToFav.setOnClickListener {
             val symbol = arguments?.getString("symbol") ?: ""
-            viewModel.onEvent(CompanyDetailsEvents.GetCompanyDetails(symbol = symbol))
+            viewModel.onEvent(CompanyDetailsEvent.GetCompanyDetails(symbol = symbol))
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.companyDetailsState.collect { state ->
                     state.companyDetails?.firstOrNull()?.let { stock ->
@@ -250,8 +250,8 @@ class CompanyDetailsFragment :
         val symbol = arguments?.getString("symbol") ?: ""
         val firebaseUser = Firebase.auth.currentUser
         val userId = firebaseUser?.uid
-        val user = UserIdModel(userId!!)
-        viewModel.onEvent(CompanyDetailsEvents.IsStockInWatchlist(userId, symbol))
+        val user = UserId(userId!!)
+        viewModel.onEvent(CompanyDetailsEvent.IsStockInWatchlist(userId, symbol))
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.companyDetailsState.collect { state ->
                 val drawableRes = if (state.isStockInWatchlist) {
@@ -264,13 +264,13 @@ class CompanyDetailsFragment :
         }
     }
 
-    private fun handleUserStocksWishlistSelection(stocks: CompanyDetailsModel) {
+    private fun handleUserStocksWishlistSelection(stocks: CompanyDetails) {
         val firebaseUser = Firebase.auth.currentUser
         val userId = firebaseUser?.uid
-        val user = UserIdModel(userId!!)
+        val user = UserId(userId!!)
         var isStockInWatchlist = false
 
-        viewModel.onEvent(CompanyDetailsEvents.IsStockInWatchlist(userId, stocks.symbol))
+        viewModel.onEvent(CompanyDetailsEvent.IsStockInWatchlist(userId, stocks.symbol))
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.companyDetailsState.collect { state ->
                 isStockInWatchlist = state.isStockInWatchlist
@@ -278,9 +278,9 @@ class CompanyDetailsFragment :
         }
 
         if (isStockInWatchlist) {
-            viewModel.onEvent(CompanyDetailsEvents.DeleteWatchlistedStocks(stocks, user))
+            viewModel.onEvent(CompanyDetailsEvent.DeleteWatchlistedStocks(stocks, user))
         } else {
-            viewModel.onEvent(CompanyDetailsEvents.InsertStocksToWatchlist(stocks, user))
+            viewModel.onEvent(CompanyDetailsEvent.InsertStocksToWatchlist(stocks, user))
         }
     }
 
@@ -290,8 +290,10 @@ class CompanyDetailsFragment :
             binding.tvStockQuantity.text = number.toString()
         }
         binding.btnDecrease.setOnClickListener {
-            number -= 1.0
-            binding.tvStockQuantity.text = number.toString()
+            if (number > 0) {
+                number -= 1.0
+                binding.tvStockQuantity.text = number.toString()
+            }
         }
     }
 
@@ -305,7 +307,7 @@ class CompanyDetailsFragment :
                 viewModel.companyDetailsState.collect { state ->
                     state.companyDetails?.firstOrNull()?.let { stock ->
                         val amount = stock.price!! * number
-                        viewModel.onEvent(CompanyDetailsEvents.BuyStock(userId, amount, symbol))
+                        viewModel.onEvent(CompanyDetailsEvent.BuyStock(userId, amount, symbol))
                     }
                 }
             }
@@ -323,7 +325,7 @@ class CompanyDetailsFragment :
                 viewModel.companyDetailsState.collect { state ->
                     state.companyDetails?.firstOrNull()?.let { stock ->
                         val amount = stock.price!! * number
-                        viewModel.onEvent(CompanyDetailsEvents.SellStock(userId, amount, symbol))
+                        viewModel.onEvent(CompanyDetailsEvent.SellStock(userId, amount, symbol))
                     }
                 }
             }

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.TransactionsUseCases
-import com.example.finalproject.presentation.event.profile.TransactionEvent
+import com.example.finalproject.presentation.event.transactions.TransactionEvent
 import com.example.finalproject.presentation.mapper.profile.toPresentation
 import com.example.finalproject.presentation.state.profile.TransactionState
 import com.example.finalproject.presentation.util.getErrorMessage

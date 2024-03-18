@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.databinding.ItemStockNewsVerticalBinding
 import com.example.finalproject.presentation.extension.loadImage
-import com.example.finalproject.presentation.model.stock_news.NewsModel
+import com.example.finalproject.presentation.model.stock_news.News
 
 class StockNewsRecyclerAdapter(
-    private val onItemClick: (NewsModel) -> Unit
-): PagingDataAdapter<NewsModel, StockNewsRecyclerAdapter.StockNewsViewHolder>(StockNewsDiffUtil()) {
+    private val onItemClick: (News) -> Unit
+): PagingDataAdapter<News, StockNewsRecyclerAdapter.StockNewsViewHolder>(StockNewsDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockNewsViewHolder {
         val binding = ItemStockNewsVerticalBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,7 +23,7 @@ class StockNewsRecyclerAdapter(
     }
 
     inner class StockNewsViewHolder(private val binding: ItemStockNewsVerticalBinding): RecyclerView.ViewHolder(binding.root) {
-        private lateinit var news : NewsModel
+        private lateinit var news : News
         fun bind() {
             news = getItem(absoluteAdapterPosition)!!
             binding.apply {
@@ -40,12 +40,12 @@ class StockNewsRecyclerAdapter(
         }
     }
 
-    private class StockNewsDiffUtil: DiffUtil.ItemCallback<NewsModel>() {
-        override fun areItemsTheSame(oldItem: NewsModel, newItem: NewsModel): Boolean {
+    private class StockNewsDiffUtil: DiffUtil.ItemCallback<News>() {
+        override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: NewsModel, newItem: NewsModel): Boolean {
+        override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
             return oldItem == newItem
         }
     }

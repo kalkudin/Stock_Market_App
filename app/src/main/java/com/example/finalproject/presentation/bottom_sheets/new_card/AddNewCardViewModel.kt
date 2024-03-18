@@ -9,9 +9,8 @@ import com.example.finalproject.domain.usecase.CreditCardUseCases
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.presentation.bottom_sheets.event.AddNewCardEvent
 import com.example.finalproject.presentation.bottom_sheets.state.NewCardState
-import com.example.finalproject.presentation.mapper.home.handleStateUpdate
 import com.example.finalproject.presentation.model.bottom_sheets.NewCardType
-import com.example.finalproject.presentation.model.funds.CreditCard
+import com.example.finalproject.presentation.model.credit_card.CreditCard
 import com.example.finalproject.presentation.util.getErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

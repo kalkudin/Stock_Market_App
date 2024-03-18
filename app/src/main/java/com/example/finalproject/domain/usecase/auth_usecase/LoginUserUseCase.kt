@@ -2,8 +2,8 @@ package com.example.finalproject.domain.usecase.auth_usecase
 
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.domain.model.User
-import com.example.finalproject.domain.repository.LoginRepository
+import com.example.finalproject.domain.model.user.GetUser
+import com.example.finalproject.domain.repository.auth.login.LoginRepository
 import com.example.finalproject.domain.util.AuthenticationUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -22,7 +22,7 @@ class LoginUserUseCase @Inject constructor(
             return flowOf(Resource.Error(ErrorType.InvalidEmail))
         }
 
-        val user = User(email = email, password = password)
+        val user = GetUser(email = email, password = password)
         return loginRepository.loginUser(user = user)
     }
 }

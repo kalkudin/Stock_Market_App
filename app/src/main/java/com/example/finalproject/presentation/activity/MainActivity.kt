@@ -1,8 +1,8 @@
 package com.example.finalproject.presentation.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.homeFragment, R.id.forgotPasswordFragment, R.id.loginFragment, R.id.registerFragment -> {
+                    R.id.welcomeFragment, R.id.forgotPasswordFragment, R.id.loginFragment, R.id.registerFragment -> {
                         navView.visibility = View.GONE
                     }
 
