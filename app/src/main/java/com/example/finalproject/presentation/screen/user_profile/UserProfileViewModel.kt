@@ -52,16 +52,6 @@ class UserProfileViewModel @Inject constructor(
     private val _navigationFlow = MutableSharedFlow<UserProfileNavigationEvent>()
     val navigationFlow: SharedFlow<UserProfileNavigationEvent> = _navigationFlow.asSharedFlow()
 
-    init {
-        viewModelScope.launch {
-            val uid = dataStoreUseCases.readUserUidUseCase().first()
-
-            imageUseCases.retrieveImageUseCase(uid = uid).collect {
-                Log.d("ProfileVM", it.toString())
-            }
-        }
-    }
-
     fun onEvent(event: UserProfileEvent) {
         viewModelScope.launch {
             when (event) {
@@ -99,7 +89,19 @@ class UserProfileViewModel @Inject constructor(
     private fun retrieveProfileData() {
         viewModelScope.launch {
             val uid = dataStoreUseCases.readUserUidUseCase().first()
+
             _profileState.update { it.copy(isLoading = true) }
+
+            val profilePictureJob = async {
+                imageUseCases.retrieveImageUseCase(uid = uid).collect { result  ->
+                    handleStateUpdate(
+                        resource = result,
+                        stateFlow = _profileState,
+                        onSuccess = { uri -> this.copy(profileImage = uri) },
+                        onError = { this.copy(errorMessage = null) }
+                    )
+                }
+            }
 
             val transactionsJob = async {
                 transactionsUseCases.getTransactionsUseCase(uid).collect { result ->
@@ -124,30 +126,13 @@ class UserProfileViewModel @Inject constructor(
             }
 
             val savedStocksJob = async {
-                viewModelScope.launch {
-                    val firebaseUser = Firebase.auth.currentUser
-                    val userId = firebaseUser?.uid
-                    if (userId != null) {
-                        dataBaseUseCases.getWatchlistedStocksForUserUseCase.invoke(UserId(userId).toDomain())
-                            .collect { stocks ->
-                                _profileState.value =
-                                    ProfileState(favoriteStockList = stocks.take(5).map { it.toPresentation() })
-                            }
-                    } else {
-                        updateErrorMessages(ErrorType.LocalDatabaseError)
-                    }
-                }
+                dataBaseUseCases.getWatchlistedStocksForUserUseCase.invoke(UserId(uid).toDomain()).collect { stocks ->
+                    _profileState.value = ProfileState(favoriteStockList = stocks.take(5).map { it.toPresentation() }) }
             }
 
-            awaitAll(transactionsJob, cardsJob, savedStocksJob)
-            _profileState.update { it.copy(isLoading = false) }
-        }
-    }
+            awaitAll(transactionsJob, cardsJob, savedStocksJob, profilePictureJob)
 
-    private fun updateErrorMessages(errorMessage: ErrorType) {
-        val message = getErrorMessage(errorMessage)
-        _profileState.update { currentState ->
-            currentState.copy(errorMessage = message)
+            _profileState.update { it.copy(isLoading = false) }
         }
     }
 
@@ -172,13 +157,8 @@ class UserProfileViewModel @Inject constructor(
 
     private suspend fun uploadImage(uri : Uri) {
         val uid = dataStoreUseCases.readUserUidUseCase().first()
+        imageUseCases.uploadImageUseCase(uri = uri, uid = uid).collect() {
 
-        imageUseCases.uploadImageUseCase(uri = uri, uid = uid).collect { resource ->
-            when(resource) {
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
-                is Resource.Success -> {}
-            }
         }
     }
 

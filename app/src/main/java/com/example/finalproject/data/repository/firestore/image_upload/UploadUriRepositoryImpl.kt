@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Log
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.repository.firestore.image_upload.UploadUriRepository
@@ -25,7 +26,7 @@ class UploadUriRepositoryImpl @Inject constructor(
         return flow {
             try {
                 val bitmap = getBitmapFromUri(uri)
-                val fileReference = storageReference.child("images/$uid/${UUID.randomUUID()}.jpg")
+                val fileReference = storageReference.child("images/$uid/profile_picture.jpg")
                 val byteArrayOutputStream = ByteArrayOutputStream()
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
                 val data = byteArrayOutputStream.toByteArray()
@@ -50,7 +51,8 @@ class UploadUriRepositoryImpl @Inject constructor(
     override suspend fun retrieveUploadedImage(uid: String): Flow<Resource<Uri>> {
         return flow {
             try {
-                val fileReference = storageReference.child("images/$uid")
+                Log.d("UserProfileVM", uid)
+                val fileReference = storageReference.child("images/$uid/profile_picture.jpg")
                 val downloadUrl = fileReference.downloadUrl.await()
 
                 emit(Resource.Success(downloadUrl))

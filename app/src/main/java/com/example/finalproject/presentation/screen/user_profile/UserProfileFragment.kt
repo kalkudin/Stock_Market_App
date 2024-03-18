@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentProfileLayoutBinding
 import com.example.finalproject.presentation.adapters.profile.CreditCardViewPagerAdapter
@@ -20,6 +21,7 @@ import com.example.finalproject.presentation.adapters.profile.TransactionRecycle
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.profile.UserProfileEvent
 import com.example.finalproject.presentation.extension.hideView
+import com.example.finalproject.presentation.extension.loadImage
 import com.example.finalproject.presentation.extension.showView
 import com.example.finalproject.presentation.model.credit_card.CreditCard
 import com.example.finalproject.presentation.state.profile.ProfileState
@@ -48,6 +50,9 @@ class UserProfileFragment : BaseFragment<FragmentProfileLayoutBinding>(FragmentP
 
             selectedImageUri?.let { uri ->
                 userProfileViewModel.onEvent(UserProfileEvent.UploadImageToFireBase(uri = uri))
+                Glide.with(requireContext())
+                    .load(uri)
+                    .into(binding.ivAvatar)
             }
         }
     }
@@ -148,6 +153,10 @@ class UserProfileFragment : BaseFragment<FragmentProfileLayoutBinding>(FragmentP
             state.errorMessage?.let { errorMessage ->
                 hideView(progressBar)
                 handleErrorMessage(errorMessage = errorMessage) }
+
+            state.profileImage?.let {
+                ivAvatar.loadImage(it.toString())
+            }
 
             if(!state.isLoading) {
                 hideView(progressBar)
