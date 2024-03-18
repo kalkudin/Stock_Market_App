@@ -31,6 +31,9 @@ fun getErrorMessage(errorType: ErrorType): String {
         ErrorType.LocalDatabaseError -> "There was an error with the local database."
         ErrorType.LocalDatabaseEmpty -> "The local database is empty."
         ErrorType.LocalDatabaseErrorDelete -> "There was an error deleting from the local database."
+        //
+        ErrorType.InsufficientFunds -> "Insufficient funds"
+        ErrorType.InsufficientStocks -> "Insufficient stocks"
         is ErrorType.UnknownError -> errorType.message
     }
 }

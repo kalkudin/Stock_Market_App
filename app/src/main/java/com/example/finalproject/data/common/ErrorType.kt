@@ -31,4 +31,7 @@ sealed class ErrorType {
     data object LocalDatabaseError : ErrorType()
     data object LocalDatabaseEmpty : ErrorType()
     data object LocalDatabaseErrorDelete : ErrorType()
+    //
+    data object InsufficientFunds : ErrorType()
+    data object InsufficientStocks : ErrorType()
 }
