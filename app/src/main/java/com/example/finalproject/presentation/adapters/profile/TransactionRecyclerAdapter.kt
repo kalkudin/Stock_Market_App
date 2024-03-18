@@ -3,12 +3,15 @@ package com.example.finalproject.presentation.adapters.profile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemTransactionLayoutBinding
 import com.example.finalproject.presentation.model.profile.Transaction
 import com.example.finalproject.presentation.mapper.home.formatUserFunds
+import com.example.finalproject.presentation.util.setTextColor
 
 class TransactionRecyclerAdapter : ListAdapter<Transaction, TransactionRecyclerAdapter.TransactionViewHolder>(
     DiffUtilCallback
@@ -29,6 +32,22 @@ class TransactionRecyclerAdapter : ListAdapter<Transaction, TransactionRecyclerA
                 tvDate.text = transaction.date
                 tvDescription.text = transaction.description
                 tvType.text = transaction.type.toString()
+
+                val greenColor = ContextCompat.getColor(itemView.context, R.color.deaf_green)
+                val blueColor = ContextCompat.getColor(itemView.context, R.color.ocean_blue)
+                val redColor = ContextCompat.getColor(itemView.context, R.color.red)
+
+                when(transaction.type) {
+                    Transaction.TransactionType.OUTGOING -> {
+                        setTextColor(greenColor, tvType)
+                    }
+                    Transaction.TransactionType.INTERNAL -> {
+                        setTextColor(redColor, tvType)
+                    }
+                    Transaction.TransactionType.UNSPECIFIED -> {
+                        setTextColor(blueColor, tvType)
+                    }
+                }
             }
         }
     }

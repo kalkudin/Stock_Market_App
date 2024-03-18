@@ -49,6 +49,7 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
         fundsViewModel.onEvent(UserFundsEvent.GetUserName)
     }
 
+
     private fun bindBackBtn() {
         with(binding) {
             btnBack.setOnClickListener {

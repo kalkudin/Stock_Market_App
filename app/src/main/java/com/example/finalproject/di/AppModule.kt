@@ -1,5 +1,6 @@
 package com.example.finalproject.di
 
+import android.content.Context
 import com.example.finalproject.BuildConfig
 import com.example.finalproject.data.common.HandleResponse
 import com.example.finalproject.data.remote.service.company_details.CompanyDetailsApiService
@@ -9,11 +10,14 @@ import com.example.finalproject.data.remote.service.stock_news.StockNewsApiServi
 import com.example.finalproject.data.remote.service.stocks_to_watch.StocksToWatchApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -30,6 +34,18 @@ object AppModule {
     @Singleton
     fun provideFireBaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideApplicationContext(@ApplicationContext context: Context): Context {
+        return context.applicationContext
+    }
+
+    @Provides
+    @Singleton
+    fun provideStorageReference(): StorageReference {
+        return FirebaseStorage.getInstance().reference
     }
 
     @Provides

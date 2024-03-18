@@ -1,5 +1,6 @@
 package com.example.finalproject.presentation.event.profile
 
+import android.net.Uri
 import com.example.finalproject.presentation.model.funds.CreditCard
 
 sealed class UserProfileEvent {
@@ -8,5 +9,6 @@ sealed class UserProfileEvent {
     data object UpdateProfile : UserProfileEvent()
     data object ViewTradingHistory : UserProfileEvent()
     data object RetrieveProfileData : UserProfileEvent()
+    data class UploadImageToFireBase(val uri: Uri) : UserProfileEvent()
     data class RemoveCard(val creditCard: CreditCard) : UserProfileEvent()
 }

@@ -33,8 +33,7 @@ class UserInitialsRepositoryImpl @Inject constructor(private val db : FirebaseFi
         }
     }
 
-    override suspend fun saveUserInitials(uid: String, fullName: UserInitials
-    ): Flow<Resource<Boolean>> = flow{
+    override suspend fun saveUserInitials(uid: String, fullName: UserInitials): Flow<Resource<Boolean>> = flow{
         emit(Resource.Loading(true))
         try {
             val userInitials = fullName.toData()

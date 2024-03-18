@@ -2,28 +2,28 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="10dp">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/card_container"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:background="@drawable/style_rounded_corners"
-        android:backgroundTint="@color/sky_blue"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedShapeAppearanceOverlay" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_card_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="68dp"
         android:text="@string/sample_number"
-        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:textSize="21sp"
         app:layout_constraintStart_toStartOf="@+id/card_container"
         app:layout_constraintTop_toTopOf="@+id/card_container" />
 
@@ -31,9 +31,11 @@
         android:id="@+id/tv_expiry_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="76dp"
+        android:fontFamily="@font/open_sauce_sans_bold"
         android:text="@string/sample_date"
-        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/tv_card_number"
         app:layout_constraintTop_toBottomOf="@+id/tv_card_number" />
 
@@ -42,29 +44,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginEnd="140dp"
+        android:fontFamily="@font/open_sauce_sans_bold"
         android:text="@string/sample_cvv"
-        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/card_container"
         app:layout_constraintTop_toTopOf="@+id/tv_expiry_date" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_card_type"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="76dp"
+        android:layout_height="69dp"
         android:src="@drawable/ic_visa"
+        app:layout_constraintBottom_toBottomOf="@+id/card_container"
         app:layout_constraintEnd_toEndOf="@+id/card_container"
-        app:layout_constraintHorizontal_bias="0.861"
+        app:layout_constraintHorizontal_bias="0.906"
         app:layout_constraintStart_toStartOf="@+id/card_container"
-        app:layout_constraintTop_toTopOf="@+id/card_container" />
+        app:layout_constraintTop_toTopOf="@+id/card_container"
+        app:layout_constraintVertical_bias="0.908" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btn_remove_card"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="260dp"
-        android:layout_marginBottom="164dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginBottom="204dp"
         android:background="@drawable/style_circle_corners"
         android:backgroundTint="@color/light_red"
         android:scaleType="centerInside"

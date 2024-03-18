@@ -1,5 +1,6 @@
 package com.example.finalproject.di
 
+import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.example.finalproject.data.common.HandleAuthentication
@@ -15,6 +16,7 @@ import com.example.finalproject.data.repository.LoginRepositoryImpl
 import com.example.finalproject.data.repository.RegisterRepositoryImpl
 import com.example.finalproject.data.repository.ResetPasswordRepositoryImpl
 import com.example.finalproject.data.repository.TransactionsRepositoryImpl
+import com.example.finalproject.data.repository.UploadUriRepositoryImpl
 import com.example.finalproject.data.repository.UserFundsRepositoryImpl
 import com.example.finalproject.data.repository.UserInitialsRepositoryImpl
 import com.example.finalproject.data.repository.company_details.CompanyDetailsRepositoryImpl
@@ -32,6 +34,7 @@ import com.example.finalproject.domain.repository.LoginRepository
 import com.example.finalproject.domain.repository.RegisterRepository
 import com.example.finalproject.domain.repository.ResetPasswordRepository
 import com.example.finalproject.domain.repository.TransactionsRepository
+import com.example.finalproject.domain.repository.UploadUriRepository
 import com.example.finalproject.domain.repository.UserFundsRepository
 import com.example.finalproject.domain.repository.UserInitialsRepository
 import com.example.finalproject.domain.repository.company_details.CompanyDetailsRepository
@@ -42,9 +45,11 @@ import com.example.finalproject.domain.repository.stocks_to_watch.StocksToWatchR
 import com.example.finalproject.domain.repository.watchlisted_stocks.WatchlistedStocksRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.StorageReference
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -152,12 +157,15 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideWatchlistRepository(
-        userDao: UserDao,
-        stocksDao: StocksDao
-    ): WatchlistedStocksRepository {
+    fun provideWatchlistRepository(userDao: UserDao, stocksDao: StocksDao): WatchlistedStocksRepository {
         return WatchlistedStocksRepositoryImpl(
             userDao = userDao,
             stocksDao = stocksDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideImageRepository(storageReference: StorageReference, @ApplicationContext context: Context) : UploadUriRepository{
+        return UploadUriRepositoryImpl(storageReference = storageReference, context = context   )
     }
 }

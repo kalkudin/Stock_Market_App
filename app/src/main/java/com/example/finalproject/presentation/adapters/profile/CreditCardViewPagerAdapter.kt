@@ -11,9 +11,7 @@ import com.example.finalproject.databinding.ItemProfileCreditCardLayoutBinding
 import com.example.finalproject.presentation.mapper.funds.maskAndFormatCardNumber
 import com.example.finalproject.presentation.model.funds.CreditCard
 
-class CreditCardViewPagerAdapter(private val onDeleteCardClick: (CreditCard) -> Unit) : ListAdapter<CreditCard, CreditCardViewPagerAdapter.ProfileCardViewHolder>(
-    DiffCallBack
-){
+class CreditCardViewPagerAdapter(private val onDeleteCardClick: (CreditCard) -> Unit) : ListAdapter<CreditCard, CreditCardViewPagerAdapter.ProfileCardViewHolder>(DiffCallBack){
 
     companion object DiffCallBack : DiffUtil.ItemCallback<CreditCard>() {
         override fun areItemsTheSame(oldItem: CreditCard, newItem: CreditCard): Boolean {
@@ -29,6 +27,7 @@ class CreditCardViewPagerAdapter(private val onDeleteCardClick: (CreditCard) -> 
     inner class ProfileCardViewHolder(private val binding : ItemProfileCreditCardLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(card : CreditCard) {
             with(binding) {
+
                 tvCardNumber.text = maskAndFormatCardNumber(cardNumber = card.cardNumber)
                 tvCcv.text = card.ccv
                 tvExpiryDate.text = card.expirationDate
@@ -36,15 +35,19 @@ class CreditCardViewPagerAdapter(private val onDeleteCardClick: (CreditCard) -> 
 
                 when(card.cardType) {
                     CreditCard.CardType.VISA -> {
+                        cardContainer.setImageResource(R.drawable.style_card_visa)
                         ivCardType.setImageResource(R.drawable.ic_visa)
                     }
 
                     CreditCard.CardType.MASTER_CARD -> {
                         ivCardType.setImageResource(R.drawable.ic_master_card)
-                        cardContainer.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.light_orange)
+                        cardContainer.setImageResource(R.drawable.style_card_mastercard)
                     }
 
-                    else -> {}
+                    else -> {
+                        ivCardType.setImageResource(R.drawable.ic_blank_card_icon)
+                        cardContainer.setImageResource(R.drawable.style_card_type_unknown)
+                    }
                 }
 
                 btnRemoveCard.setOnClickListener {
