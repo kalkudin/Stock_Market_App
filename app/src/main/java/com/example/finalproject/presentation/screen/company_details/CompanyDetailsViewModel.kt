@@ -1,9 +1,11 @@
 package com.example.finalproject.presentation.screen.company_details
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
+import com.example.finalproject.data.common.SuccessType
 import com.example.finalproject.domain.usecase.DataBaseUseCases
 import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.domain.usecase.UserFundsUseCases
@@ -16,8 +18,8 @@ import com.example.finalproject.presentation.model.company_details.CompanyDetail
 import com.example.finalproject.presentation.model.company_details.UserId
 import com.example.finalproject.presentation.state.company_details.CompanyDetailsState
 import com.example.finalproject.presentation.util.getErrorMessage
+import com.example.finalproject.presentation.util.getSuccessMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -25,6 +27,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.round
 
 @HiltViewModel
 class CompanyDetailsViewModel @Inject constructor(
@@ -166,65 +169,69 @@ class CompanyDetailsViewModel @Inject constructor(
 //    }
 
     private fun buyStock(userId: String, amount: Double, description: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch{
             if (amount > 0) {
                 handleTransaction(userId, amount, description, "buy")
             } else {
-                updateErrorMessage("Number of stocks to buy should be greater than zero")
+                updateErrorMessage(ErrorType.AmountGreaterThanZeroToBuy)
             }
         }
     }
 
     private fun sellStock(userId: String, amount: Double, description: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (amount > 0) {
+        viewModelScope.launch {
+            if (amount > 0){
                 handleTransaction(userId, amount, description, "sell")
             } else {
-                updateErrorMessage("Number of stocks to sell should be greater than zero")
+                updateErrorMessage(ErrorType.AmountGreaterThanZeroToSell)
             }
         }
     }
 
+    //ეს ფუნქციაა გასასწორებელი რესურში ყლეურად შედის და სულ ლოადინგს აგდებს
     private suspend fun handleTransaction(
         userId: String,
         amount: Double,
         description: String,
         transactionType: String
     ) {
+        Log.d("handleTransaction", "Function called with userId: $userId, amount: $amount, description: $description, transactionType: $transactionType")
+
+        val roundedAmount = round(amount * 100) / 100
+        Log.d("handleTransaction", "Rounded amount: $roundedAmount")
+
         val resource = userFundsUseCases.retrieveUserFundsUseCase(uid = userId).first()
         when (resource) {
             is Resource.Success -> {
                 val userFunds = resource.data.amount
-                if (userFunds >= amount) {
+                Log.d("handleTransaction", "User funds: $userFunds")
+                if (userFunds >= roundedAmount) {
                     transactionsUseCases.saveTransactionUseCase(
                         userId,
-                        amount,
+                        roundedAmount,
                         transactionType,
                         description
                     ).collect {
-                        updateSuccessMessage("Stock $transactionType successfully")
+                        updateSuccessMessage(SuccessType.TransactionSuccessful)
+                        Log.d("handleTransaction", "Transaction successful")
                     }
                 } else {
-                    updateErrorMessage("Insufficient funds to $transactionType stock")
+                    updateErrorMessage(ErrorType.InsufficientFunds)
+                    Log.d("handleTransaction", "Insufficient funds to $transactionType stock")
                 }
             }
-            is Resource.Error -> updateErrorMessages(resource.errorType)
-            else -> updateErrorMessage("Unknown error occurred")
+            is Resource.Error -> {
+                updateErrorMessage(resource.errorType)
+                Log.d("handleTransaction", "Error occurred: ${resource.errorType}")
+            }
+            is Resource.Loading -> {
+                _companyDetailsState.update { currentState ->
+                    currentState.copy(isLoading = resource.loading)
+                }
+                Log.d("handleTransaction", "Loading state")
+            }
         }
     }
-
-    private fun updateSuccessMessage(message: String) {
-        _companyDetailsState.update { currentState ->
-            currentState.copy(successMessage = message)
-        }
-    }
-
-    private fun updateErrorMessage(message: String) {
-        _companyDetailsState.update { currentState ->
-            currentState.copy(errorMessage = message)
-        }
-    }
-    //
 
     private fun getCompanyDetails(symbol: String) {
         viewModelScope.launch {
@@ -255,13 +262,6 @@ class CompanyDetailsViewModel @Inject constructor(
                     currentState.copy(companyChartIntraday = data.map { it.toPresentation() })
                 }
             }
-        }
-    }
-
-    private fun updateErrorMessages(errorMessage: ErrorType) {
-        val message = getErrorMessage(errorMessage)
-        _companyDetailsState.update { currentState ->
-            currentState.copy(errorMessage = message)
         }
     }
 
@@ -300,12 +300,26 @@ class CompanyDetailsViewModel @Inject constructor(
             resourceFlow.collect { resource ->
                 when (resource) {
                     is Resource.Success -> handleSuccess(resource.data)
-                    is Resource.Error -> updateErrorMessages(resource.errorType)
+                    is Resource.Error -> updateErrorMessage(resource.errorType)
                     is Resource.Loading -> _companyDetailsState.update { currentState ->
                         currentState.copy(isLoading = resource.loading)
                     }
                 }
             }
+        }
+    }
+
+    private fun updateSuccessMessage(successMessage: SuccessType) {
+        val message = getSuccessMessage(successMessage)
+        _companyDetailsState.update { currentState ->
+            currentState.copy(successMessage = message)
+        }
+    }
+
+    private fun updateErrorMessage(errorMessage: ErrorType) {
+        val message = getErrorMessage(errorMessage)
+        _companyDetailsState.update { currentState ->
+            currentState.copy(errorMessage = message)
         }
     }
 }

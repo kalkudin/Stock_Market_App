@@ -14,8 +14,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnBack"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@color/black"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,11 +32,22 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civLogo"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnBack" />
+
+        <View
+            android:id="@+id/dividerOne"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/civLogo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnAddToFav"
@@ -53,18 +64,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textColor="@color/sky_blue"
-            android:textSize="20sp"
+            android:textColor="@color/light_blue"
+            android:textStyle="bold"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/civLogo" />
+            app:layout_constraintTop_toBottomOf="@id/dividerOne" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSymbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/sky_blue"
             android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvName" />
 
@@ -73,11 +88,22 @@
             android:id="@+id/tvDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/sky_blue"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSymbol" />
+
+        <View
+            android:id="@+id/dividerTwo"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/tvDesc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/quantityContainer"
@@ -87,23 +113,25 @@
             app:cardBackgroundColor="@color/sky_blue"
             app:cardCornerRadius="15dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc">
+            app:layout_constraintTop_toBottomOf="@id/dividerTwo">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
+                android:padding="5dp"
                 >
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btnDecrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="10dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_minus"
+                    app:layout_constraintEnd_toStartOf="@id/tvStockQuantity"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvStockQuantity"
@@ -112,19 +140,22 @@
                     android:paddingHorizontal="10dp"
                     android:text="0"
                     android:textColor="@color/dark_blue"
-                    android:textSize="30sp"
+                    android:textSize="26sp"
+                    app:layout_constraintEnd_toStartOf="@id/btnDecrease"
                     app:layout_constraintStart_toEndOf="@id/btnDecrease"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btnIncrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="10dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_plus"
                     app:layout_constraintStart_toEndOf="@id/tvStockQuantity"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -136,12 +167,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginStart="5dp"
-            android:background="@drawable/style_dates_button"
+            android:background="@drawable/style_buy_button"
             android:text="Buy"
             android:textAllCaps="false"
             android:textColor="@color/dark_blue"
             app:layout_constraintStart_toEndOf="@id/quantityContainer"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc"/>
+            app:layout_constraintTop_toBottomOf="@id/dividerTwo"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSell"
@@ -149,15 +180,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginStart="5dp"
-            android:background="@drawable/style_dates_button"
+            android:background="@drawable/style_sell_button"
             android:text="Sell"
             android:textAllCaps="false"
             android:textColor="@color/dark_blue"
             app:layout_constraintStart_toEndOf="@id/btnBuy"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc"/>
+            app:layout_constraintTop_toBottomOf="@id/dividerTwo"/>
 
+        <View
+            android:id="@+id/dividerThree"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/quantityContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!--cooment-->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -166,7 +205,7 @@
             android:layout_marginTop="22dp"
             app:cardCornerRadius="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/quantityContainer">
+            app:layout_constraintTop_toBottomOf="@id/dividerThree">
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinner"
@@ -186,7 +225,7 @@
             android:textColor="@color/dark_blue"
             app:layout_constraintEnd_toStartOf="@id/btnToDate"
             app:layout_constraintStart_toEndOf="@id/cardView"
-            app:layout_constraintTop_toBottomOf="@id/quantityContainer" />
+            app:layout_constraintTop_toBottomOf="@id/dividerThree" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnToDate"
@@ -199,7 +238,7 @@
             android:textColor="@color/dark_blue"
             app:layout_constraintEnd_toStartOf="@id/btnFetch"
             app:layout_constraintStart_toEndOf="@id/btnFromDate"
-            app:layout_constraintTop_toBottomOf="@id/quantityContainer" />
+            app:layout_constraintTop_toBottomOf="@id/dividerThree" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFetch"
@@ -211,7 +250,7 @@
             android:textAllCaps="false"
             android:textColor="@color/dark_blue"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/quantityContainer" />
+            app:layout_constraintTop_toBottomOf="@id/dividerThree" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPriceNow"
@@ -221,6 +260,7 @@
             android:layout_marginEnd="8dp"
             android:text="@string/price_now"
             android:textColor="@color/sky_blue"
+            android:textStyle="bold"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardView" />
@@ -230,8 +270,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="5dp"
             android:textColor="@color/sky_blue"
+            android:textStyle="bold"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/tvPriceNow"
             app:layout_constraintTop_toBottomOf="@id/cardView" />

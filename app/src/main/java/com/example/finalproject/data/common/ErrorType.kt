@@ -34,4 +34,7 @@ sealed class ErrorType {
     //
     data object InsufficientFunds : ErrorType()
     data object InsufficientStocks : ErrorType()
+    //
+    data object AmountGreaterThanZeroToBuy : ErrorType()
+    data object AmountGreaterThanZeroToSell : ErrorType()
 }

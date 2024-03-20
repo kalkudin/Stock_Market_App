@@ -34,6 +34,9 @@ fun getErrorMessage(errorType: ErrorType): String {
         //
         ErrorType.InsufficientFunds -> "Insufficient funds"
         ErrorType.InsufficientStocks -> "Insufficient stocks"
+        //
+        ErrorType.AmountGreaterThanZeroToSell -> "Number of stocks to sell should be greater than zero"
+        ErrorType.AmountGreaterThanZeroToBuy -> "Number of stocks to buy should be greater than zero"
         is ErrorType.UnknownError -> errorType.message
     }
 }
