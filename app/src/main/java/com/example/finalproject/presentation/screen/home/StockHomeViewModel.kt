@@ -53,8 +53,6 @@ class StockHomeViewModel @Inject constructor(
 
     private fun getStocksAndUserData() {
         viewModelScope.launch {
-            _stockState.update { state -> state.copy(isLoading = true) }
-
             val userId = dataStoreUseCases.readUserUidUseCase().first()
 
             _stockState.update { state -> state.copy(isLoading = true) }
@@ -77,7 +75,7 @@ class StockHomeViewModel @Inject constructor(
                         stateFlow = _stockState,
                         onSuccess = {funds -> this.copy(userFunds = funds.amount.toString())},
                         onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
-                        )
+                    )
                 }
             }
 
@@ -86,8 +84,8 @@ class StockHomeViewModel @Inject constructor(
                     handleStateUpdate(
                         resource = resource,
                         stateFlow = _stockState,
-                        onSuccess = {bestStocks -> this.copy(bestPerformingStocks = bestStocks.take(6).map { stock -> stock.toPresentation(
-                            Stock.PerformingType.BEST_PERFORMING) })},
+                        onSuccess = {bestStocks -> this.copy(bestPerformingStocks = bestStocks.take(6).map { stock ->
+                            stock.toPresentation(Stock.PerformingType.BEST_PERFORMING) })},
                         onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
                     )
                 }
@@ -98,8 +96,8 @@ class StockHomeViewModel @Inject constructor(
                     handleStateUpdate(
                         resource = resource,
                         stateFlow = _stockState,
-                        onSuccess = {worstStocks -> this.copy(worstPerformingStocks = worstStocks.take(6).map { stock -> stock.toPresentation(
-                            Stock.PerformingType.WORST_PERFORMING) })},
+                        onSuccess = {worstStocks -> this.copy(worstPerformingStocks = worstStocks.take(6).map { stock ->
+                            stock.toPresentation(Stock.PerformingType.WORST_PERFORMING) })},
                         onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
                     )
                 }
@@ -110,15 +108,14 @@ class StockHomeViewModel @Inject constructor(
                     handleStateUpdate(
                         resource = resource,
                         stateFlow = _stockState,
-                        onSuccess = {activeStocks -> this.copy(activePerformingStocks = activeStocks.take(6).map { stock -> stock.toPresentation(
-                            Stock.PerformingType.ACTIVE_PERFORMING) })},
+                        onSuccess = {activeStocks -> this.copy(activePerformingStocks = activeStocks.take(6).map { stock ->
+                            stock.toPresentation(Stock.PerformingType.ACTIVE_PERFORMING) })},
                         onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
                     )
                 }
             }
 
             awaitAll(fundsJob, bestStocksJob, worstStocksJob, activeStocksJob, userInfoJob)
-
             _stockState.update { state -> state.copy(isLoading = false)}
         }
     }
@@ -158,8 +155,7 @@ class StockHomeViewModel @Inject constructor(
 sealed class StockHomeNavigationEvent {
     data object LogOut : StockHomeNavigationEvent()
     data object NavigateToFundsPage : StockHomeNavigationEvent()
-    data class NavigateToExtendedStockList(val stockType: Stock.PerformingType) : StockHomeNavigationEvent()
-    data class NavigateToDetailsPage(val stock: Stock) : StockHomeNavigationEvent()
-
     data object NavigateToStockNews : StockHomeNavigationEvent()
+    data class NavigateToDetailsPage(val stock: Stock) : StockHomeNavigationEvent()
+    data class NavigateToExtendedStockList(val stockType: Stock.PerformingType) : StockHomeNavigationEvent()
 }

@@ -17,10 +17,6 @@ class WelcomeFragment : BaseFragment<FragmentHomeLayoutBinding>(FragmentHomeLayo
 
     private val homeViewModel : HomeViewModel by viewModels()
 
-    override fun bind() {
-        bindUserSession()
-    }
-
     override fun bindViewActionListeners() {
         bindLoginBtn()
         bindRegisterBtn()
@@ -28,10 +24,6 @@ class WelcomeFragment : BaseFragment<FragmentHomeLayoutBinding>(FragmentHomeLayo
 
     override fun bindObservers() {
         bindNavigationFlow()
-    }
-
-    private fun bindUserSession() {
-        homeViewModel.onEvent(WelcomeEvent.CheckCurrentSession)
     }
 
     private fun bindLoginBtn() {
@@ -57,7 +49,6 @@ class WelcomeFragment : BaseFragment<FragmentHomeLayoutBinding>(FragmentHomeLayo
                     when(event) {
                         is HomeNavigationEvent.NavigateToLogin -> navigateToLogin()
                         is HomeNavigationEvent.NavigateToRegister -> navigateToRegister()
-                        is HomeNavigationEvent.NavigateToStockHome -> navigateToStockHome()
                     }
                 }
             }
@@ -70,9 +61,5 @@ class WelcomeFragment : BaseFragment<FragmentHomeLayoutBinding>(FragmentHomeLayo
 
     private fun navigateToRegister() {
         findNavController().navigate(R.id.action_homeFragment_to_registerFragment)
-    }
-
-    private fun navigateToStockHome() {
-        findNavController().navigate(R.id.action_homeFragment_to_stockHomeFragment)
     }
 }

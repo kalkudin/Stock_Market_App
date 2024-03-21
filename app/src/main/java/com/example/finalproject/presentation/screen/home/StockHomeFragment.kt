@@ -20,8 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class StockHomeFragment :
-    BaseFragment<FragmentStockHomeLayoutBinding>(FragmentStockHomeLayoutBinding::inflate) {
+class StockHomeFragment : BaseFragment<FragmentStockHomeLayoutBinding>(FragmentStockHomeLayoutBinding::inflate) {
 
     private val stockHomeViewModel: StockHomeViewModel by viewModels()
 
@@ -69,21 +68,19 @@ class StockHomeFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 stockHomeViewModel.navigationFlow.collect { event ->
-                    when (event) {
-                        is StockHomeNavigationEvent.LogOut -> logOut()
-                        is StockHomeNavigationEvent.NavigateToDetailsPage -> navigateToDetailsFragment(
-                            stock = event.stock
-                        )
-
-                        is StockHomeNavigationEvent.NavigateToExtendedStockList -> navigateToExtensiveListFragment(
-                            stockType = event.stockType
-                        )
-
-                        is StockHomeNavigationEvent.NavigateToFundsPage -> navigateToAddFundsFragment()
-                        is StockHomeNavigationEvent.NavigateToStockNews -> navigateToStockNewsFragment()
-                    }
+                    handleNavigationFlow(event = event)
                 }
             }
+        }
+    }
+
+    private fun handleNavigationFlow(event : StockHomeNavigationEvent) {
+        when (event) {
+            is StockHomeNavigationEvent.LogOut -> logOut()
+            is StockHomeNavigationEvent.NavigateToFundsPage -> navigateToAddFundsFragment()
+            is StockHomeNavigationEvent.NavigateToStockNews -> navigateToStockNewsFragment()
+            is StockHomeNavigationEvent.NavigateToDetailsPage -> navigateToDetailsFragment(stock = event.stock)
+            is StockHomeNavigationEvent.NavigateToExtendedStockList -> navigateToExtensiveListFragment(stockType = event.stockType)
         }
     }
 

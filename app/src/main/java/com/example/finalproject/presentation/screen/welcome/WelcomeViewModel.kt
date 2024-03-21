@@ -13,9 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val dataStoreUseCases: DataStoreUseCases
-) : ViewModel() {
+class HomeViewModel @Inject constructor() : ViewModel() {
 
     private val _navigationFlow = MutableSharedFlow<HomeNavigationEvent>()
     val navigationFlow : SharedFlow<HomeNavigationEvent> = _navigationFlow.asSharedFlow()
@@ -24,7 +22,6 @@ class HomeViewModel @Inject constructor(
         when(event) {
             is WelcomeEvent.LoginPressed -> navigateUserToLogin()
             is WelcomeEvent.RegisterPressed -> navigateUserToRegister()
-            is WelcomeEvent.CheckCurrentSession -> checkCurrentSession()
         }
     }
 
@@ -39,16 +36,9 @@ class HomeViewModel @Inject constructor(
             _navigationFlow.emit(HomeNavigationEvent.NavigateToRegister)
         }
     }
-
-    private fun checkCurrentSession() {
-        viewModelScope.launch {
-            if(dataStoreUseCases.readUserSessionUseCase().first()) {_navigationFlow.emit(HomeNavigationEvent.NavigateToStockHome)}
-        }
-    }
 }
 
 sealed class HomeNavigationEvent {
     data object NavigateToLogin : HomeNavigationEvent()
     data object NavigateToRegister : HomeNavigationEvent()
-    data object NavigateToStockHome : HomeNavigationEvent()
 }

@@ -35,11 +35,12 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
             navController = navHostFragment.findNavController()
+
             navView.setupWithNavController(navController)
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
-                    R.id.welcomeFragment, R.id.forgotPasswordFragment, R.id.loginFragment, R.id.registerFragment -> {
+                    R.id.welcomeFragment, R.id.forgotPasswordFragment, R.id.loginFragment, R.id.registerFragment, R.id.sessionFragment -> {
                         navView.visibility = View.GONE
                     }
 

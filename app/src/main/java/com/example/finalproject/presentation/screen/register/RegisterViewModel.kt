@@ -32,43 +32,39 @@ class RegisterViewModel @Inject constructor(
     val navigationFlow: SharedFlow<RegisterNavigationEvent> = _navigationFlow.asSharedFlow()
 
     fun onEvent(event: RegisterEvent) {
-        when (event) {
-            is RegisterEvent.BackPressed -> navigateToHome()
-            is RegisterEvent.UserAlreadyExistsPressed -> navigateToLogin()
-            is RegisterEvent.ResetFlow -> resetStateFlow()
-            is RegisterEvent.Register -> registerUser(
-                email = event.email,
-                password = event.password,
-                repeatPassword = event.repeatPassword,
-                firstName = event.firstName,
-                lastName =  event.lastName,
-            )
+        viewModelScope.launch {
+            when (event) {
+                is RegisterEvent.BackPressed -> navigateToHome()
+                is RegisterEvent.UserAlreadyExistsPressed -> navigateToLogin()
+                is RegisterEvent.ResetFlow -> resetStateFlow()
+                is RegisterEvent.Register -> registerUser(
+                    email = event.email,
+                    password = event.password,
+                    repeatPassword = event.repeatPassword,
+                    firstName = event.firstName,
+                    lastName =  event.lastName,
+                )
+            }
         }
     }
 
-    private fun registerUser(email: String, password: String, repeatPassword: String, firstName: String, lastName: String) {
-        viewModelScope.launch {
-            authUseCases.registerUserUseCase(email, password, repeatPassword, firstName, lastName).collect { resource ->
-                when (resource) {
-                    is Resource.Loading -> _registerFlow.update {
-                        it.copy(isLoading = true) }
+    private suspend fun registerUser(email: String, password: String, repeatPassword: String, firstName: String, lastName: String) {
+        authUseCases.registerUserUseCase(email, password, repeatPassword, firstName, lastName).collect { resource ->
+            when (resource) {
+                is Resource.Loading -> _registerFlow.update { state ->
+                    state.copy(isLoading = true)
+                }
+                is Resource.Success -> {
+                    saveUserInitials(uid = resource.data, firstName = firstName, lastName = lastName)
 
-                    is Resource.Success -> {
-                        _registerFlow.update {
-                            it.copy(isSuccess = true, isLoading = false)
-                        }
-                        saveUserInitials(uid = resource.data, firstName = firstName, lastName = lastName)
-                        navigateToLogin()
+                    _registerFlow.update { state ->
+                        state.copy(isSuccess = true, isLoading = false)
                     }
-
-                    is Resource.Error -> {
-                        val errorMessage = getErrorMessage(resource.errorType)
-                        _registerFlow.update {
-                            it.copy(
-                                errorMessage = errorMessage,
-                                isLoading = false
-                            )
-                        }
+                    navigateToLogin()
+                }
+                is Resource.Error -> {
+                    _registerFlow.update {
+                        it.copy(errorMessage = getErrorMessage(resource.errorType), isLoading = false)
                     }
                 }
             }
@@ -76,28 +72,23 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun saveUserInitials(uid: String, firstName : String, lastName : String) {
-        val job = viewModelScope.launch {
-            authUseCases.saveUserInitialsUseCase(uid = uid, firstName = "jemal", lastName = "jiblibegashvili").collect { resource ->
-                Log.d("RegisterVM", resource.toString())
-            }
+        val userInitialsJob = viewModelScope.launch {
+            authUseCases.saveUserInitialsUseCase(uid = uid, firstName = firstName, lastName = lastName).collect {  }
         }
-        job.join()
+        userInitialsJob.join()
     }
 
-    private fun navigateToHome() {
-        viewModelScope.launch {
-            _navigationFlow.emit(RegisterNavigationEvent.NavigateToHome)
-        }
+    private suspend fun navigateToHome() {
+        _navigationFlow.emit(RegisterNavigationEvent.NavigateToHome)
     }
 
-    private fun navigateToLogin() {
-        viewModelScope.launch {
-            _navigationFlow.emit(RegisterNavigationEvent.NavigateToLogin)
-        }
+    private suspend fun navigateToLogin() {
+        _navigationFlow.emit(RegisterNavigationEvent.NavigateToLogin)
+
     }
 
     private fun resetStateFlow() {
-        _registerFlow.value = RegisterState()
+        _registerFlow.update { state -> state.copy(isLoading = false, errorMessage = null, isSuccess = false) }
     }
 }
 

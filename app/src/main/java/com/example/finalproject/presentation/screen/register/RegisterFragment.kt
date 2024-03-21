@@ -54,9 +54,11 @@ class RegisterFragment :
     private fun bindAdapter() {
         with(binding) {
             registerRecyclerAdapter = RegisterPageRecyclerViewAdapter(
+
                 onAlreadyRegisteredCLicked = {
                     bindUserAlreadyRegisteredBtn()
                 },
+
                 registerUser = { user ->
                     registerUser(user = user)
                 })

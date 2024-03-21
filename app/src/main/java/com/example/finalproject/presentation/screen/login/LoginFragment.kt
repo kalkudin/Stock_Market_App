@@ -1,5 +1,6 @@
 package com.example.finalproject.presentation.screen.login
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,6 +13,7 @@ import com.example.finalproject.presentation.event.login.LoginEvent
 import com.example.finalproject.presentation.state.login.LoginState
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.extension.setupPasswordToggle
+import com.example.finalproject.presentation.extension.showView
 import com.example.finalproject.presentation.util.CreditCardNumberFormattingTextWatcher
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -107,15 +109,20 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
     }
 
     private fun handleLoginState(state : LoginState) {
-//        binding.progressBar.isVisible = state.isLoading
+        with(binding) {
+            if(state.isLoading) {
+                showView(progressBar)
+            }
 
-        state.isSuccess?.takeIf { it.isNotEmpty() }?.let {
-            showSuccess()
-        }
+            state.isSuccess?.takeIf { it.isNotEmpty() }?.let {
+                showSuccess()
+                loginViewModel.onEvent(LoginEvent.LoginSuccess)
+            }
 
-        state.errorMessage?.let { errorMessage ->
-            showError(errorMessage)
-            loginViewModel.onEvent(LoginEvent.ResetFlow)
+            state.errorMessage?.let { errorMessage ->
+                showError(errorMessage)
+                loginViewModel.onEvent(LoginEvent.ResetFlow)
+            }
         }
     }
 
