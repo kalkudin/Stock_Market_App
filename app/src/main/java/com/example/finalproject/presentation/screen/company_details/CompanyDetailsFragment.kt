@@ -56,7 +56,7 @@ class CompanyDetailsFragment :
 
     override fun bindViewActionListeners() {
         handleBackButton()
-        buttonSetup()
+        dateButtonSetup()
         favouriteButtonSetup()
         buyStockButtonSetup()
         sellStockButtonSetup()
@@ -91,11 +91,17 @@ class CompanyDetailsFragment :
         state.companyChartIntraday?.let { chartData ->
             updateChart(chartData)
         }
+        state.statusMessage?.let {
+            binding.root.showSnackBar(it)
+            viewModel.onEvent(CompanyDetailsEvent.ResetFlow)
+        }
         state.successMessage?.let {
             binding.root.showSnackBar(it)
+            viewModel.onEvent(CompanyDetailsEvent.ResetFlow)
         }
         state.errorMessage?.let {
             binding.root.showSnackBar(it)
+            viewModel.onEvent(CompanyDetailsEvent.ResetFlow)
         }
         binding.progressBar.isVisible = state.isLoading
     }
@@ -124,6 +130,7 @@ class CompanyDetailsFragment :
         )
     }
 
+    //CHART
     private fun spinnerForIntradaySetup() {
         val intervals = resources.getStringArray(R.array.interval_options)
         val adapter = ArrayAdapter(requireContext(), simple_spinner_item, intervals)
@@ -131,7 +138,7 @@ class CompanyDetailsFragment :
         binding.spinner.adapter = adapter
     }
 
-    private fun buttonSetup() {
+    private fun dateButtonSetup() {
         var fromDate = ""
         var toDate = ""
 
@@ -233,6 +240,7 @@ class CompanyDetailsFragment :
         lineChart.invalidate()
     }
 
+    //WATCHLIST
     private fun favouriteButtonSetup() {
         binding.btnAddToFav.setOnClickListener {
             val symbol = arguments?.getString("symbol") ?: ""
@@ -246,6 +254,7 @@ class CompanyDetailsFragment :
             }
         }
     }
+
     private fun checkIfStockIsInWatchlist() {
         val symbol = arguments?.getString("symbol") ?: ""
         val firebaseUser = Firebase.auth.currentUser
@@ -284,6 +293,7 @@ class CompanyDetailsFragment :
         }
     }
 
+    //BUY/SELL STOCK
     private fun setupQuantityButtons() {
         binding.btnIncrease.setOnClickListener {
             number += 1.0

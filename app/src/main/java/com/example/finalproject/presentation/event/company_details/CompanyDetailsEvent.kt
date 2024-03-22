@@ -21,4 +21,5 @@ sealed class CompanyDetailsEvent {
     data class BuyStock(val userId: String, val amount: Double, val description: String) : CompanyDetailsEvent()
     data class SellStock(val userId: String, val amount: Double, val description: String) : CompanyDetailsEvent()
     data class IsStockInWatchlist(val userId: String, val symbol: String) : CompanyDetailsEvent()
+    data object ResetFlow : CompanyDetailsEvent()
 }

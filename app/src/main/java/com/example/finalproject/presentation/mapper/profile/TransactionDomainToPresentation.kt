@@ -13,6 +13,8 @@ fun GetTransaction.toPresentation() : Transaction {
         type = when (type.lowercase(Locale.ROOT)) {
             "outgoing" -> Transaction.TransactionType.OUTGOING
             "internal" -> Transaction.TransactionType.INTERNAL
+            "buy" -> Transaction.TransactionType.BUY
+            "sell" -> Transaction.TransactionType.SELL
             else -> Transaction.TransactionType.UNSPECIFIED
         }
     )
