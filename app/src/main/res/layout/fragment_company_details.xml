@@ -14,8 +14,8 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnBack"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@color/black"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,11 +32,22 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civLogo"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnBack" />
+
+        <View
+            android:id="@+id/dividerOne"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/civLogo" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnAddToFav"
@@ -49,35 +60,54 @@
             app:layout_constraintTop_toBottomOf="@id/btnBack" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/sky_blue"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/civLogo" />
-
-        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSymbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:textColor="@color/sky_blue"
-            android:textSize="18sp"
+            android:fontFamily="@font/open_sauce_sans_bold"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvName" />
+            app:layout_constraintTop_toBottomOf="@id/dividerOne" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/ghost_white"
+            android:fontFamily="@font/open_sauce_sans_bold"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSymbol" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDesc"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/sky_blue"
-            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/ghost_white"
+            android:textSize="17sp"
+            android:justificationMode="inter_word"
+            android:fontFamily="@font/open_sauce_sans_medium"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvSymbol" />
+            app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+        <View
+            android:id="@+id/dividerTwo"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDesc" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/quantityContainer"
@@ -87,21 +117,23 @@
             app:cardBackgroundColor="@color/sky_blue"
             app:cardCornerRadius="15dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc">
+            app:layout_constraintTop_toBottomOf="@id/dividerTwo">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
-                >
+                android:background="@drawable/style_stocks_to_watch_active_gradient"
+                android:padding="7dp">
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btnDecrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="10dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_minus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tvStockQuantity"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,19 +142,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="10dp"
-                    android:text="0"
-                    android:textColor="@color/dark_blue"
-                    android:textSize="30sp"
+                    android:text="0.0"
+                    android:textColor="@color/light_white"
+                    android:fontFamily="@font/open_sauce_sans_medium"
+                    android:textSize="26sp"
+                    app:layout_constraintEnd_toStartOf="@id/btnDecrease"
                     app:layout_constraintStart_toEndOf="@id/btnDecrease"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btnIncrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="10dp"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_plus"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tvStockQuantity"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -134,30 +170,40 @@
             android:id="@+id/btnBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="5dp"
-            android:background="@drawable/style_dates_button"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/style_stocks_to_watch_best_gradient"
             android:text="Buy"
             android:textAllCaps="false"
-            android:textColor="@color/dark_blue"
+            android:fontFamily="@font/open_sauce_sans_medium"
+            android:textColor="@color/light_green"
             app:layout_constraintStart_toEndOf="@id/quantityContainer"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc"/>
+            app:layout_constraintTop_toBottomOf="@id/dividerTwo" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="5dp"
-            android:background="@drawable/style_dates_button"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/style_stocks_to_watch_worst_gradient"
             android:text="Sell"
             android:textAllCaps="false"
-            android:textColor="@color/dark_blue"
+            android:textColor="@color/light_red"
+            android:fontFamily="@font/open_sauce_sans_medium"
             app:layout_constraintStart_toEndOf="@id/btnBuy"
-            app:layout_constraintTop_toBottomOf="@id/tvDesc"/>
+            app:layout_constraintTop_toBottomOf="@id/dividerTwo" />
 
+        <View
+            android:id="@+id/dividerThree"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quantityContainer" />
 
-        <!--cooment-->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -166,7 +212,7 @@
             android:layout_marginTop="22dp"
             app:cardCornerRadius="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/quantityContainer">
+            app:layout_constraintTop_toBottomOf="@id/dividerThree">
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinner"
@@ -180,38 +226,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/style_dates_button"
+            android:background="@drawable/style_stocks_to_watch_active_gradient"
             android:text="From"
             android:textAllCaps="false"
-            android:textColor="@color/dark_blue"
+            android:textColor="@color/light_white"
+            android:fontFamily="@font/open_sauce_sans_medium"
             app:layout_constraintEnd_toStartOf="@id/btnToDate"
             app:layout_constraintStart_toEndOf="@id/cardView"
-            app:layout_constraintTop_toBottomOf="@id/quantityContainer" />
+            app:layout_constraintTop_toBottomOf="@id/dividerThree" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnToDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/style_dates_button"
+            android:background="@drawable/style_stocks_to_watch_active_gradient"
             android:text="To"
             android:textAllCaps="false"
-            android:textColor="@color/dark_blue"
+            android:textColor="@color/light_white"
+            android:fontFamily="@font/open_sauce_sans_medium"
             app:layout_constraintEnd_toStartOf="@id/btnFetch"
             app:layout_constraintStart_toEndOf="@id/btnFromDate"
-            app:layout_constraintTop_toBottomOf="@id/quantityContainer" />
+            app:layout_constraintTop_toBottomOf="@id/dividerThree" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnFetch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/style_dates_button"
+            android:background="@drawable/style_stocks_to_watch_active_gradient"
             android:text="Update"
             android:textAllCaps="false"
-            android:textColor="@color/dark_blue"
+            android:textColor="@color/light_white"
+            android:fontFamily="@font/open_sauce_sans_medium"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/quantityContainer" />
+            app:layout_constraintTop_toBottomOf="@id/dividerThree" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPriceNow"
@@ -220,8 +269,9 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="8dp"
             android:text="@string/price_now"
-            android:textColor="@color/sky_blue"
+            android:textColor="@color/ghost_white"
             android:textSize="20sp"
+            android:fontFamily="@font/open_sauce_sans_bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardView" />
 
@@ -229,10 +279,11 @@
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
-            android:textColor="@color/sky_blue"
+            android:textColor="@color/ghost_white"
             android:textSize="20sp"
+            android:fontFamily="@font/open_sauce_sans_bold"
             app:layout_constraintStart_toEndOf="@id/tvPriceNow"
             app:layout_constraintTop_toBottomOf="@id/cardView" />
 

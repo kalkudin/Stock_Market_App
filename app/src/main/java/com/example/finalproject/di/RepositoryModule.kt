@@ -8,6 +8,9 @@ import com.example.finalproject.data.common.HandlePasswordReset
 import com.example.finalproject.data.common.HandleResponse
 import com.example.finalproject.data.local.dao.stocks.StocksDao
 import com.example.finalproject.data.local.dao.user.UserDao
+import com.example.finalproject.data.remote.service.company_details.CompanyDetailsApiService
+import com.example.finalproject.data.remote.service.company_details_chart.CompanyChartIntradayApiService
+import com.example.finalproject.data.remote.service.company_list.CompanyListApiService
 import com.example.finalproject.data.remote.service.stock_news.StockNewsApiService
 import com.example.finalproject.data.remote.service.stocks_to_watch.StocksToWatchApiService
 import com.example.finalproject.data.repository.auth.login.LoginRepositoryImpl
@@ -25,21 +28,18 @@ import com.example.finalproject.data.repository.firestore.user_initials.UserInit
 import com.example.finalproject.data.repository.stock_news.StockNewsRepositoryImpl
 import com.example.finalproject.data.repository.stocks_to_watch.StocksToWatchRepositoryImpl
 import com.example.finalproject.data.repository.watchlisted_stocks.WatchlistedStocksRepositoryImpl
-import com.example.finalproject.domain.datasource.company_details.RemoteCompanyDetailsDataSource
-import com.example.finalproject.domain.datasource.company_details_chart.RemoteCompanyChartIntradayDataSource
-import com.example.finalproject.domain.datasource.company_list.RemoteCompanyListDataSource
-import com.example.finalproject.domain.repository.firestore.credit_card.CreditCardRepository
-import com.example.finalproject.domain.repository.datastore.DataStoreRepository
 import com.example.finalproject.domain.repository.auth.login.LoginRepository
 import com.example.finalproject.domain.repository.auth.register.RegisterRepository
 import com.example.finalproject.domain.repository.auth.reset_password.ResetPasswordRepository
-import com.example.finalproject.domain.repository.firestore.transactions.TransactionsRepository
-import com.example.finalproject.domain.repository.firestore.image_upload.UploadUriRepository
-import com.example.finalproject.domain.repository.firestore.user_funds.UserFundsRepository
-import com.example.finalproject.domain.repository.firestore.user_initials.UserInitialsRepository
 import com.example.finalproject.domain.repository.company_details.CompanyDetailsRepository
 import com.example.finalproject.domain.repository.company_details_chart.CompanyChartIntradayRepository
 import com.example.finalproject.domain.repository.company_list.CompanyListRepository
+import com.example.finalproject.domain.repository.datastore.DataStoreRepository
+import com.example.finalproject.domain.repository.firestore.credit_card.CreditCardRepository
+import com.example.finalproject.domain.repository.firestore.image_upload.UploadUriRepository
+import com.example.finalproject.domain.repository.firestore.transactions.TransactionsRepository
+import com.example.finalproject.domain.repository.firestore.user_funds.UserFundsRepository
+import com.example.finalproject.domain.repository.firestore.user_initials.UserInitialsRepository
 import com.example.finalproject.domain.repository.stock_news.StockNewsRepository
 import com.example.finalproject.domain.repository.stocks_to_watch.StocksToWatchRepository
 import com.example.finalproject.domain.repository.watchlisted_stocks.WatchlistedStocksRepository
@@ -84,20 +84,24 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideCompanyListRepository(
-        remoteCompanyListDataSource: RemoteCompanyListDataSource,
+        listApiService: CompanyListApiService,
+        responseHandler: HandleResponse
     ) : CompanyListRepository {
         return CompanyListRepositoryImpl(
-            remoteCompanyListDataSource = remoteCompanyListDataSource,
+            apiService = listApiService,
+            responseHandler = responseHandler
         )
     }
 
     @Provides
     @Singleton
     fun provideCompanyDetailsRepository(
-        remoteCompanyDetailsDataSource: RemoteCompanyDetailsDataSource,
+        detailsApiService: CompanyDetailsApiService,
+        responseHandler: HandleResponse
     ) : CompanyDetailsRepository {
         return CompanyDetailsRepositoryImpl(
-            remoteCompanyDetailsDataSource = remoteCompanyDetailsDataSource,
+            apiService = detailsApiService,
+            responseHandler = responseHandler
         )
     }
 
@@ -140,10 +144,12 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideCompanyChartIntradayRepository(
-        remoteCompanyChartIntradayDataSource: RemoteCompanyChartIntradayDataSource,
+        intradayChartApiService: CompanyChartIntradayApiService,
+        responseHandler: HandleResponse
     ) : CompanyChartIntradayRepository {
         return CompanyChartIntradayRepositoryImpl(
-            remoteCompanyChartIntradayDataSource = remoteCompanyChartIntradayDataSource,
+            apiService = intradayChartApiService,
+            responseHandler = responseHandler
         )
     }
 

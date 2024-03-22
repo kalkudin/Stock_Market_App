@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.example.finalproject.databinding.ItemTransactionLayoutBinding
-import com.example.finalproject.presentation.model.profile.Transaction
 import com.example.finalproject.presentation.mapper.home.formatUserFunds
+import com.example.finalproject.presentation.model.profile.Transaction
 import com.example.finalproject.presentation.util.setTextColor
 
 class TransactionRecyclerAdapter : ListAdapter<Transaction, TransactionRecyclerAdapter.TransactionViewHolder>(
@@ -36,6 +36,10 @@ class TransactionRecyclerAdapter : ListAdapter<Transaction, TransactionRecyclerA
                 val greenColor = ContextCompat.getColor(itemView.context, R.color.deaf_green)
                 val blueColor = ContextCompat.getColor(itemView.context, R.color.ocean_blue)
                 val redColor = ContextCompat.getColor(itemView.context, R.color.red)
+                val whiteColor = ContextCompat.getColor(itemView.context, R.color.white)
+                val lightOrange = ContextCompat.getColor(itemView.context, R.color.light_orange)
+
+
 
                 when(transaction.type) {
                     Transaction.TransactionType.OUTGOING -> {
@@ -43,6 +47,12 @@ class TransactionRecyclerAdapter : ListAdapter<Transaction, TransactionRecyclerA
                     }
                     Transaction.TransactionType.INTERNAL -> {
                         setTextColor(redColor, tvType)
+                    }
+                    Transaction.TransactionType.BUY -> {
+                        setTextColor(whiteColor, tvType)
+                    }
+                    Transaction.TransactionType.SELL -> {
+                        setTextColor(lightOrange, tvType)
                     }
                     Transaction.TransactionType.UNSPECIFIED -> {
                         setTextColor(blueColor, tvType)

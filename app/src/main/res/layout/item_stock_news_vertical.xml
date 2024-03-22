@@ -27,9 +27,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/sample_text"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/sky_blue"
+        android:fontFamily="@font/open_sauce_sans_bold"
+        android:textColor="@color/light_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardView"/>
 
@@ -40,7 +41,8 @@
         android:layout_marginTop="8dp"
         android:text="@string/sample_text"
         android:textSize="16sp"
-        android:textColor="@color/sky_blue"
+        android:textColor="@color/ghost_white"
+        android:fontFamily="@font/open_sauce_sans_medium"
         android:maxLines="3"
         android:ellipsize="end"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +55,8 @@
         android:layout_marginTop="20dp"
         android:text="@string/sample_text"
         android:textSize="14sp"
-        android:textColor="@color/sky_blue"
+        android:textColor="@color/light_blue"
+        android:fontFamily="@font/open_sauce_sans_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvContent"/>
     <androidx.appcompat.widget.AppCompatTextView
@@ -63,7 +66,8 @@
         android:layout_marginTop="1dp"
         android:text="@string/sample_text"
         android:textSize="14sp"
-        android:textColor="@color/sky_blue"
+        android:textColor="@color/light_blue"
+        android:fontFamily="@font/open_sauce_sans_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDate"/>
     <androidx.appcompat.widget.AppCompatTextView
@@ -73,7 +77,8 @@
         android:layout_marginTop="1dp"
         android:text="@string/sample_text"
         android:textSize="14sp"
-        android:textColor="@color/sky_blue"
+        android:textColor="@color/light_blue"
+        android:fontFamily="@font/open_sauce_sans_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSource"/>
 

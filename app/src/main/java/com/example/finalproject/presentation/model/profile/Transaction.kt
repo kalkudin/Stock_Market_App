@@ -10,6 +10,8 @@ data class Transaction(
     enum class TransactionType {
         OUTGOING,
         INTERNAL,
+        BUY,
+        SELL,
         UNSPECIFIED
     }
 }
