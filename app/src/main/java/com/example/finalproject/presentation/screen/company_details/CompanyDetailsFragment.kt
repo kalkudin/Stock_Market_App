@@ -244,11 +244,15 @@ class CompanyDetailsFragment :
     private fun favouriteButtonSetup() {
         binding.btnAddToFav.setOnClickListener {
             val symbol = arguments?.getString("symbol") ?: ""
-            viewModel.onEvent(CompanyDetailsEvent.GetCompanyDetails(symbol = symbol))
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.companyDetailsState.collect { state ->
-                    state.companyDetails?.firstOrNull()?.let { stock ->
-                        handleUserStocksWishlistSelection(stock)
+                    if (!state.isStockInWatchlist) {
+                        viewModel.onEvent(CompanyDetailsEvent.GetCompanyDetails(symbol = symbol))
+                        state.companyDetails?.firstOrNull()?.let { stock ->
+                            handleUserStocksWishlistSelection(stock)
+                        }
+                    } else {
+                        binding.root.showSnackBar("Stock is already in watchlist")
                     }
                 }
             }
@@ -277,19 +281,12 @@ class CompanyDetailsFragment :
         val firebaseUser = Firebase.auth.currentUser
         val userId = firebaseUser?.uid
         val user = UserId(userId!!)
-        var isStockInWatchlist = false
 
-        viewModel.onEvent(CompanyDetailsEvent.IsStockInWatchlist(userId, stocks.symbol))
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.companyDetailsState.collect { state ->
-                isStockInWatchlist = state.isStockInWatchlist
+                viewModel.onEvent(CompanyDetailsEvent.InsertStocksToWatchlist(stocks, user))
+                binding.root.showSnackBar("Stock added to watchlist")
             }
-        }
-
-        if (isStockInWatchlist) {
-            viewModel.onEvent(CompanyDetailsEvent.DeleteWatchlistedStocks(stocks, user))
-        } else {
-            viewModel.onEvent(CompanyDetailsEvent.InsertStocksToWatchlist(stocks, user))
         }
     }
 

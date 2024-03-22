@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/search_with_company_name_or_symbol"
         android:textColorHint="@color/grey_blue"
+        android:fontFamily="@font/open_sauce_sans_medium"
         android:background="@drawable/style_search_bar"
         android:layout_margin="16dp"
         android:padding="10dp"

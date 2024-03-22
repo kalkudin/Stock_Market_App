@@ -24,6 +24,7 @@
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="5dp"
         android:hint="@string/search_with_company_name_or_symbol"
+        android:fontFamily="@font/open_sauce_sans_medium"
         android:padding="10dp"
         android:layout_margin="16dp"
         android:textColorHint="@color/grey_blue"
