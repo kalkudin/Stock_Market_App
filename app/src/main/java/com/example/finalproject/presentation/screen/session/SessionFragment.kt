@@ -1,5 +1,6 @@
 package com.example.finalproject.presentation.screen.session
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +18,10 @@ class SessionFragment : BaseFragment<FragmentSessionLayoutBinding>(FragmentSessi
 
     private val sessionViewModel : SessionViewModel by viewModels()
 
+    override fun bind() {
+        super.bind()
+        extractSymbol()
+    }
     override fun bindViewActionListeners() {
         bindSession()
     }
@@ -56,5 +61,16 @@ class SessionFragment : BaseFragment<FragmentSessionLayoutBinding>(FragmentSessi
 
     private fun navigateToWelcomePage() {
         findNavController().navigate(R.id.action_sessionFragment_to_welcomeFragment)
+    }
+
+    private fun extractSymbol() {
+        val symbol = arguments?.getString("symbol")
+        symbol?.let {
+            val bundle = bundleOf("symbol" to it)
+            findNavController().navigate(
+                R.id.action_sessionFragment_to_companyDetailsFragment,
+                bundle
+            )
+        }
     }
 }
