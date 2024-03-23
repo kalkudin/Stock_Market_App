@@ -6,7 +6,6 @@ import com.example.finalproject.presentation.model.company_details.CompanyDetail
 data class CompanyDetailsState(
     val companyDetails: List<CompanyDetails>? = null,
     val companyChartIntraday: List<CompanyChartIntraday>? = null,
-    val statusMessage: String? = null,
     val errorMessage: String? = null,
     val successMessage: String? = null,
     val isLoading: Boolean = false,

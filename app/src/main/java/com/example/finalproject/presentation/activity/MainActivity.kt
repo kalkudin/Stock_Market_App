@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                     R.id.welcomeFragment, R.id.forgotPasswordFragment, R.id.loginFragment, R.id.registerFragment, R.id.sessionFragment -> {
                         navView.visibility = View.GONE
                     }
-
                     else -> {
                         navView.visibility = View.VISIBLE
                     }
@@ -90,10 +89,9 @@ class MainActivity : AppCompatActivity() {
             if (bundle.containsKey("symbol")) {
                 val symbol = bundle.getString("symbol")
                 symbol?.let {
-                    // Add a delay before navigating to the details page
                     Handler(Looper.getMainLooper()).postDelayed({
                         navigateToSessionFragment(it)
-                    }, 2000) // Delay of 2 seconds
+                    }, 2000)
                 }
             } else {
                 val navController = findNavController(R.id.fragment_container)
@@ -108,27 +106,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragment_container)
         navController.navigate(R.id.sessionFragment, bundle)
     }
-
-//    private fun navigateToDetailsFragment(symbol: String) {
-//        Log.d("messaging", "Trying to navigate to details page with symbol $symbol")
-//        val bundle = bundleOf("symbol" to symbol)
-//        val navController = findNavController(R.id.fragment_container)
-//        val currentDestinationId = navController.currentDestination?.id
-//        Log.d("messaging", "Current destination: $currentDestinationId")
-//        if (currentDestinationId == R.id.stockHomeFragment) {
-//            try {
-//                val didNavigate = navController.safeNavigateWithArguments(
-//                    R.id.action_stockHomeFragment_to_companyDetailsFragment,
-//                    bundle
-//                )
-//                Log.d("messaging", "Did navigate: $didNavigate")
-//            } catch (e: Exception) {
-//                Log.e("messaging", "Error navigating", e)
-//            }
-//        } else {
-//            Log.d("messaging", "Unexpected current destination")
-//        }
-//    }
 
     private fun requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

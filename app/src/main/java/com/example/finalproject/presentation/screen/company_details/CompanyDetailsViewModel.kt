@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.data.common.StatusType
 import com.example.finalproject.data.common.SuccessType
 import com.example.finalproject.domain.usecase.DataBaseUseCases
 import com.example.finalproject.domain.usecase.TransactionsUseCases
@@ -19,7 +18,6 @@ import com.example.finalproject.presentation.model.company_details.CompanyDetail
 import com.example.finalproject.presentation.model.company_details.UserId
 import com.example.finalproject.presentation.state.company_details.CompanyDetailsState
 import com.example.finalproject.presentation.util.getErrorMessage
-import com.example.finalproject.presentation.util.getStatusMessage
 import com.example.finalproject.presentation.util.getSuccessMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -172,7 +170,6 @@ class CompanyDetailsViewModel @Inject constructor(
         }
     }
 
-    //didi albatobit mesame state unda moashoro da imushavebs
     private fun buyStock(userId: String, amount: Double, description: String) {
         viewModelScope.launch {
             Log.d("buyStock", "Function called with userId: $userId, amount: $amount, description: $description")
@@ -184,6 +181,9 @@ class CompanyDetailsViewModel @Inject constructor(
                                 transactionsUseCases.saveTransactionUseCase(uid = userId, amount = amount,description = description, type = "buy").collect {
                                     updateSuccessMessage(SuccessType.TransactionSuccessful)
                                     Log.d("buyStock", "Transaction successful")
+                                    // Subtract the amount from the user's funds
+                                    userFundsUseCases.subtractFundsUseCase.subtractFunds(userId, amount)
+                                    Log.d("buyStock", "SubtractFundsUseCase called with userId: $userId, amount: $amount")
                                 }
                             } else {
                                 updateErrorMessage(ErrorType.InsufficientFunds)
@@ -194,10 +194,7 @@ class CompanyDetailsViewModel @Inject constructor(
                             updateErrorMessage(resource.errorType)
                             Log.d("buyStock", "Error occurred: ${resource.errorType}")
                         }
-                        is Resource.Loading -> {
-                            updateStatusMessage(StatusType.TransactionProcessing)
-                            Log.d("buyStock", "Transaction processing")
-                        }
+                        is Resource.Loading -> { }
                     }
                 }
             } else {
@@ -227,16 +224,16 @@ class CompanyDetailsViewModel @Inject constructor(
                                             transactionsUseCases.saveTransactionUseCase(uid = userId, amount = amount,description = description, type = "sell").collect {
                                                 updateSuccessMessage(SuccessType.TransactionSuccessful)
                                                 Log.d("sellStock", "Transaction successful")
+                                                // Add the amount to the user's funds
+                                                userFundsUseCases.addFundsUseCase.addFunds(userId, amount)
+                                                Log.d("sellStock", "AddFundsUseCase called with userId: $userId, amount: $amount")
                                             }
                                         }
                                         is Resource.Error -> {
                                             updateErrorMessage(resource.errorType)
                                             Log.d("sellStock", "Error occurred: ${resource.errorType}")
                                         }
-                                        is Resource.Loading -> {
-                                            updateStatusMessage(StatusType.TransactionProcessing)
-                                            Log.d("sellStock", "Transaction processing1")
-                                        }
+                                        is Resource.Loading -> {}
                                     }
                                 }
                             } else {
@@ -248,23 +245,13 @@ class CompanyDetailsViewModel @Inject constructor(
                             updateErrorMessage(resource.errorType)
                             Log.d("sellStock", "Error occurred: ${resource.errorType}")
                         }
-                        is Resource.Loading -> {
-                            updateStatusMessage(StatusType.TransactionProcessing)
-                            Log.d("sellStock", "Transaction processing2")
-                        }
+                        is Resource.Loading -> {}
                     }
                 }
             } else {
                 updateErrorMessage(ErrorType.AmountGreaterThanZeroToSell)
                 Log.d("sellStock", "Amount must be greater than zero to sell")
             }
-        }
-    }
-
-    private fun updateStatusMessage(statusMessage: StatusType) {
-        val message = getStatusMessage(statusMessage)
-        _companyDetailsState.update { currentState ->
-            currentState.copy(statusMessage = message)
         }
     }
 

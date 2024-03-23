@@ -91,10 +91,6 @@ class CompanyDetailsFragment :
         state.companyChartIntraday?.let { chartData ->
             updateChart(chartData)
         }
-        state.statusMessage?.let {
-            binding.root.showSnackBar(it)
-            viewModel.onEvent(CompanyDetailsEvent.ResetFlow)
-        }
         state.successMessage?.let {
             binding.root.showSnackBar(it)
             viewModel.onEvent(CompanyDetailsEvent.ResetFlow)

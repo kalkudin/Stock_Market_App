@@ -26,6 +26,5 @@ class SaveTransactionUseCase @Inject constructor(
                 description = description
             )
         )
-        Log.d("SaveTransactionUseCase", "Transaction saved successfully.")
     }
 }

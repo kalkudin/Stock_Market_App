@@ -8,4 +8,7 @@ interface UserFundsRepository {
     suspend fun addUserFunds(userFunds : GetUserFunds) : Flow<Resource<Boolean>>
     suspend fun removeUserFunds(userFunds: GetUserFunds) : Flow<Resource<Boolean>>
     suspend fun retrieveUserFunds(uid : String) : Flow<Resource<GetUserFunds>>
+
+    //
+    suspend fun updateUserFunds(uid: String, newAmount: Double): Flow<Resource<Boolean>>
 }
