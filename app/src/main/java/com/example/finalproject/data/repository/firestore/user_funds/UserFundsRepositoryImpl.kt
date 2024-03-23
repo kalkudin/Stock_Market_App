@@ -68,21 +68,4 @@ class UserFundsRepositoryImpl @Inject constructor(
             emit(Resource.Error(ErrorType.NetworkError))
         }
     }
-
-    //
-    override suspend fun updateUserFunds(uid: String, newAmount: Double): Flow<Resource<Boolean>> = flow {
-        emit(Resource.Loading(true))
-        try {
-            val userFundsRef = db.collection("userFunds").document(uid)
-            val snapshot = userFundsRef.get().await()
-            if (snapshot.exists()) {
-                userFundsRef.update("fundAmount", newAmount).await()
-                emit(Resource.Success(true))
-            } else {
-                emit(Resource.Error(ErrorType.UnknownError("User funds document does not exist.")))
-            }
-        } catch (e: Exception) {
-            emit(Resource.Error(ErrorType.NetworkError))
-        }
-    }
 }

@@ -74,6 +74,8 @@
     <string name="watchlist">Watchlist</string>
     <string name="profile">Profile</string>
     <string name="price_now">Price Now : </string>
+    <string name="portfolio">Portfolio</string>
+    <string name="search_with_symbol">Search with Symbol</string>
     <string-array name="sort_options">
         <item>Type</item>
         <item>Date - Latest</item>

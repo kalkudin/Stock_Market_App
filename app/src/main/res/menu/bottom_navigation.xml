@@ -18,9 +18,9 @@
         android:title="@string/home"/>
 
     <item
-        android:id="@+id/watchlistedStocksFragment"
+        android:id="@+id/ownedStocksFragment"
         android:icon="@drawable/ic_watchlist"
-        android:title="@string/watchlist"/>
+        android:title="@string/portfolio"/>
 
     <item
         android:id="@+id/userProfileFragment"

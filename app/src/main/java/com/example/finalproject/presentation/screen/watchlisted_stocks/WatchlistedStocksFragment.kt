@@ -1,6 +1,5 @@
 package com.example.finalproject.presentation.screen.watchlisted_stocks
 
-import android.util.Log
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,6 +11,7 @@ import com.example.finalproject.databinding.FragmentWatchlistedStocksBinding
 import com.example.finalproject.presentation.adapters.watchlisted_stocks.WatchlistedStocksRecyclerAdapter
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.watchlisted_stocks.WatchlistedStocksEvent
+import com.example.finalproject.presentation.extension.showSnackBar
 import com.example.finalproject.presentation.model.company_details.CompanyDetails
 import com.example.finalproject.presentation.model.company_details.UserId
 import com.example.finalproject.presentation.state.watchlisted_stocks.WatchlistedStocksState
@@ -60,7 +60,7 @@ class WatchlistedStocksFragment :
         if (userId != null) {
             viewModel.onEvent(WatchlistedStocksEvent.GetWatchlistedStocks(UserId(userId)))
         } else {
-            Log.d("FavouritesFragment", "Failed to get favourite plants: User not logged in")
+            binding.root.showSnackBar("User not found")
         }
     }
 

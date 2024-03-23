@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.data.common.SuccessType
+import com.example.finalproject.domain.model.user_funds.GetUserFunds
 import com.example.finalproject.domain.usecase.DataBaseUseCases
+import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.domain.usecase.UserFundsUseCases
 import com.example.finalproject.domain.usecase.company_details_chart_usecase.GetCompanyChartIntradayUseCase
@@ -23,6 +25,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,6 +35,7 @@ class CompanyDetailsViewModel @Inject constructor(
     private val getCompanyDetailsUseCase: GetCompanyDetailsUseCase,
     private val getCompanyChartIntradayUseCase: GetCompanyChartIntradayUseCase,
     private val dataBaseUseCases: DataBaseUseCases,
+    private val dataStoreUseCase: DataStoreUseCases,
     private val transactionsUseCases: TransactionsUseCases,
     private val userFundsUseCases: UserFundsUseCases
 ) : ViewModel() {
@@ -39,6 +43,24 @@ class CompanyDetailsViewModel @Inject constructor(
     private val _companyDetailsState = MutableStateFlow(CompanyDetailsState())
     val companyDetailsState: SharedFlow<CompanyDetailsState> get() = _companyDetailsState
 
+
+    //
+    private var amount : Double = 0.0
+
+    init {
+        viewModelScope.launch {
+            val uid = dataStoreUseCase.readUserUidUseCase().first()
+
+            userFundsUseCases.retrieveUserFundsUseCase(uid).collect { resource ->
+                when (resource) {
+                    is Resource.Success -> amount = resource.data.amount
+                    else -> {}
+                }
+            }
+        }
+
+    }
+    //
 
     fun onEvent(event: CompanyDetailsEvent) {
         when (event) {
@@ -169,33 +191,17 @@ class CompanyDetailsViewModel @Inject constructor(
             }
         }
     }
-
-    private fun buyStock(userId: String, amount: Double, description: String) {
+    private fun buyStock(userId: String, transactionAmount: Double, description: String) {
         viewModelScope.launch {
-            Log.d("buyStock", "Function called with userId: $userId, amount: $amount, description: $description")
-            if (amount > 0) {
-                userFundsUseCases.retrieveUserFundsUseCase(uid = userId).collect { resource ->
-                    when (resource) {
-                        is Resource.Success -> {
-                            if (resource.data.amount >= amount) {
-                                transactionsUseCases.saveTransactionUseCase(uid = userId, amount = amount,description = description, type = "buy").collect {
-                                    updateSuccessMessage(SuccessType.TransactionSuccessful)
-                                    Log.d("buyStock", "Transaction successful")
-                                    // Subtract the amount from the user's funds
-                                    userFundsUseCases.subtractFundsUseCase.subtractFunds(userId, amount)
-                                    Log.d("buyStock", "SubtractFundsUseCase called with userId: $userId, amount: $amount")
-                                }
-                            } else {
-                                updateErrorMessage(ErrorType.InsufficientFunds)
-                                Log.d("buyStock", "Insufficient funds to buy stock")
-                            }
-                        }
-                        is Resource.Error -> {
-                            updateErrorMessage(resource.errorType)
-                            Log.d("buyStock", "Error occurred: ${resource.errorType}")
-                        }
-                        is Resource.Loading -> { }
-                    }
+            Log.d("buyStock", "Function called with userId: $userId, amount: $transactionAmount, description: $description")
+            if (transactionAmount > 0) {
+                if (amount >= transactionAmount) {
+                    saveTransaction(userId, transactionAmount, description, "buy")
+                    removeUserFunds(userId, transactionAmount)
+                    Log.d("buyStock", "RemoveUserFundsUseCase called with userId: $userId, amount: $transactionAmount")
+                } else {
+                    updateErrorMessage(ErrorType.InsufficientFunds)
+                    Log.d("buyStock", "Insufficient funds to buy stock")
                 }
             } else {
                 updateErrorMessage(ErrorType.AmountGreaterThanZeroToBuy)
@@ -218,24 +224,9 @@ class CompanyDetailsViewModel @Inject constructor(
                             val ownedAmount = boughtAmount - soldAmount
 
                             if (ownedAmount >= amount) {
-                                userFundsUseCases.retrieveUserFundsUseCase(uid = userId).collect { resource ->
-                                    when (resource) {
-                                        is Resource.Success -> {
-                                            transactionsUseCases.saveTransactionUseCase(uid = userId, amount = amount,description = description, type = "sell").collect {
-                                                updateSuccessMessage(SuccessType.TransactionSuccessful)
-                                                Log.d("sellStock", "Transaction successful")
-                                                // Add the amount to the user's funds
-                                                userFundsUseCases.addFundsUseCase.addFunds(userId, amount)
-                                                Log.d("sellStock", "AddFundsUseCase called with userId: $userId, amount: $amount")
-                                            }
-                                        }
-                                        is Resource.Error -> {
-                                            updateErrorMessage(resource.errorType)
-                                            Log.d("sellStock", "Error occurred: ${resource.errorType}")
-                                        }
-                                        is Resource.Loading -> {}
-                                    }
-                                }
+                                saveTransaction(userId, amount, description, "sell")
+                                addUserFunds(userId, amount)
+                                Log.d("sellStock", "AddUserFundsUseCase called with userId: $userId, amount: $amount")
                             } else {
                                 updateErrorMessage(ErrorType.InsufficientStocks)
                                 Log.d("sellStock", "Insufficient stocks to sell")
@@ -254,6 +245,44 @@ class CompanyDetailsViewModel @Inject constructor(
             }
         }
     }
+
+    private suspend fun removeUserFunds(userId: String, amount: Double) {
+        userFundsUseCases.removeUserFundsUseCase.invoke(GetUserFunds(userId, amount)).collect { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    Log.d("removeUserFunds", "Funds removed successfully")
+                }
+                is Resource.Error -> {
+                    updateErrorMessage(resource.errorType)
+                    Log.d("removeUserFunds", "Error occurred: ${resource.errorType}")
+                }
+                is Resource.Loading -> {}
+            }
+        }
+    }
+
+    private suspend fun addUserFunds(userId: String, amount: Double) {
+        userFundsUseCases.addFundsUseCase.invoke(userId, amount.toString()).collect { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    Log.d("addUserFunds", "Funds added successfully")
+                }
+                is Resource.Error -> {
+                    updateErrorMessage(resource.errorType)
+                    Log.d("addUserFunds", "Error occurred: ${resource.errorType}")
+                }
+                is Resource.Loading -> {}
+            }
+        }
+    }
+
+    private suspend fun saveTransaction(userId: String, amount: Double, description: String, type: String) {
+        transactionsUseCases.saveTransactionUseCase(uid = userId, amount = amount, description = description, type = type).collect {
+            updateSuccessMessage(SuccessType.TransactionSuccessful)
+            Log.d("saveTransaction", "Transaction successful")
+        }
+    }
+
 
     private fun updateSuccessMessage(successMessage: SuccessType) {
         val message = getSuccessMessage(successMessage)

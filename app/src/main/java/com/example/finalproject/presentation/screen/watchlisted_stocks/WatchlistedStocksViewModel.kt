@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.domain.usecase.DataBaseUseCases
+import com.example.finalproject.domain.usecase.DataStoreUseCases
+import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.domain.usecase.database_usecase.GetWatchlistedStocksForUserUseCase
 import com.example.finalproject.presentation.event.watchlisted_stocks.WatchlistedStocksEvent
 import com.example.finalproject.presentation.mapper.company_details.toDomain
@@ -25,7 +27,9 @@ import javax.inject.Inject
 @HiltViewModel
 class WatchlistedStocksViewModel @Inject constructor(
     private val getWatchlistedStocksUseCase: GetWatchlistedStocksForUserUseCase,
-    private val dataBaseUseCases: DataBaseUseCases
+    private val dataBaseUseCases: DataBaseUseCases,
+    private val transactionsUseCases: TransactionsUseCases,
+    private val dataStoreUseCase: DataStoreUseCases
 ) : ViewModel() {
 
     private val _watchlistedStocksState = MutableStateFlow(WatchlistedStocksState())
@@ -54,13 +58,12 @@ class WatchlistedStocksViewModel @Inject constructor(
                             WatchlistedStocksState(watchlistedStocks = stocks.map { it.toPresentation() })
                     }
             } else {
-                updateErrorMessages(ErrorType.LocalDatabaseError)
+                updateErrorMessage(ErrorType.LocalDatabaseError)
             }
         }
     }
 
-
-    private fun updateErrorMessages(errorMessage: ErrorType) {
+    private fun updateErrorMessage(errorMessage: ErrorType) {
         val message = getErrorMessage(errorMessage)
         _watchlistedStocksState.update { currentState ->
             currentState.copy(errorMessage = message)

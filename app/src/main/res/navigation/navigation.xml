@@ -241,4 +241,16 @@
                 app:argType="string" />
         </action>
     </fragment>
+    <fragment
+        android:id="@+id/ownedStocksFragment"
+        android:name="com.example.finalproject.presentation.screen.owned_stocks.OwnedStocksFragment"
+        android:label="OwnedStocksFragment" >
+        <action
+            android:id="@+id/action_ownedStocksFragment_to_companyDetailsFragment"
+            app:destination="@id/companyDetailsFragment">
+            <argument
+                android:name="symbol"
+                app:argType="string" />
+        </action>
+    </fragment>
 </navigation>

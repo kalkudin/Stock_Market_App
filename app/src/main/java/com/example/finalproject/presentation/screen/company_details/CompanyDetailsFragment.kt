@@ -32,6 +32,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -307,11 +308,9 @@ class CompanyDetailsFragment :
 
         binding.btnBuy.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.companyDetailsState.collect { state ->
-                    state.companyDetails?.firstOrNull()?.let { stock ->
-                        val amount = stock.price!! * number
-                        viewModel.onEvent(CompanyDetailsEvent.BuyStock(userId, amount, symbol))
-                    }
+                viewModel.companyDetailsState.first().companyDetails?.firstOrNull()?.let { stock ->
+                    val amount = stock.price!! * number
+                    viewModel.onEvent(CompanyDetailsEvent.BuyStock(userId, amount, symbol))
                 }
             }
         }
@@ -325,11 +324,9 @@ class CompanyDetailsFragment :
 
         binding.btnSell.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.companyDetailsState.collect { state ->
-                    state.companyDetails?.firstOrNull()?.let { stock ->
-                        val amount = stock.price!! * number
-                        viewModel.onEvent(CompanyDetailsEvent.SellStock(userId, amount, symbol))
-                    }
+                viewModel.companyDetailsState.first().companyDetails?.firstOrNull()?.let { stock ->
+                    val amount = stock.price!! * number
+                    viewModel.onEvent(CompanyDetailsEvent.SellStock(userId, amount, symbol))
                 }
             }
         }
