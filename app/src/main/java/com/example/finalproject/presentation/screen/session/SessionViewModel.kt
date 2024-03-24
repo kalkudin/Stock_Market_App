@@ -18,11 +18,9 @@ class SessionViewModel @Inject constructor(private val dataStoreUseCases: DataSt
     private val _navigationFlow = MutableSharedFlow<SessionNavigationEvent>()
     val navigationFlow : SharedFlow<SessionNavigationEvent> = _navigationFlow.asSharedFlow()
 
-    fun onEvent(event : SessionEvent) {
+    init {
         viewModelScope.launch {
-            when(event) {
-                is SessionEvent.CheckCurrentSession -> checkCurrentSession()
-            }
+            checkCurrentSession()
         }
     }
 

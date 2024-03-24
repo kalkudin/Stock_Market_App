@@ -42,7 +42,9 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_stockHomeFragment"
-            app:destination="@id/stockHomeFragment" />
+            app:destination="@id/stockHomeFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -84,23 +86,33 @@
 
         <action
             android:id="@+id/action_stockHomeFragment_to_homeFragment"
-            app:destination="@id/welcomeFragment" />
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_stockHomeFragment_to_companyDetailsFragment"
-            app:destination="@id/companyDetailsFragment">
+            app:destination="@id/companyDetailsFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true">
             <argument
                 android:name="symbol"
                 app:argType="string" />
         </action>
         <action
             android:id="@+id/action_stockHomeFragment_to_extensiveStocksToWatchFragment"
-            app:destination="@id/extensiveStocksToWatchFragment" />
+            app:destination="@id/extensiveStocksToWatchFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_stockHomeFragment_to_userFundsFragment"
-            app:destination="@id/userFundsFragment" />
+            app:destination="@id/userFundsFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_stockHomeFragment_to_stockNewsFragment"
-            app:destination="@id/stockNewsFragment" />
+            app:destination="@id/stockNewsFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -110,7 +122,9 @@
         tools:layout="@layout/fragment_company_list">
         <action
             android:id="@+id/action_companyListFragment_to_companyDetailsFragment"
-            app:destination="@id/companyDetailsFragment">
+            app:destination="@id/companyDetailsFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true">
             <argument
                 android:name="symbol"
                 app:argType="string" />
@@ -127,6 +141,11 @@
             app:destination="@id/companyListFragment"
             app:popUpTo="@id/navigation"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_companyDetailsFragment_to_stockHomeFragment"
+            app:destination="@id/stockHomeFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -135,14 +154,18 @@
         android:label="ExtensiveStocksToWatchFragment">
         <action
             android:id="@+id/action_extensiveStocksToWatchFragment_to_stockHomeFragment"
-            app:destination="@id/stockHomeFragment" />
+            app:destination="@id/stockHomeFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
         <argument
             android:name="type"
             android:defaultValue="BEST_PERFORMING"
             app:argType="com.example.finalproject.presentation.model.home.Stock$PerformingType" />
         <action
             android:id="@+id/action_extensiveStocksToWatchFragment_to_companyDetailsFragment"
-            app:destination="@id/companyDetailsFragment">
+            app:destination="@id/companyDetailsFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true">
             <argument
                 android:name="symbol"
                 app:argType="string" />
@@ -155,16 +178,22 @@
         android:label="UserFundsFragment">
         <action
             android:id="@+id/action_userFundsFragment_to_stockHomeFragment"
-            app:destination="@id/stockHomeFragment" />
+            app:destination="@id/stockHomeFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
         <argument
             android:name="creditCard"
             app:argType="com.example.finalproject.presentation.model.credit_card.CreditCard" />
         <action
             android:id="@+id/action_userFundsFragment_to_addNewCardBottomSheetFragment"
-            app:destination="@id/addNewCardBottomSheetFragment" />
+            app:destination="@id/addNewCardBottomSheetFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_userFundsFragment_to_userCreditCardsBottomSheetFragment"
-            app:destination="@id/userCreditCardsBottomSheetFragment" />
+            app:destination="@id/userCreditCardsBottomSheetFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -173,10 +202,14 @@
         android:label="UserProfileFragment">
         <action
             android:id="@+id/action_userProfileFragment_to_transactionFragment"
-            app:destination="@id/transactionFragment" />
+            app:destination="@id/transactionFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_userProfileFragment_to_watchlistedStocksFragment"
-            app:destination="@id/watchlistedStocksFragment" />
+            app:destination="@id/watchlistedStocksFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <dialog
@@ -185,7 +218,9 @@
         android:label="AddNewCardBottomSheetFragment">
         <action
             android:id="@+id/action_addNewCardBottomSheetFragment_to_userFundsFragment"
-            app:destination="@id/userFundsFragment" />
+            app:destination="@id/userFundsFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </dialog>
 
     <dialog
@@ -194,7 +229,9 @@
         android:label="UserCreditCardsBottomSheetFragment">
         <action
             android:id="@+id/action_userCreditCardsBottomSheetFragment_to_userFundsFragment"
-            app:destination="@id/userFundsFragment" />
+            app:destination="@id/userFundsFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </dialog>
 
     <fragment
@@ -203,7 +240,9 @@
         android:label="TransactionFragment">
         <action
             android:id="@+id/action_transactionFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
+            app:destination="@id/userProfileFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/stockNewsFragment"
@@ -216,7 +255,9 @@
         android:label="WatchlistedStocksFragment">
         <action
             android:id="@+id/action_watchlistedStocksFragment_to_companyDetailsFragment"
-            app:destination="@id/companyDetailsFragment">
+            app:destination="@id/companyDetailsFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true">
             <argument
                 android:name="symbol"
                 app:argType="string" />
@@ -226,7 +267,7 @@
     <fragment
         android:id="@+id/sessionFragment"
         android:name="com.example.finalproject.presentation.screen.session.SessionFragment"
-        android:label="SessionFragment" >
+        android:label="SessionFragment">
         <action
             android:id="@+id/action_sessionFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
@@ -236,21 +277,21 @@
         <action
             android:id="@+id/action_sessionFragment_to_companyDetailsFragment"
             app:destination="@id/companyDetailsFragment">
-            <argument
-                android:name="symbol"
-                app:argType="string" />
-        </action>
-    </fragment>
-    <fragment
-        android:id="@+id/ownedStocksFragment"
-        android:name="com.example.finalproject.presentation.screen.owned_stocks.OwnedStocksFragment"
-        android:label="OwnedStocksFragment" >
-        <action
-            android:id="@+id/action_ownedStocksFragment_to_companyDetailsFragment"
-            app:destination="@id/companyDetailsFragment">
-            <argument
-                android:name="symbol"
-                app:argType="string" />
-        </action>
-    </fragment>
-</navigation>
+        <argument
+            android:name="symbol"
+            app:argType="string" />
+    </action>
+</fragment><fragment
+android:id="@+id/ownedStocksFragment"
+android:label="OwnedStocksFragment"
+android:name="com.example.finalproject.presentation.screen.owned_stocks.OwnedStocksFragment">
+<action
+    android:id="@+id/action_ownedStocksFragment_to_companyDetailsFragment"
+    app:destination="@id/companyDetailsFragment"
+    app:popUpTo="@id/navigation"
+    app:popUpToInclusive="true">
+    <argument
+        android:name="symbol"
+        app:argType="string" />
+</action>
+</fragment></navigation>

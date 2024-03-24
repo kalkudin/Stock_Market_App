@@ -43,7 +43,6 @@ class CompanyDetailsViewModel @Inject constructor(
     private val _companyDetailsState = MutableStateFlow(CompanyDetailsState())
     val companyDetailsState: SharedFlow<CompanyDetailsState> get() = _companyDetailsState
 
-
     //
     private var amount : Double = 0.0
 

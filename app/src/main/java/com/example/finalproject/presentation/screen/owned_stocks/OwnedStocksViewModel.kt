@@ -31,7 +31,6 @@ class OwnedStocksViewModel @Inject constructor(
     private val _ownedNavigationEvent = MutableSharedFlow<OwnedStocksNavigationEvents>()
     val ownedNavigationEvent: SharedFlow<OwnedStocksNavigationEvents> get() = _ownedNavigationEvent
 
-
     fun onEvent(event: OwnedStocksEvent) {
         when (event) {
             is OwnedStocksEvent.GetOwnedStocks -> getOwnedStocks()
@@ -39,7 +38,6 @@ class OwnedStocksViewModel @Inject constructor(
             is OwnedStocksEvent.SearchOwnedStocks -> searchOwnedStocks(event.query)
         }
     }
-
 
     private fun getOwnedStocks() {
         viewModelScope.launch {

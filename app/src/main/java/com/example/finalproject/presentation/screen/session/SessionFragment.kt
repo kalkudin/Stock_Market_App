@@ -19,25 +19,22 @@ class SessionFragment : BaseFragment<FragmentSessionLayoutBinding>(FragmentSessi
     private val sessionViewModel : SessionViewModel by viewModels()
 
     override fun bind() {
-        super.bind()
         extractSymbol()
     }
+
     override fun bindViewActionListeners() {
-        bindSession()
+
     }
 
     override fun bindObservers() {
         bindNavigationFlow()
     }
 
-    private fun bindSession() {
-        sessionViewModel.onEvent(SessionEvent.CheckCurrentSession)
-    }
 
     private fun bindNavigationFlow() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                sessionViewModel.navigationFlow.collect() { event ->
+                sessionViewModel.navigationFlow.collect { event ->
                     handleEvent(event)
                 }
             }

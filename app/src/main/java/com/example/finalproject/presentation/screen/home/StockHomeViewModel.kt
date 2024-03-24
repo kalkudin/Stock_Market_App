@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.round
 
 @HiltViewModel
 class StockHomeViewModel @Inject constructor(
@@ -73,7 +74,7 @@ class StockHomeViewModel @Inject constructor(
                     handleStateUpdate(
                         resource = resource,
                         stateFlow = _stockState,
-                        onSuccess = {funds -> this.copy(userFunds = funds.amount.toString())},
+                        onSuccess = {funds -> this.copy(userFunds = round(funds.amount).toString())},
                         onError = { errorMessage -> this.copy(errorMessage = errorMessage) }
                     )
                 }

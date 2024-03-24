@@ -105,7 +105,7 @@ class CompanyDetailsFragment :
 
     private fun handleBackButton() {
         binding.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_companyDetailsFragment_to_stockHomeFragment)
         }
     }
 

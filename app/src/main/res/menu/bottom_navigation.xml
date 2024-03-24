@@ -6,7 +6,6 @@
         android:icon="@drawable/ic_list"
         android:title="@string/stocks" />
 
-
     <item
         android:id="@+id/stockNewsFragment"
         android:icon="@drawable/ic_news"

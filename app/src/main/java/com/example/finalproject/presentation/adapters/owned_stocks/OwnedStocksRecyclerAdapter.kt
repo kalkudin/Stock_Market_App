@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.databinding.ItemOwnedStockLayoutBinding
 import com.example.finalproject.presentation.model.owned_stocks.OwnedStock
+import kotlin.math.round
 
 class OwnedStocksRecyclerAdapter(
     private val onCompanyClick: (OwnedStock) -> Unit
@@ -25,18 +26,15 @@ class OwnedStocksRecyclerAdapter(
         holder: OwnedStocksRecyclerAdapter.OwnedStocksViewHolder,
         position: Int
     ) {
-        holder.bind()
+        val item = getItem(position)
+        holder.bind(item)
     }
 
-    inner class OwnedStocksViewHolder(
-        private val binding: ItemOwnedStockLayoutBinding
-    ): RecyclerView.ViewHolder(binding.root) {
-        private lateinit var item: OwnedStock
-        fun bind() {
-            item = currentList[adapterPosition]
+    inner class OwnedStocksViewHolder(private val binding: ItemOwnedStockLayoutBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(item : OwnedStock) {
             binding.apply {
                 tvCompanySymbol.text = item.symbol
-                tvAmount.text = "$${item.amount}"
+                tvAmount.text = "$${round(item.amount)}"
             }
             itemView.setOnClickListener {
                 onCompanyClick.invoke(item)
