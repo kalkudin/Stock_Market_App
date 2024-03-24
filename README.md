@@ -51,9 +51,53 @@ Once the user logs in they will be met with the home page. this page contains so
 
 ![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/e91e6bd6-abac-43bf-8235-4425a1823272)
 
-The news 
+This is also the page where the user can either proceed to add additional funds. The addition of funds is purely mock, but still requires the user to enter a mock credit. They can do this on the page responsible for the funds : 
+
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/8b58e39e-6abe-4781-8f63-6001223cb247) 
+
+To successfully add funds the user is prompted to select a creditcard by entering in the initials of a new one, or selecting one which they have already registered 
+
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/8006a431-261c-4b9a-b08f-ca68e146e473)
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/79ccb8c2-d821-4e4f-bf9a-63944bd91d80)
+
+after selecting a card, it is now possible to add funds by entering a designated amout. After entering, the amount will be displayed on the Home page. 
+Also on the Home page, the user can choose to view the assorted stocks in more details by pressing either of the view more buttons for the respective categories. this will take the user to the appropriate page. 
+
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/5343b8b2-8f85-4a71-97ae-5eaa24085826)
+
+It is also possible to press any of the stock options in question to be taken to their details page 
+
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/6925ad5e-9a76-4564-aa38-be8d9be993d7)
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/a513c123-0ad8-4df4-a506-e6da74152689)
+
+This page offers the performance of the stock over a selected time perioid, the user can add the stock to their watchlist, or buy and sell the stocks accordingly. The buying and selling happens with the mock funds which the user transfers to their account.
+
+## Protfolio
+
+On this page, the user can see all the stocks that they have bought. Pressing on any will of course take them to the respective stock page to perform additional operations. 
+
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/747f3059-a819-43c0-a038-a0d5db87a568)
+
+## The news 
 
 ![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/0ece34b2-c5e1-4afb-baae-07e695eec5b3)
+
+This page is dedicated to presenting the latest and up to date news regarding the current financial market. 
+
+##Profile 
+
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/852653f9-0e60-4499-bddf-74992393f402)
+
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/d614c07f-8b65-4269-9719-5c8c45cb8e05)
+
+
+Here the user can set their profile picture, view their transaction history, view their watchlisted stocks which they have saved previously, and manage their credit cards. 
+
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/acc9987e-e856-4ab6-aae3-f86050853b09)
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/bd946bf6-44e0-414a-9326-dd297cff08d0)
+
+
+
 
 
 
