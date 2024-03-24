@@ -1,4 +1,4 @@
-![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/0ece34b2-c5e1-4afb-baae-07e695eec5b3)# Description
+# Description
 
 This is an stock market application developed for our final project for TBC android bootcamp. It is meant to provide real time, accurate information regarding the most relevant, up-to-date and important changes in the stockmarket, as well as give the user 
 the ability to sell, buy, save and retrieve their stocks with a mock balance, register mock creditcards, keep track of their transactions and bought stocks, as well as observe the latest updates in the stock market. It is designed with clean architecture in mind,
@@ -52,6 +52,8 @@ Once the user logs in they will be met with the home page. this page contains so
 ![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/e91e6bd6-abac-43bf-8235-4425a1823272)
 
 The news 
+
+![image](https://github.com/kalkudin/Stock_Market_App/assets/117531275/0ece34b2-c5e1-4afb-baae-07e695eec5b3)
 
 
 
