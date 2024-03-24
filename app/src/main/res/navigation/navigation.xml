@@ -186,14 +186,10 @@
             app:argType="com.example.finalproject.presentation.model.credit_card.CreditCard" />
         <action
             android:id="@+id/action_userFundsFragment_to_addNewCardBottomSheetFragment"
-            app:destination="@id/addNewCardBottomSheetFragment"
-            app:popUpTo="@id/navigation"
-            app:popUpToInclusive="true" />
+            app:destination="@id/addNewCardBottomSheetFragment" />
         <action
             android:id="@+id/action_userFundsFragment_to_userCreditCardsBottomSheetFragment"
-            app:destination="@id/userCreditCardsBottomSheetFragment"
-            app:popUpTo="@id/navigation"
-            app:popUpToInclusive="true" />
+            app:destination="@id/userCreditCardsBottomSheetFragment" />
     </fragment>
 
     <fragment

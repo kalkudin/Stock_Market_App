@@ -30,7 +30,6 @@ class SessionFragment : BaseFragment<FragmentSessionLayoutBinding>(FragmentSessi
         bindNavigationFlow()
     }
 
-
     private fun bindNavigationFlow() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
