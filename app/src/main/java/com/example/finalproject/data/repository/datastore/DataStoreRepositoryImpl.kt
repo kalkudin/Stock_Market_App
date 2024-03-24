@@ -1,5 +1,6 @@
 package com.example.finalproject.data.repository.datastore
 
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -27,6 +28,7 @@ class DataStoreRepositoryImpl @Inject constructor(
 
     override suspend fun saveSession(key: Preferences.Key<Boolean>, value: Boolean) {
         dataStore.edit { preferences ->
+            Log.d("DataStoreRepository", "SessionSaved")
             preferences[key] = value
         }
     }

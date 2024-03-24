@@ -13,6 +13,8 @@ import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentFundsLayoutBinding
 import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.funds.UserFundsEvent
+import com.example.finalproject.presentation.extension.hideView
+import com.example.finalproject.presentation.extension.showView
 import com.example.finalproject.presentation.mapper.credit_card.maskAndFormatCardNumber
 import com.example.finalproject.presentation.model.credit_card.CreditCard
 import com.example.finalproject.presentation.state.funds.FundsState
@@ -116,11 +118,12 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
 
     private fun handleState(state : FundsState) {
         with(binding) {
-            if(state.isLoading) progressBar.visibility = View.VISIBLE
+            if(state.isLoading) showView(progressBar)
 
             state.errorMessage?.let { errorMessage ->
                 progressBar.visibility = View.GONE
                 handleErrorMessage(errorMessage)
+                hideView(progressBar)
                 resetFlow()
             }
 
@@ -132,7 +135,6 @@ class UserFundsFragment : BaseFragment<FragmentFundsLayoutBinding>(FragmentFunds
                 progressBar.visibility = View.GONE
                 handleFundsAdded(etAddFunds.text.toString())
             }
-
         }
     }
 

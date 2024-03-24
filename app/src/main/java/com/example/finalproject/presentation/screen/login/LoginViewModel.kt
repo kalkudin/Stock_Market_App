@@ -1,5 +1,6 @@
 package com.example.finalproject.presentation.screen.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.data.common.Resource
@@ -31,6 +32,7 @@ class LoginViewModel @Inject constructor(
     private val _navigationFlow = MutableSharedFlow<LoginNavigationEvent>()
     val navigationFlow: SharedFlow<LoginNavigationEvent> = _navigationFlow.asSharedFlow()
 
+
     fun onEvent(event: LoginEvent) {
         viewModelScope.launch {
             when (event) {
@@ -46,14 +48,15 @@ class LoginViewModel @Inject constructor(
     }
 
     private suspend fun loginUser(email: String, password: String, saveSession: Boolean) {
+
         authUseCases.loginUserUseCase(email, password).collect { resource ->
             when (resource) {
                 is Resource.Success -> {
+                    saveUserUid(uid = resource.data)
+                    saveUserSession(saveSession = saveSession)
                     _loginFlow.update { state ->
                         state.copy(isLoading = false, isSuccess = resource.data)
                     }
-                    saveUserUid(uid = resource.data)
-                    saveUserSession(saveSession = saveSession)
                 }
                 is Resource.Error -> {
                     _loginFlow.update { errorState ->
@@ -94,6 +97,7 @@ class LoginViewModel @Inject constructor(
     }
 
     private suspend fun saveUserSession(saveSession : Boolean) {
+        Log.d("SessionVM", "SaveSessionCalled with $saveSession")
         dataStoreUseCases.saveUserSessionUseCase(rememberMe = saveSession)
     }
 

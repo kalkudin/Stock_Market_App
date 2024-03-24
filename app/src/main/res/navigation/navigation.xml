@@ -37,14 +37,10 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/welcomeFragment"
-            app:popUpTo="@id/navigation"
-            app:popUpToInclusive="true" />
+            app:destination="@id/welcomeFragment" />
         <action
             android:id="@+id/action_loginFragment_to_stockHomeFragment"
-            app:destination="@id/stockHomeFragment"
-            app:popUpTo="@id/navigation"
-            app:popUpToInclusive="true" />
+            app:destination="@id/stockHomeFragment" />
     </fragment>
 
     <fragment
@@ -266,13 +262,19 @@
         android:label="SessionFragment">
         <action
             android:id="@+id/action_sessionFragment_to_welcomeFragment"
-            app:destination="@id/welcomeFragment" />
+            app:destination="@id/welcomeFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_sessionFragment_to_stockHomeFragment"
-            app:destination="@id/stockHomeFragment" />
+            app:destination="@id/stockHomeFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_sessionFragment_to_companyDetailsFragment"
-            app:destination="@id/companyDetailsFragment">
+            app:destination="@id/companyDetailsFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true">
         <argument
             android:name="symbol"
             app:argType="string" />

@@ -3,7 +3,6 @@ package com.example.finalproject.presentation.screen.session
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finalproject.domain.usecase.DataStoreUseCases
-import com.example.finalproject.presentation.event.welcome.SessionEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -27,12 +26,13 @@ class SessionViewModel @Inject constructor(private val dataStoreUseCases: DataSt
     private suspend fun checkCurrentSession() {
         val sessionExists = dataStoreUseCases.readUserSessionUseCase().first()
 
-        if (sessionExists)
+        if (sessionExists) {
             _navigationFlow.emit(SessionNavigationEvent.SessionExists)
-        else
+        }
+        else {
             _navigationFlow.emit(SessionNavigationEvent.SessionMissing)
+        }
     }
-
 }
 
 sealed class SessionNavigationEvent() {

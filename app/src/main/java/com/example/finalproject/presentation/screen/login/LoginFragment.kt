@@ -12,6 +12,7 @@ import com.example.finalproject.databinding.FragmentLoginLayoutBinding
 import com.example.finalproject.presentation.event.login.LoginEvent
 import com.example.finalproject.presentation.state.login.LoginState
 import com.example.finalproject.presentation.base.BaseFragment
+import com.example.finalproject.presentation.extension.hideView
 import com.example.finalproject.presentation.extension.setupPasswordToggle
 import com.example.finalproject.presentation.extension.showView
 import com.example.finalproject.presentation.util.CreditCardNumberFormattingTextWatcher
@@ -121,6 +122,7 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
 
             state.errorMessage?.let { errorMessage ->
                 showError(errorMessage)
+                hideView(progressBar)
                 loginViewModel.onEvent(LoginEvent.ResetFlow)
             }
         }
