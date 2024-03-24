@@ -1,5 +1,7 @@
 package com.example.finalproject.presentation.screen.session
 
+import android.app.AlertDialog
+import android.content.Intent
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,6 +14,8 @@ import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.welcome.SessionEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import android.provider.Settings
+
 
 @AndroidEntryPoint
 class SessionFragment : BaseFragment<FragmentSessionLayoutBinding>(FragmentSessionLayoutBinding::inflate) {
@@ -42,11 +46,14 @@ class SessionFragment : BaseFragment<FragmentSessionLayoutBinding>(FragmentSessi
 
     private fun handleEvent(event : SessionNavigationEvent) {
         when(event) {
-            SessionNavigationEvent.SessionExists -> {
+            is SessionNavigationEvent.SessionExists -> {
                 navigateToHomePage()
             }
-            SessionNavigationEvent.SessionMissing -> {
+            is SessionNavigationEvent.SessionMissing -> {
                 navigateToWelcomePage()
+            }
+            is SessionNavigationEvent.NoNetworkConnection -> {
+                promptToCheckNetwork()
             }
         }
     }
@@ -57,6 +64,20 @@ class SessionFragment : BaseFragment<FragmentSessionLayoutBinding>(FragmentSessi
 
     private fun navigateToWelcomePage() {
         findNavController().navigate(R.id.action_sessionFragment_to_welcomeFragment)
+    }
+
+    private fun promptToCheckNetwork() {
+        AlertDialog.Builder(context)
+            .setTitle("No Internet Connection")
+            .setMessage("Please check your network settings and try again.")
+            .setPositiveButton("Retry") { _, _ ->
+                sessionViewModel.onEvent(SessionEvent.CheckCurrentSession)
+            }
+            .setNegativeButton("Turn on WiFi") { _, _ ->
+                startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+            }
+            .setCancelable(false)
+            .show()
     }
 
     private fun extractSymbol() {
