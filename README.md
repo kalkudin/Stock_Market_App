@@ -29,3 +29,9 @@ To build the application, we have used a variety of different technologies and c
 - MPAndroidChart for drawing and displaying charts
 
 ## API used
+
+//guga 
+
+## Features 
+
+# Authentication 
