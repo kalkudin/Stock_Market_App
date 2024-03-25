@@ -79,10 +79,13 @@ class StockNewsFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigateToUrl.collect { url ->
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                    try {
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                            data = Uri.parse(url)
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
                         startActivity(intent)
-                    } else {
+                    } catch (e: Exception) {
                         binding.root.showSnackBar("No app can handle the request")
                     }
                 }
