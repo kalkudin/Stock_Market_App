@@ -30,7 +30,17 @@ To build the application, we have used a variety of different technologies and c
 
 # API used
 
-//guga 
+- Mock API for list of companies - https://run.mocky.io/v3/91776aaa-ca12-4c57-8330-28ef21085895
+- Mock API for best stocks - https://run.mocky.io/v3/e37f2736-d4be-477e-b7bb-91e2e4a45899
+- Mock API for worst stocks - https://run.mocky.io/v3/2080748b-0af0-4e88-a1b0-1ee8c01f1e9c
+- Mock API for active stocks - https://run.mocky.io/v3/1f1e5417-2aaa-4fc6-9461-9d94db1d1dd4
+- API for company details - https://financialmodelingprep.com/api//api/v3/profile/{symbol}
+- API for stock news - https://financialmodelingprep.com/api//api/v3/historical-chart/{interval}/{symbol}
+- API for charts - https://financialmodelingprep.com/api//api/v3/fmp/articles
+
+For variuos company listings we created mock APIs using the https://designer.mocky.io
+For details, news and charting information we used APIs provided by the https://site.financialmodelingprep.com/developer/docs
+
 
 # Features 
 
