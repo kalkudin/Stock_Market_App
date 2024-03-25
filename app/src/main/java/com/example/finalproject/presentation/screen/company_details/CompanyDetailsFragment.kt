@@ -1,7 +1,5 @@
 package com.example.finalproject.presentation.screen.company_details
 
-import android.R.layout.simple_spinner_dropdown_item
-import android.R.layout.simple_spinner_item
 import android.app.DatePickerDialog
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -130,8 +128,8 @@ class CompanyDetailsFragment :
     //CHART
     private fun spinnerForIntradaySetup() {
         val intervals = resources.getStringArray(R.array.interval_options)
-        val adapter = ArrayAdapter(requireContext(), simple_spinner_item, intervals)
-        adapter.setDropDownViewResource(simple_spinner_dropdown_item)
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_spinner, intervals)
+        adapter.setDropDownViewResource(R.layout.item_spinner)
         binding.spinner.adapter = adapter
     }
 
