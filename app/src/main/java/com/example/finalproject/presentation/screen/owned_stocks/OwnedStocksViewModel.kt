@@ -8,15 +8,9 @@ import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.presentation.event.owned_stocks.OwnedStocksEvent
-import com.example.finalproject.presentation.mapper.company_details.toDomain
-import com.example.finalproject.presentation.mapper.company_details.toPresentation
-import com.example.finalproject.presentation.model.company_details.UserId
 import com.example.finalproject.presentation.model.owned_stocks.OwnedStock
 import com.example.finalproject.presentation.state.owned_stocks.OwnedStocksState
-import com.example.finalproject.presentation.state.watchlisted_stocks.WatchlistedStocksState
 import com.example.finalproject.presentation.util.getErrorMessage
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

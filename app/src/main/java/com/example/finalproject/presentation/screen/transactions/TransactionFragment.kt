@@ -9,10 +9,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentTransactionsLayoutBinding
-import com.example.finalproject.presentation.base.BaseFragment
-import com.example.finalproject.presentation.extension.setOnItemSelected
 import com.example.finalproject.presentation.adapters.profile.TransactionRecyclerAdapter
+import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.transactions.TransactionEvent
+import com.example.finalproject.presentation.extension.setOnItemSelected
 import com.example.finalproject.presentation.state.profile.TransactionState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +42,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionsLayoutBinding>(Frag
 
     private fun bindBackBnt() {
         with(binding) {
-            btnBack.setOnClickListener() {
+            btnBack.setOnClickListener {
                 transactionsViewModel.onEvent(TransactionEvent.NavigateBack)
             }
         }

@@ -2,6 +2,7 @@ package com.example.finalproject.presentation.screen.stock_news
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.example.finalproject.domain.usecase.stock_news.GetStockNewsUseCase
 import com.example.finalproject.presentation.event.stock_news.StockNewsEvent
@@ -30,7 +31,7 @@ class StockNewsViewModel @Inject constructor(
     fun onEvent(event: StockNewsEvent) {
         when (event) {
             is StockNewsEvent.GetNewsList -> getStockNews()
-            is StockNewsEvent.NewsItemClick -> onNewsItemClick(event.item)//finish this one later
+            is StockNewsEvent.NewsItemClick -> onNewsItemClick(event.item)
         }
     }
 
@@ -42,7 +43,7 @@ class StockNewsViewModel @Inject constructor(
 
     private fun getStockNews() {
         viewModelScope.launch {
-            getStockNewsUseCase.invoke().collect { pagingData ->
+            getStockNewsUseCase.invoke().cachedIn(viewModelScope).collect { pagingData ->
                 _stockNewsState.update { currentState ->
                     currentState.copy(stockNews = pagingData.map { it.toPresentation() })
                 }

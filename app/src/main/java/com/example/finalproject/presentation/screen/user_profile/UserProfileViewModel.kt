@@ -1,10 +1,8 @@
 package com.example.finalproject.presentation.screen.user_profile
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
 import com.example.finalproject.domain.usecase.CreditCardUseCases
 import com.example.finalproject.domain.usecase.DataBaseUseCases
@@ -12,17 +10,15 @@ import com.example.finalproject.domain.usecase.DataStoreUseCases
 import com.example.finalproject.domain.usecase.ImageUseCases
 import com.example.finalproject.domain.usecase.TransactionsUseCases
 import com.example.finalproject.presentation.event.profile.UserProfileEvent
+import com.example.finalproject.presentation.mapper.base.handleStateUpdate
 import com.example.finalproject.presentation.mapper.company_details.toDomain
 import com.example.finalproject.presentation.mapper.company_details.toPresentation
 import com.example.finalproject.presentation.mapper.credit_card.toPresentation
-import com.example.finalproject.presentation.mapper.base.handleStateUpdate
 import com.example.finalproject.presentation.mapper.profile.toPresentation
 import com.example.finalproject.presentation.model.company_details.UserId
 import com.example.finalproject.presentation.model.credit_card.CreditCard
 import com.example.finalproject.presentation.state.profile.ProfileState
 import com.example.finalproject.presentation.util.getErrorMessage
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

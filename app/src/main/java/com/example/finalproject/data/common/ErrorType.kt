@@ -1,6 +1,7 @@
 package com.example.finalproject.data.common
 
 sealed class ErrorType {
+    //authentication exceptions
     data object WeakPassword : ErrorType()
     data object InvalidCredentials : ErrorType()
     data object UserCollision : ErrorType()
@@ -12,8 +13,7 @@ sealed class ErrorType {
     data object PasswordCriteriaNotMet : ErrorType()
     data object PasswordsNotMatching : ErrorType()
     data class UnknownError(val message: String) : ErrorType()
-    //http request exceptions, gonna change this later,
-    //gonna make separate file for this
+    //http request exceptions
     data object SocketTimeout:ErrorType()
     data object UnknownHost:ErrorType()
     data object SSLHandshake:ErrorType()
@@ -22,19 +22,19 @@ sealed class ErrorType {
     data object InvalidCardNumber : ErrorType()
     data object InvalidExpirationDate : ErrorType()
     data object InvalidCCV : ErrorType()
-    //
+    //card errors
     data object CardAlreadyExists : ErrorType()
     data object NoSuchCreditCard : ErrorType()
     data object InvalidFunds : ErrorType()
     data object InvalidCardType : ErrorType()
-    //
+    //room database errors
     data object LocalDatabaseError : ErrorType()
     data object LocalDatabaseEmpty : ErrorType()
     data object LocalDatabaseErrorDelete : ErrorType()
-    //
+    //funds errors
     data object InsufficientFunds : ErrorType()
     data object InsufficientStocks : ErrorType()
-    //
+    //buy/sell errors
     data object AmountGreaterThanZeroToBuy : ErrorType()
     data object AmountGreaterThanZeroToSell : ErrorType()
 }

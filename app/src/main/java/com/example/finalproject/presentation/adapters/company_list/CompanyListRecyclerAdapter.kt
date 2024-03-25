@@ -31,15 +31,14 @@ class CompanyListRecyclerAdapter(
         holder: CompanyListRecyclerAdapter.CompanyListViewHolder,
         position: Int
     ) {
-        holder.bind()
+        val item = getItem(position)
+        holder.bind(item)
     }
 
     inner class CompanyListViewHolder(
         private val binding: ItemCompanyListBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        private lateinit var item: CompanyList
-        fun bind() {
-            item = currentList[adapterPosition]
+        fun bind(item: CompanyList) {
             binding.apply {
 
                 val greenColor = ContextCompat.getColor(itemView.context, R.color.deaf_green)

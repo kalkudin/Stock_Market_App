@@ -31,15 +31,14 @@ class WatchlistedStocksRecyclerAdapter(
         holder: WatchlistedStocksRecyclerAdapter.WatchlistedStocksViewHolder,
         position: Int
     ) {
-        holder.bind()
+        val item = getItem(position)
+        holder.bind(item)
     }
 
     inner class WatchlistedStocksViewHolder(
         private val binding: ItemWatchlistLayoutBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        private lateinit var item: CompanyDetails
-        fun bind() {
-            item = currentList[adapterPosition]
+        fun bind(item: CompanyDetails) {
             binding.apply {
 
                 val greenColor = ContextCompat.getColor(itemView.context, R.color.deaf_green)

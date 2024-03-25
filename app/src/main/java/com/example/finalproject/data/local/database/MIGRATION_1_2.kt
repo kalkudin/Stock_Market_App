@@ -5,7 +5,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        // Create the new table with the correct schema
         database.execSQL("""
             CREATE TABLE new_StocksEntity (
                 symbol TEXT NOT NULL,

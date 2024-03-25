@@ -1,9 +1,7 @@
 package com.example.finalproject.domain.util
 
-import android.util.Log
-import androidx.paging.LOGGER
-import java.util.UUID
 import java.util.Calendar
+import java.util.UUID
 import javax.inject.Inject
 
 class CreditCardValidationUtil @Inject constructor() {
