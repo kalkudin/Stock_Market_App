@@ -1,6 +1,5 @@
 package com.example.finalproject.presentation.screen.login
 
-import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -9,13 +8,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.finalproject.R
 import com.example.finalproject.databinding.FragmentLoginLayoutBinding
-import com.example.finalproject.presentation.event.login.LoginEvent
-import com.example.finalproject.presentation.state.login.LoginState
 import com.example.finalproject.presentation.base.BaseFragment
+import com.example.finalproject.presentation.event.login.LoginEvent
 import com.example.finalproject.presentation.extension.hideView
 import com.example.finalproject.presentation.extension.setupPasswordToggle
 import com.example.finalproject.presentation.extension.showView
-import com.example.finalproject.presentation.util.CreditCardNumberFormattingTextWatcher
+import com.example.finalproject.presentation.state.login.LoginState
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -156,6 +154,8 @@ class LoginFragment : BaseFragment<FragmentLoginLayoutBinding>(FragmentLoginLayo
     }
 
     private fun navigateToStockHome() {
-        findNavController().navigate(R.id.action_loginFragment_to_stockHomeFragment)
+        if (findNavController().currentDestination?.id == R.id.loginFragment) {
+            findNavController().navigate(R.id.action_loginFragment_to_stockHomeFragment)
+        }
     }
 }
