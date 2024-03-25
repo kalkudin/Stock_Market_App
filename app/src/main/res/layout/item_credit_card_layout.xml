@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="20dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ic_container"
+        android:layout_width="250dp"
+        android:layout_height="160dp"
+        android:background="@drawable/style_card_visa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:shapeAppearanceOverlay="@style/RoundedShapeAppearanceOverlay" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_card_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_container"
+        app:layout_constraintEnd_toEndOf="@+id/ic_container"
+        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintStart_toStartOf="@+id/ic_container"
+        app:layout_constraintTop_toTopOf="@+id/ic_container"
+        app:layout_constraintVertical_bias="0.255" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_card_type"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/ic_container"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_card_number"
+        app:layout_constraintTop_toTopOf="@+id/tv_card_number" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_ccv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_expiration_date"
+        app:layout_constraintEnd_toEndOf="@+id/iv_card_type"
+        app:layout_constraintStart_toStartOf="@+id/iv_card_type"
+        app:layout_constraintTop_toTopOf="@+id/tv_expiration_date"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_expiration_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="68dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/tv_card_number"
+        app:layout_constraintTop_toBottomOf="@id/tv_card_number" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

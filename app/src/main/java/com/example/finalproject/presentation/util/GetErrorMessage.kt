@@ -14,6 +14,29 @@ fun getErrorMessage(errorType: ErrorType): String {
         ErrorType.InvalidEmail -> "Invalid email address."
         ErrorType.PasswordCriteriaNotMet -> "Password does not meet the criteria."
         ErrorType.PasswordsNotMatching -> "The passwords do not match."
+        //
+        ErrorType.SocketTimeout -> "The server did not respond in time."
+        ErrorType.UnknownHost -> "The server could not be found."
+        ErrorType.SSLHandshake -> "There was an error establishing a secure connection."
+        ErrorType.Http -> "There was an error with the HTTP request."
+        ErrorType.IO -> "There was an input/output error."
+        //
+        ErrorType.InvalidCCV -> "Invalid CCV"
+        ErrorType.InvalidCardNumber -> "Invalid card number"
+        ErrorType.InvalidExpirationDate -> "Invalid expiration date"
+        ErrorType.CardAlreadyExists -> "This card already exists"
+        ErrorType.NoSuchCreditCard -> "This Credit Card Does Not Exist"
+        ErrorType.InvalidFunds -> "The amount entered is invalid, please try again"
+        ErrorType.InvalidCardType -> "Please Select A Valid Card Type"
+        ErrorType.LocalDatabaseError -> "There was an error with the local database."
+        ErrorType.LocalDatabaseEmpty -> "The local database is empty."
+        ErrorType.LocalDatabaseErrorDelete -> "There was an error deleting from the local database."
+        //
+        ErrorType.InsufficientFunds -> "Insufficient funds"
+        ErrorType.InsufficientStocks -> "Insufficient stocks"
+        //
+        ErrorType.AmountGreaterThanZeroToSell -> "Number of stocks to sell should be greater than zero"
+        ErrorType.AmountGreaterThanZeroToBuy -> "Number of stocks to buy should be greater than zero"
         is ErrorType.UnknownError -> errorType.message
     }
 }

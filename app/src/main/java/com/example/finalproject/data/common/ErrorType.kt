@@ -12,4 +12,29 @@ sealed class ErrorType {
     data object PasswordCriteriaNotMet : ErrorType()
     data object PasswordsNotMatching : ErrorType()
     data class UnknownError(val message: String) : ErrorType()
+    //http request exceptions, gonna change this later,
+    //gonna make separate file for this
+    data object SocketTimeout:ErrorType()
+    data object UnknownHost:ErrorType()
+    data object SSLHandshake:ErrorType()
+    data object Http:ErrorType()
+    data object IO:ErrorType()
+    data object InvalidCardNumber : ErrorType()
+    data object InvalidExpirationDate : ErrorType()
+    data object InvalidCCV : ErrorType()
+    //
+    data object CardAlreadyExists : ErrorType()
+    data object NoSuchCreditCard : ErrorType()
+    data object InvalidFunds : ErrorType()
+    data object InvalidCardType : ErrorType()
+    //
+    data object LocalDatabaseError : ErrorType()
+    data object LocalDatabaseEmpty : ErrorType()
+    data object LocalDatabaseErrorDelete : ErrorType()
+    //
+    data object InsufficientFunds : ErrorType()
+    data object InsufficientStocks : ErrorType()
+    //
+    data object AmountGreaterThanZeroToBuy : ErrorType()
+    data object AmountGreaterThanZeroToSell : ErrorType()
 }

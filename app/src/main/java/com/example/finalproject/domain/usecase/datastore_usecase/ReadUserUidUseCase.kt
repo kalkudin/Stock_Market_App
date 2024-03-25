@@ -1,7 +1,7 @@
 package com.example.finalproject.domain.usecase.datastore_usecase
 
-import com.example.finalproject.data.repository.DataStoreRepositoryImpl
-import com.example.finalproject.domain.repository.DataStoreRepository
+import com.example.finalproject.data.repository.datastore.DataStoreRepositoryImpl
+import com.example.finalproject.domain.repository.datastore.DataStoreRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

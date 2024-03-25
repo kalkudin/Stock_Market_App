@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/style_background_wave">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_card_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="5dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/card_container"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/style_card_type_unknown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_card_type"
+        app:layout_constraintVertical_bias="0.059"
+        app:shapeAppearanceOverlay="@style/RoundedShapeAppearanceOverlay" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_add_credit_card"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="308dp"
+        android:background="@drawable/style_circle_corners"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_plus"
+        app:layout_constraintBottom_toBottomOf="@+id/card_container"
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="@+id/card_container" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_card_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/style_et_without_bottom_line"
+        android:hint="@string/sample_number"
+        android:maxLength="19"
+        android:textSize="21sp"
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
+        app:layout_constraintHorizontal_bias="0.192"
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="@+id/card_container" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_expiry_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:background="@drawable/style_et_without_bottom_line"
+        android:hint="@string/mm"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/et_card_number"
+        app:layout_constraintTop_toBottomOf="@+id/et_card_number" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_expiry_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/style_et_without_bottom_line"
+        android:hint="@string/yy"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/et_expiry_month"
+        app:layout_constraintTop_toTopOf="@+id/et_expiry_month" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_ccv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/style_et_without_bottom_line"
+        android:hint="@string/sample_cvv"
+        android:inputType="number"
+        android:maxLength="3"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/et_card_number"
+        app:layout_constraintTop_toTopOf="@+id/et_expiry_year" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_card_type"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="124dp"
+        android:src="@drawable/ic_blank_card_icon"
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="@+id/et_card_number" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/card_container"
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/card_container" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

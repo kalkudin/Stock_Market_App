@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/style_background_wave">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_logout"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/ic_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.024"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_greeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/sample_greeting"
+        android:textColor="@color/ghost_white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.914"
+        app:layout_constraintStart_toEndOf="@+id/btn_logout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_primary_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/tv_welcome_text"
+        android:textColor="@color/sky_blue"
+        android:textSize="29sp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_greeting"
+        app:layout_constraintTop_toBottomOf="@+id/tv_greeting" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/user_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_layered_peaks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_primary_welcome"
+        app:shapeAppearanceOverlay="@style/RoundedShapeAppearanceOverlay" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_user_funds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/tv_funds_currently_available"
+        android:textColor="@color/light_gray"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_info_container"
+        app:layout_constraintEnd_toEndOf="@+id/user_info_container"
+        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintStart_toStartOf="@+id/user_info_container"
+        app:layout_constraintTop_toTopOf="@+id/user_info_container"
+        app:layout_constraintVertical_bias="0.122" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_funds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="@string/current_funds"
+        android:textColor="@color/light_white"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_info_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.014"
+        app:layout_constraintStart_toStartOf="@id/user_info_container"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_funds"
+        app:layout_constraintVertical_bias="0.203" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/light_white"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_info_container"
+        app:layout_constraintEnd_toStartOf="@+id/ic_wallet"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/tv_funds"
+        app:layout_constraintTop_toTopOf="@id/tv_funds"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_wallet"
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_wallet"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_amount"
+        app:layout_constraintEnd_toEndOf="@+id/user_info_container"
+        app:layout_constraintStart_toEndOf="@id/tv_amount"
+        app:layout_constraintTop_toTopOf="@+id/tv_amount"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_add_more_funds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sauce_sans_bold"
+        android:text="@string/add_more_funds"
+        android:textColor="@color/light_white"
+        app:layout_constraintBottom_toBottomOf="@+id/user_info_container"
+        app:layout_constraintEnd_toEndOf="@+id/user_info_container"
+        app:layout_constraintHorizontal_bias="0.91"
+        app:layout_constraintStart_toStartOf="@+id/user_info_container"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount"
+        app:layout_constraintVertical_bias="0.727" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_best"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/best_stocks"
+        android:textColor="@color/deaf_green"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/rv_best_stocks"
+        app:layout_constraintEnd_toStartOf="@+id/btn_view_more_best_stocks"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/rv_best_stocks"
+        app:layout_constraintTop_toBottomOf="@+id/user_info_container"
+        app:layout_constraintVertical_bias="0.459" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_view_more_best_stocks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/view_more"
+        android:textColor="@color/light_white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_best"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.872"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_best"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_arrow_right"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_view_more_best_stocks"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_view_more_best_stocks"
+        app:layout_constraintTop_toTopOf="@+id/btn_view_more_best_stocks"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_best_stocks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_best" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_worst"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/worst_stocks"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@+id/rv_worst_stocks"
+        app:layout_constraintEnd_toStartOf="@+id/btn_view_more_worst_stocks"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/rv_worst_stocks" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_view_more_worst_stocks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/view_more"
+        android:textColor="@color/light_white"
+
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_worst"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.872"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_worst"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_arrow_right"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_view_more_worst_stocks"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_view_more_worst_stocks"
+        app:layout_constraintTop_toTopOf="@+id/btn_view_more_worst_stocks"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_worst_stocks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_best_stocks" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_active"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/active_stocks"
+        android:textColor="@color/sky_blue"
+        android:textSize="18sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@+id/rv_active_stocks"
+        app:layout_constraintEnd_toStartOf="@+id/btn_view_more_active_stocks"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/rv_active_stocks" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/btn_view_more_active_stocks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/view_more"
+        android:textSize="18sp"
+        android:textColor="@color/light_white"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_active"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.872"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_active" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_arrow_right"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_view_more_active_stocks"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_view_more_active_stocks"
+        app:layout_constraintTop_toTopOf="@+id/btn_view_more_active_stocks"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_active_stocks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_worst_stocks"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

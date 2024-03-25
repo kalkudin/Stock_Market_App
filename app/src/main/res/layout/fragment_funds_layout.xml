@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/style_background_wave">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.1"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_grid_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_gradient"
+        android:layout_width="780dp"
+        android:layout_height="780dp"
+        android:layout_marginTop="556dp"
+        android:src="@drawable/ic_gradient_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/background_screen"
+        android:layout_width="353dp"
+        android:layout_height="253dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:alpha="0.3"
+        android:background="@drawable/style_card_type_unknown"
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="@+id/card_container"
+        app:shapeAppearanceOverlay="@style/RoundedShapeAppearanceOverlay" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/card_container"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:background="@drawable/style_card_type_unknown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.148"
+        app:shapeAppearanceOverlay="@style/RoundedShapeAppearanceOverlay" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_card_type"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
+        android:src="@drawable/ic_blank_card_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/card_container"
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="@+id/card_container"
+        app:layout_constraintVertical_bias="0.079" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/card_container"
+        app:layout_constraintStart_toStartOf="@+id/tv_card_number"
+        app:layout_constraintTop_toTopOf="@+id/card_container"
+        app:layout_constraintVertical_bias="0.091" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_user_initials"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/open_sauce_sans_regular"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_card_number"
+        app:layout_constraintEnd_toStartOf="@+id/iv_card_type"
+        app:layout_constraintStart_toStartOf="@+id/tv_card_number"
+        app:layout_constraintTop_toTopOf="@+id/card_container" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_card_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:maxLines="1"
+        android:text="@string/sample_number"
+        android:textColor="@color/white"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="@+id/card_container"
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="@+id/card_container"
+        app:layout_constraintVertical_bias="0.401" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_expiry_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/sample_date"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/card_container"
+        app:layout_constraintEnd_toEndOf="@+id/tv_card_number"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_card_number"
+        app:layout_constraintTop_toBottomOf="@+id/tv_card_number"
+        app:layout_constraintVertical_bias="0.676" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_ccv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/sample_cvv"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_expiry_date"
+        app:layout_constraintEnd_toStartOf="@+id/iv_card_type"
+        app:layout_constraintHorizontal_bias="0.823"
+        app:layout_constraintStart_toEndOf="@+id/tv_expiry_date"
+        app:layout_constraintTop_toTopOf="@+id/tv_expiry_date"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_add_funds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:ellipsize="end"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:gravity="center"
+        android:hint="@string/_0_0"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:textColorHint="@color/ghost_white"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add_funds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_container"
+        app:layout_constraintVertical_bias="0.481" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_funds"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/dark_blue"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/add_funds"
+        android:textAllCaps="false"
+        android:textColor="@color/sky_blue"
+        android:textSize="16sp"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_get_all_cards"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.988"
+        app:rippleColor="@color/deaf_green"
+        app:strokeColor="@color/sky_blue"
+        app:strokeWidth="1dp" />
+
+    <!--    <androidx.appcompat.widget.AppCompatImageView-->
+    <!--        android:layout_width="30dp"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:src="@drawable/ic_bill"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/btn_add_funds"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/btn_add_funds"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/btn_add_funds" />-->
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_new_credit_card"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="224dp"
+        android:background="@drawable/style_circle_corners"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_plus"
+        app:layout_constraintEnd_toEndOf="@+id/card_container"
+        app:layout_constraintStart_toStartOf="@+id/card_container"
+        app:layout_constraintTop_toTopOf="@+id/card_container" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add_funds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_add_funds" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_get_all_cards"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/dark_blue"
+        android:fontFamily="@font/open_sauce_sans_medium"
+        android:text="@string/use_an_existing_card"
+        android:textColor="@color/sky_blue"
+        android:textSize="16sp"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976"
+        app:rippleColor="@color/sky_blue"
+        app:strokeColor="@color/sky_blue"
+        app:strokeWidth="1dp" />
+
+    <!--    <androidx.appcompat.widget.AppCompatImageView-->
+    <!--        android:layout_width="30dp"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:src="@drawable/ic_blank_card_icon"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/btn_get_all_cards"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/btn_get_all_cards"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/btn_get_all_cards"-->
+    <!--        app:layout_constraintVertical_bias="0.48" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>

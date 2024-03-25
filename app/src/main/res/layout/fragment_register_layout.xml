@@ -1,129 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/style_background_wave">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/Back"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_gradient"
+        android:layout_width="780dp"
+        android:layout_height="780dp"
+        android:layout_marginTop="556dp"
+        android:src="@drawable/ic_gradient_blue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_email"
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/email"
-        android:paddingStart="20dp"
-        android:textSize="20sp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_grid_background"
+        android:scaleType="centerCrop"
+        android:alpha="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_back"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_password"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_register_page"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:paddingStart="20dp"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_lock_1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="6dp"
-        android:src="@drawable/ic_lock_locked"
-        app:layout_constraintBottom_toBottomOf="@+id/et_password"
-        app:layout_constraintEnd_toEndOf="@+id/et_password"
-        app:layout_constraintTop_toTopOf="@+id/et_password" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_lock_2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="6dp"
-        android:src="@drawable/ic_lock_locked"
-        app:layout_constraintBottom_toBottomOf="@+id/et_repeat_password"
-        app:layout_constraintEnd_toEndOf="@+id/et_repeat_password"
-        app:layout_constraintTop_toTopOf="@+id/et_repeat_password" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ic_email"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="6dp"
-        android:src="@drawable/ic_email"
-        app:layout_constraintBottom_toBottomOf="@+id/et_email"
-        app:layout_constraintEnd_toEndOf="@+id/et_email"
-        app:layout_constraintTop_toTopOf="@+id/et_email" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/et_repeat_password"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:hint="Repeat Password"
-        android:inputType="textPassword"
-        android:paddingStart="20dp"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_password" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="460dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/register"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_password" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/btn_already_registered"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center"
-        android:text="@string/already_registered_click_here_to_log_in"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_repeat_password"
-        app:layout_constraintVertical_bias="0.952" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_back"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginBottom="20dp"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/btn_already_registered"
+        android:layout_marginBottom="24dp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/style_progress_bar_custom"
+        android:progress="0"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/rv_register_page"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/rv_register_page" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

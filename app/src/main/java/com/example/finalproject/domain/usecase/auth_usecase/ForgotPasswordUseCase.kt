@@ -2,7 +2,7 @@ package com.example.finalproject.domain.usecase.auth_usecase
 
 import com.example.finalproject.data.common.ErrorType
 import com.example.finalproject.data.common.Resource
-import com.example.finalproject.domain.repository.ResetPasswordRepository
+import com.example.finalproject.domain.repository.auth.reset_password.ResetPasswordRepository
 import com.example.finalproject.domain.util.AuthenticationUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
