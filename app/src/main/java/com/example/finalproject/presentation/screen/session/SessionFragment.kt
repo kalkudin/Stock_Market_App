@@ -2,6 +2,7 @@ package com.example.finalproject.presentation.screen.session
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.provider.Settings
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,7 +15,6 @@ import com.example.finalproject.presentation.base.BaseFragment
 import com.example.finalproject.presentation.event.welcome.SessionEvent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import android.provider.Settings
 
 
 @AndroidEntryPoint
@@ -59,7 +59,9 @@ class SessionFragment : BaseFragment<FragmentSessionLayoutBinding>(FragmentSessi
     }
 
     private fun navigateToHomePage() {
-        findNavController().navigate(R.id.action_sessionFragment_to_stockHomeFragment)
+        if (findNavController().currentDestination?.id == R.id.sessionFragment) {
+            findNavController().navigate(R.id.action_sessionFragment_to_stockHomeFragment)
+        }
     }
 
     private fun navigateToWelcomePage() {
